@@ -2,13 +2,14 @@ import React from 'react'
 import './CardPost.css'
 
 const CardPost = ({props}) =>{
+    
     return (
         <>
             <div class="col-6 col-sm-4 col-md-3 cardpost">
                 <a href="chitiet.html" class="detail-room">
                     <div class="room">
                         <div class="image-room">
-                            <div class="image"><img src="images/img1.jpg" alt="can-ho" /></div>
+                            <div class="image"><img src="images/img1.jpg" alt="can-ho" id="cardPost-img"/></div>
                             <div class="follow"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                         </div>
                         <div class="cap">

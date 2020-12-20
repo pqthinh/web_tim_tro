@@ -5,6 +5,7 @@ import Menu from '../component/Menu'
 import Padding from "../component/padding"
 import Slider from '../component/SlideSlick'
 import ListPostSlick from '../component/SlickPost'
+import CardPostHorizontal from '../component/CardPostHorizontal'
 
 const Home =() =>{
     return (
@@ -12,6 +13,10 @@ const Home =() =>{
             <Menu />
             <Padding />
             <Slider />
+            <Padding />
+            <div>
+                <CardPostHorizontal />
+            </div>
             <Padding />
             <ListPost />
             <Padding />

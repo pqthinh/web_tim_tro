@@ -1,0 +1,80 @@
+.container-card {
+    display: block;
+    width: 1000px;
+    margin: auto;
+    padding: auto;
+}
+
+.container-card .card-horizontal {
+    height: 200px;
+    display: flex;
+    margin-left: 10px;
+}
+.container-card .card-horizontal .Card-H-img {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+.container-card .card-horizontal .Card-H-img img {
+    height: 100%;
+    width: 200px;
+}
+.container-card .card-horizontal .Card-H-img .Card-img-number {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background: url('https://static.chotot.com/storage/chotot-icons/svg/number-image.svg') no-repeat;
+    background-size: contain;
+    width: 30px;
+}
+.container-card .card-horizontal .Card-H-img .Card-img-number .number {
+    color: #ffffff;
+    font-size: 12px;
+    margin-left: 10px;
+}
+.container-card .card-horizontal .Card-H-content {
+    margin-left: 20px;
+    line-height: 40px;
+    width: 500px;
+}
+
+@media screen and (max-width: 600px) {
+    .container-card {
+        width: "90%";
+        margin-left: 10px;
+        display: block;
+        padding: auto;
+    }
+    
+    .container-card .card-horizontal {
+        height: 110px;
+    }
+
+    .container-card .card-horizontal .Card-H-content {
+        margin-top: 2px;
+        margin-left: 5px;
+        line-height: 18px;
+        font-size: 10px;
+        width: 200px;
+    }
+    .container-card .card-horizontal .Card-H-img img {
+        /* height: 100px; */
+        width: 100px;
+    }
+}
+
+.container-card .card-horizontal .extends {
+    position: relative;
+    float: right;
+    margin-right: 20px;
+}
+
+.container-card .card-horizontal .extends .chinhsuatin{
+    position: absolute;
+    top: 0;
+}
+
+.container-card .card-horizontal .extends .themvaodanhmucyeuthich{
+    position: absolute;
+    bottom: 0;
+}

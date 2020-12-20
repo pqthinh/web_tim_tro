@@ -16,7 +16,7 @@
 }
   
 .container{
-	min-height: 50vh;
+	/* min-height: 50vh; */
 }
 .container .row .carousel-inner img{
 	max-width: 100%;
