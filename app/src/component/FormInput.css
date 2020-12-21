@@ -1,0 +1,33 @@
+.input-form {
+    width: 100%; 
+    padding: 10px 20px;
+    display: block;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    outline: none;
+}
+
+.input {
+    margin: 10px 0;
+}
+.error {
+    border: 1px solid red;
+}
+
+.input label span {
+    color: red; 
+}
+
+.input > span {
+    color: red;
+    font-size: 0.8rem;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.input label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: block;
+    clear: both;
+}

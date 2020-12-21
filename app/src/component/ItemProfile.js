@@ -17,7 +17,7 @@ const UserItem = ({props})=> {
         <div>
             {/* <li className="nav-item dropdown no-arrow"> */}
                 <div className="nav-link dropdown-toggle" id="userDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style ={{display: 'flex'}}>
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style ={{display: 'inline-block'}}>
                     <span className="mr-2 d-none d-lg-inline text-gray-600 small">{user.name}</span>
                     <img src={user.avatar} className="img-profile rounded-circle avatar" alt="profile"/>
                 </div>

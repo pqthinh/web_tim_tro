@@ -1,0 +1,8 @@
+.card-note {
+    color: #fff;
+    background-image: linear-gradient( #11998e,#38ef7d );
+	border-top: 2px solid #cccccc87;
+	margin-top: 40px;
+	padding-top: 25px;
+    padding: 25px;
+}
