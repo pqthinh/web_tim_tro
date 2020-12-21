@@ -1,0 +1,37 @@
+{
+  "name": "server_test_up_image",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node index",
+    "web": "npm run start --prefix client/my-app",
+    "admin": "npm run start --prefix client/admin-app",
+    "start": "nodemon index"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
+    "fs": "0.0.1-security",
+    "helmet": "^4.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "mysql2": "^2.2.5",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemailer": "^6.4.16",
+    "password-hash": "^1.2.2"
+  }
+}

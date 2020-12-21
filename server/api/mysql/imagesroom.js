@@ -69,7 +69,7 @@ const Service = {
         for(const key in data ) {
             var imagebase64 = data[key].split(',')[1]
             const link = `data/uploads/image/${new Date().getTime() +"_"+ key}`
-            base64_decode( imagebase64, `${__dirname}/../../}.jpg`);
+            base64_decode( imagebase64, `${__dirname}/../../${link}.jpg`);
             arr.push(`${baseUrl}/${link}.jpg`)
         }
         console.log(arr)

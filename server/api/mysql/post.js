@@ -107,7 +107,7 @@ const Post = {
         for(const key in data ) {
             var imagebase64 = data[key].split(',')[1]
             const link = `data/uploads/image/${new Date().getTime() +"_"+ key}`
-            base64_decode( imagebase64, `${__dirname}/../../}.jpg`);
+            base64_decode( imagebase64, `${__dirname}/../../${link}.jpg`);
             arr.push(`${baseUrl}/${link}.jpg`)
         }
         console.log(arr)
@@ -117,22 +117,29 @@ const Post = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             
-            const id_owner = body.id_owner, typeRoom = body.roomType , area=  body.area, chungchu = body.shared , bathroom = body.bathroom , kitchen = body.kitchen, dieuhoa = body.airConditioner , bancong = body.balcony , diennuoc = body.typeCostElectric , dien = body.electricity , nuoc = body.water , nearby =  body.nearby
-            // create room   data : ('phòng trọ', '15', '1', 'phòng tắm riêng, vệ sinh khéo kín', 'có bếp riêng', '0', '1', '1', '0', '0', NULL)
-            let room = "INSERT INTO `room` ( `roomType`, `area`, `shared`, `bathroom`, `kitchen`, `airConditioner`, `balcony`, `typeCostElectric`, `electricity`, `water`, `near_place`) VALUES (?,?,?,?,?,?,?,?,?,?,?) "
+            const id_owner = body.id_owner, typeRoom = body.roomType , area=  body.area, chungchu = body.shared , bathroom = body.bathroom , kitchen = body.kitchen, dieuhoa = body.airConditioner , nonglanh = body.nonglanh, bancong = body.balcony , diennuoc = body.typeCostElectric || 0 , dien = body.electricity , nuoc = body.water , nearby =  body.nearby, other = body.other
+
+            const address = body.address , thoihan  = body.duration , quantity = body.quantity , price = body.price , tiencoc= body.tiencoc, discription = body.discription , images = arr ,title = body.title
+            // create room   data : ('phòng trọ', '15', '1', 'phòng tắm riêng, vệ sinh khép kín', 'có bếp riêng', '0', '1', '1', '0', '0', NULL)
+            let room = "INSERT INTO `room` ( `roomType`, `area`, `shared`, `bathroom`, `kitchen`, `airConditioner`,`nonglanh`, `balcony`, `typeCostElectric`, `electricity`, `water`, `near_place`, `other`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) "
+
+
+            // let room =  `INSERT INTO room ( roomType, area, shared, bathroom, kitchen, airConditioner, nonglanh, balcony, typeCostElectric, electricity, water, near_place, other) VALUES ( '${typeRoom}' , '${area}' , '${chungchu}' , '${bathroom}' , '${kitchen}' , '${dieuhoa}' , '${nonglanh}' , '${bancong}' , '${diennuoc}' , '${dien}' , '${nuoc}' , '${nearby}' , '${other}');`
             
-            const resroom = await conn.query(room, [typeRoom, area, chungchu, bathroom, kitchen, dieuhoa, bancong, diennuoc, dien, nuoc, nearby])
+            const resroom = await conn.query(room, [typeRoom, area, chungchu, bathroom, kitchen, dieuhoa,nonglanh, bancong, diennuoc, dien, nuoc, JSON.stringify(nearby), other])
+            // const resroom = await conn.query(room)
+            console.log(room)
             await conn.commit()
             let id_room  = resroom[0].insertId
             console.log("create room id: "+ id_room)
 
             // create post
-            const address = body.address , thoihan  = body.duration , quantity = body.quantity , price = body.price , discription = body.discription , images = JSON.stringify(arr)
+            // const address = body.address , thoihan  = body.duration , quantity = body.quantity , price = body.price , tiencoc= body.tiencoc, discription = body.discription , images = arr ,title = body.title
             // data post: (`postID`, `roomID`, `id_owner`, `address`, `duration`, `quantity`, `price`, `available`, `views`, `status`, `discription`, `images`, `createAt`, `updateAt`) :(NULL, '2', '1', 'Me Tri ha, Nam Tu Liem, Ha Noi', '7', '1', '4000000', 'not rented', '1', 'pending', NULL, 'http://localhost:4000/data/logo/logo.png', current_timestamp(), current_timestamp()) 
 
-            let post  =  "INSERT INTO `post` ( `roomID`, `id_owner`, `address`, `duration`, `quantity`, `price`, `discription`, `images`) VALUES  (?,?,?,?,?,?,?,?)"
+            let post  =  "INSERT INTO `post` ( `roomID`, `id_owner`,`title`, `address`, `duration`, `quantity`, `price`,`tiencoc`, `discription`, `images`) VALUES  (?,?,?,?,?,?,?,?,?,?)"
 
-            const respost = await conn.query(post, [id_room, id_owner, address, thoihan, quantity, price, discription, images])
+            const respost = await conn.query(post, [id_room, id_owner, title, address, thoihan, quantity, price,tiencoc, discription, JSON.stringify(images)])
             
             await conn.commit()
             const id_post = respost[0].insertId
@@ -207,7 +214,7 @@ const Post = {
         for(const key in data ) {
             var imagebase64 = data[key].split(',')[1]
             const link = `data/uploads/image/${new Date().getTime() +"_"+ key}`
-            base64_decode( imagebase64, `${__dirname}/../../}.jpg`);
+            base64_decode( imagebase64, `${__dirname}/../../${link}.jpg`);
             arr.push(`${baseUrl}/${link}.jpg`)
         }
         console.log(arr)
