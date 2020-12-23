@@ -74,10 +74,10 @@ const ReportToAdmin = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql, result
-            sql = `insert into report(id_post,	id_member,	content, typeReport) values (?, ? ,? , 'gia han tin' )`
+            sql = `insert into thongbaoadmin(id_post,	id_owner,	content) values (?, ? ,?  )`
             result = await conn.query(sql, [id_post, id_member, content])
             await conn.commit()
-            res.json({msg: "Gui report thanh cong"})
+            res.json({msg: "Gui report gia han tin thanh cong"})
         }
         catch (err) {
             await conn.rollback()

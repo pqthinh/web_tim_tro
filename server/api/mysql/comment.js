@@ -25,7 +25,7 @@ const Comment = {
     // comment da dc duyet
     GetCommentPost : async (req ,res , next) =>{
         let conn 
-        const body = req.body , id_member = body.id_member ?  `id_member = ${body.id_member}` : " 1 ", id_post =  body.id_post ?  `id_post =  ${body.id_post} `: " 1 "
+        const body = req.body , id_member = (body.id_member ?  `id_member = '${body.id_member}'` : " 1 "), id_post = ( body.id_post ?  `id_post =  '${body.id_post}' `: " 1 " )
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
@@ -43,7 +43,7 @@ const Comment = {
             await conn.release()
         }
     },
-    // comment da dc duyet
+    // comment da dc duyet thi khong can nua (penđing với deactive) // de admin co the xem va kich hoat
     GetCommentPostToAdmin : async (req ,res , next) =>{
         let conn 
         // const body = req.body , id_member = body.id_member , id_post =  body.id_post 

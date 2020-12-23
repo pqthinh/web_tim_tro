@@ -47,7 +47,7 @@ router.post('/user/member/search',auth , owner.Search)            // body req : 
 router.post('/user/owner/repass', owner.UpdatePassOwner)    // newpass, email , oldpass
 router.post('/user/owner/signup', owner.AddOwner)            // name , password ,email, phone ,place,  cmt
 router.post('/user/owner/forgotpass', owner.sendEmailResetPass)  // body req :email
-router.post('/user/owner/login', owner.loginOwner)            // email, pass
+router.post('/user/owner/login', owner.loginOwner)            // email, pass  (pass: pqthinh)
 router.post('/user/owner/Status',auth , owner.StatusOwner)          // id_owner , status pendding => (active / deactive)
 
 // member
