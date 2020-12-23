@@ -15,17 +15,15 @@ import DetailPost from "./pages/detailPost";
 function App() {
   return (
     <>
-      <Router>
+      <Router >
         <Switch>
           <Route exact path='/' component={Home} />
-          <PublicRoute path="/chitiet.html" component={DetailPost} />
-
-
+          <PublicRoute path="/post/:id" component={DetailPost} />
           <PublicRoute path='/login' component={Login} />
           <PublicRoute path="/register" component={Register} />
           <PublicRoute path="/forgotpass" component={ForgotPassword} />
-          <PublicRoute path="/renter" component={RegisterRenterScreen} />
-          <PublicRoute path="/owner" component={RegisterOwnerScreen} />
+          <PublicRoute path="/renter/signup" component={RegisterRenterScreen} />
+          <PublicRoute path="/owner/signup" component={RegisterOwnerScreen} />
           <Route component={NotFoundScreen} />
         </Switch>
       </Router>

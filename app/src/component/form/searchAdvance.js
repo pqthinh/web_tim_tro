@@ -4,31 +4,23 @@
 
 // sort view + sort time + sort gia
 
-import './SearchForm.css'
+import '../SearchForm.css'
 
-const Search = ()=>{
+const SearchAdvance = ()=>{
     return (
-        <div className="container">
-        <div className="form-search">
+    <div className="container">
+        <div className="form-search" style={{width: '100%'}}>
             <div class="r-left">
-                <div class="right">
-                    <div class="box-search">
+                    <div class="box-search" style={{width: '100%'}}>
                         <button class="nut"><i class="fas fa-search"></i></button>
                         <input type="text" placeholder="Tìm theo khu vực, tên trường học,..." />
                         <button type="button" class="btntim">Tìm kiếm</button>
                     </div>
-                </div>
-            </div>
-            <div class="r-right">
-                <p>
-                    Tìm kiếm phòng theo địa điểm, giá, cơ sở vật chất
-                </p>
-                <button type="button" class="btnreview">Tìm kiếm nâng cao</button>
             </div>
         </div>
-        </div>
+    </div>
     )
 }
 
-export default Search
+export default SearchAdvance
 

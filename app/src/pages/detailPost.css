@@ -14,10 +14,7 @@
     width: 100%;
     padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
 }
-  
-.container{
-	/* min-height: 50vh; */
-}
+
 .container .row .carousel-inner img{
 	max-width: 100%;
 	height: 400px;
@@ -29,7 +26,7 @@
     border-radius: 10px;
     background: #fff;
     box-shadow: 0 0 5px #a0a0a0;
-    color: red;
+    color: #EF4836;
     margin-top: 20px;
     margin-bottom: 30px;
 }
@@ -39,16 +36,13 @@
 	transition: all .4s ease;
 	cursor: pointer;
 }
-/* 
-i{
-	margin-right: 10px;
-} */
+
 .container .detail {
     margin: 20px 0;
 }
 .contact {
     margin-top: 30px;
-    background: red;
+    background: #EF4836;
     color: #fff;
     height: 35px;
     text-align: center;
@@ -61,7 +55,25 @@ i{
 }
 .contact:hover{
 	cursor: pointer;
-	border: 1px solid red;
+	border: 1px solid #EF4836;
 	background: #fff;
-	color: red;
+	color: #EF4836;
+}
+
+.price-news {
+    color: #EF4836;
+}
+
+@media screen and (max-width: 800px) {
+    .text-button-modal {
+      display: none;
+    }
+    .title-of-details-post {
+        font-size: 12px;
+        margin-top: 20px;
+    }
+    .img-fluid {
+        max-width: 100%;
+        margin-top: 5px;
+    }
 }

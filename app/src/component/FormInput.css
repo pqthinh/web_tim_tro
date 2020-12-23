@@ -11,15 +11,15 @@
     margin: 10px 0;
 }
 .error {
-    border: 1px solid red;
+    border: 1px solid #EF4836;
 }
 
 .input label span {
-    color: red; 
+    color: #EF4836; 
 }
 
 .input > span {
-    color: red;
+    color: #EF4836;
     font-size: 0.8rem;
     float: left;
     margin-bottom: 10px;

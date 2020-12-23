@@ -1,4 +1,5 @@
 
+import { Link } from 'react-router-dom'
 import './CardPostHorizontal.css'
 
 const fake = {
@@ -15,7 +16,11 @@ const fake = {
 const CardPostHorizontal = ({props, post})=>{
     const data =  post || fake
     return (
-        <>
+        <>  
+        <Link to={{
+            pathname:"post/1",
+            state: {news: fake}
+        }}>
             <div className="container-card">
                 <div className="card-horizontal">
                     <div className="Card-H-img">
@@ -54,6 +59,7 @@ const CardPostHorizontal = ({props, post})=>{
                     </div>
                 </div>
             </div>
+        </Link>
         </>
     )
 }

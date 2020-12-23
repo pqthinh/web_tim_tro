@@ -16,6 +16,8 @@ export default function CommentForm ({props}) {
     }
     const handleSubmit = (event) => {
         alert('An essay was submitted: ' + comment + " star: "+ star);
+        // upload to server
+        // check quyen truoc : chi renter moi dc binh luan
         event.preventDefault();
     }
     return (

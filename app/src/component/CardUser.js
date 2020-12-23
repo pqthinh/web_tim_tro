@@ -5,9 +5,8 @@ const CardUser = () =>{
         <>
             <div id="home" class="tab-pane in active">
 					<div class="row">
-						<div class="col-xs-12 col-sm-4 center">
-                            <div className="mt-3"></div>
-                            <img src="images/img1.jpg" alt="Avatar" class="avatar img-fluid"/> 
+						<div class="col-xs-12 col-sm-4 center justify-content-center align-self-center">
+                            <img src="images/img1.jpg" alt="Avatar" class="avatar-card-user img-fluid"/> 
 						</div>
 
 						<div class="col-xs-12 col-sm-8">
@@ -34,19 +33,29 @@ const CardUser = () =>{
 							</div>
 
 							<div class="profile-user-info">
-
 								<div class="profile-info-row">
 									<div class="profile-info-name">
-                                        <i class="fab fa-facebook"></i>
-                                        <span  className="content"> Facebook</span>
+									<i class="fas fa-phone-square"></i>
+                                        <span  className="content"> sdt</span>
 									</div>
 								</div>
 							</div>
+
+							<div class="profile-user-info">
+								<div class="profile-info-row">
+									<div class="profile-info-name">
+										<i class="far fa-newspaper"></i>
+                                        <span  className="content"> 20 Tin đăng</span>
+									</div>
+								</div>
+							</div>
+							
+							<div className="Star-of-user">
+								<span>Đánh giá: 5 <i class="fas fa-star" style={{color: "yellow"}}></i></span>
+							</div>
 						</div>
 					</div>
-                    <div className="Star-of-user">
-                        <span>Đánh giá: 5 <i class="fas fa-star"></i></span>
-                    </div>
+                    
                 </div>
                 <div className="mt-3"></div>
         </>

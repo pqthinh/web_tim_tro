@@ -2,9 +2,6 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Register() {
-    // const [page, setPage] = useState('')
-    // onClick={()=> setPage("renter")}
-    // onClick={()=>setPage("owner")}
     return (
         <div className="limiter">
             <div className="container-login100">
@@ -16,7 +13,7 @@ export default function Register() {
                     <form className="login100-form validate-form">
                         
                         <div className="container-login100-form-btn">
-                            <Link to="/renter">
+                            <Link to="/renter/signup">
                                 <button className="login100-form-btn">
                                     Register acount as renter
                                     <i class="fa fa-arrow-right" aria-hidden="true"></i>
@@ -25,7 +22,7 @@ export default function Register() {
                         </div>
 
                         <div className="container-login100-form-btn">
-                            <Link to="/owner">
+                            <Link to="/owner/signup">
                                 <button className="login100-form-btn" >
                                     Register acount as owner <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                 </button>
@@ -51,3 +48,7 @@ export default function Register() {
         
     )
 }
+
+// const [page, setPage] = useState('')
+// onClick={()=> setPage("renter")}
+// onClick={()=>setPage("owner")}

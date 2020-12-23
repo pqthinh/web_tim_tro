@@ -44,7 +44,8 @@ export const PostForm = () => {
 
     // object images
     const [objImages, setObjImages] = useState({})
-    const [linkimg, setLinkimg] = useState([])
+    // up luon anh len cung voi tin thi ko can cai nay nua
+    // const [linkimg, setLinkimg] = useState([])
 
     const handleAddNearbyForm = (e) => {
         setNearby([...nearby, { stt: nearby.length + 1, value: "" }]);
@@ -83,15 +84,16 @@ export const PostForm = () => {
     };
 
     // button upload ảnh lên server trước
-    const handleSubmitImages =async (images) => {
-        // console.log(images)
-        const result = await axios.post("http://localhost:4000/api/images/upload/base64", {file: images} )
-        const path = result.data.path
-        console.log(path)
-        setLinkimg(path)
+    // up luon anh cung voi chi tiet tin 
+    // const handleSubmitImages =async (images) => {
+    //     // console.log(images)
+    //     const result = await axios.post("http://localhost:4000/api/images/upload/base64", {file: images} )
+    //     const path = result.data.path
+    //     console.log(path)
+    //     setLinkimg(path)
 
-        // Làm cách này thì set images: ở phần onsubmit thành (linkimgs)
-    }
+    //     // Làm cách này thì set images: ở phần onsubmit thành (linkimgs)
+    // }
 
     const handlePostNewsToDB = async (data) => {
         try {
@@ -159,7 +161,7 @@ export const PostForm = () => {
         validationSchema: Yup.object({
             commune: Yup.string().required(message),
             district: Yup.string().required(message),
-            district: Yup.string().required(message),
+            province: Yup.string().required(message),
 
             typeroom: Yup.number().required(message),
             numberOfRoom: Yup.number().required(message),
@@ -187,7 +189,7 @@ export const PostForm = () => {
             // images: Yup.array().min(1).max(10).required(message),
         }),
         onSubmit: (value) => {
-            console.log(value);
+            // console.log(value);
             let data = {
                 // province: province1[value.province].name ,
                 address:  value.street + ", "+ communeValue1[value.commune].name + ", "+districtValue1[value.district].name + ", "+ province1[value.province].name,
@@ -295,7 +297,7 @@ export const PostForm = () => {
                         touched={touched}
                         onChange={handleChange}
                         typeInput="select"
-                        typeWidth="large"
+                        
                     />
                     <FormInput
                         name="with_owner"
@@ -316,7 +318,7 @@ export const PostForm = () => {
                         error={errors.numberOfRoom}
                         touched={touched}
                         placeholder="Số phòng"
-                        typeWidth="small"
+                        
                         type="number"
                     />
                 </div>
@@ -339,7 +341,7 @@ export const PostForm = () => {
                         error={errors.price}
                         touched={touched}
                         placeholder="Giá"
-                        typeWidth="large"
+                        
                     />
                     <FormInput
                         name="pre_money"
@@ -364,7 +366,7 @@ export const PostForm = () => {
                         listOption={option}
                         onChange={handleChange}
                         typeInput="select"
-                        typeWidth="large"
+                        
                     />
                     <FormInput
                         name="heater"
@@ -375,7 +377,7 @@ export const PostForm = () => {
                         touched={touched}
                         listOption={option}
                         onChange={handleChange}
-                        typeWidth="small"
+                        
                         typeInput="select"
                     />
                     <FormInput
@@ -399,7 +401,7 @@ export const PostForm = () => {
                         touched={touched}
                         onChange={handleChange}
                         typeInput="select"
-                        typeWidth="medium"
+                        
                     />
                     <FormInput
                         name="balcony"
@@ -410,7 +412,7 @@ export const PostForm = () => {
                         listOption={option}
                         touched={touched}
                         onChange={handleChange}
-                        typeWidth="medium"
+                        
                         typeInput="select"
                     />
                 </div>
@@ -423,7 +425,7 @@ export const PostForm = () => {
                         touched={touched}
                         onChange={handleChange}
                         placeholder="Điện (đ/kWh)"
-                        typeWidth="medium"
+                        
                     />
                     <FormInput
                         name="water_price"
@@ -433,7 +435,7 @@ export const PostForm = () => {
                         onChange={handleChange}
                         required={true}
                         placeholder="Nước (đ/m3)"
-                        typeWidth="medium"
+                        
                     />
                     <FormInput
                         name="other"
@@ -465,7 +467,7 @@ export const PostForm = () => {
                     label="Mô tả"
                     required={true}
                     placeholder="Mô tả về phòng để mọi người chú ý ..."
-                    error={console.log(errors)}
+                    error={errors.description}
                     touched={touched}
                     
                 />

@@ -4,7 +4,7 @@
 
 // sort view + sort time + sort gia
 
-import './SearchForm.css'
+import '../SearchForm.css'
 
 const Search = ()=>{
     return (

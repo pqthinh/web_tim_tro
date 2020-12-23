@@ -11,7 +11,7 @@ import PrivateRoute from '../Utils/PrivateRoute'
 import { removeUserSession , getUser} from '../Utils/Common'
 import Chat from './pages/chat'
 import '../css/menu.css'
-import ImageUpload from "../component/postNews/imageuploadtest";
+// import ImageUpload from "../component/postNews/imageuploadtest";
 import MessageBoxComponent from "../component/menu/message";
 import BoxItemComponent from "../component/menu/ItemBox";
 import TableOwner from "../component/table/tableOwner";
@@ -99,10 +99,10 @@ export default function NestingExample(props) {
       <div className ="container">
         <Switch>
           <PrivateRoute exact path="/">
-              <Topic /> 
+              <TableOwner /> 
           </PrivateRoute>
           <PrivateRoute path="/notifycations">
-              <Home />
+              <Chat />
           </PrivateRoute>
           <PrivateRoute path="/customer" component={TableOwner} />
           <PrivateRoute path="/member" component={TableMember} />
@@ -113,69 +113,14 @@ export default function NestingExample(props) {
               <Chat />
           </PrivateRoute>
           <PrivateRoute path="/statistical">
-              <Topics />
+              <Chat />
           </PrivateRoute>
           <PrivateRoute path="/information">
-              <Home />
+              <Chat />
           </PrivateRoute>
         </Switch>
       </div>
   </div>
   </Router>
-  );
-}
-
-function Home() {
-  return (
-    <div>
-      <ImageUpload />
-    </div>
-  );
-}
-
-function Topics() {
-  // The `path` lets us build <Route> paths that are
-  // relative to the parent route, while the `url` lets
-  // us build relative links.
-  let { path, url } = useRouteMatch();
-
-  return (
-    <div>
-      <h2>Topics</h2>
-      <ul>
-        <li>
-          <Link to={`${url}/rendering`}>Rendering with React</Link>
-        </li>
-        <li>
-          <Link to={`${url}/components`}>Components</Link>
-        </li>
-        <li>
-          <Link to={`${url}/props-v-state`}>Props v. State</Link>
-        </li>
-      </ul>
-
-      <Switch>
-        <PrivateRoute exact path={path}>
-          <h3>Please select a topic.</h3>
-        </PrivateRoute>
-        <PrivateRoute path={`${path}/:topicId`}>
-          <Topic />
-        </PrivateRoute>
-      </Switch>
-    </div>
-  );
-}
-
-function Topic() {
-  // The <Route> that rendered this component has a
-  // path of `/topics/:topicId`. The `:topicId` portion
-  // of the URL indicates a placeholder that we can
-  // get from `useParams()`.
-  let { topicId } = useParams();
-
-  return (
-    <div>
-      <h3>{topicId}</h3>
-    </div>
   );
 }

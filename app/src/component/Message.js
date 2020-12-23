@@ -2,6 +2,7 @@ import React from "react";
 import ItemMessage from "./ItemMessage";
 
 export default function Message() {
+    // data se dc thay bang api
     const data = [
         {
             avatar: "http://localhost:3000/favicon.png",

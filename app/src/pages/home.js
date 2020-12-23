@@ -7,12 +7,24 @@ import Slider from '../component/SlideSlick'
 import ListPostSlick from '../component/SlickPost'
 import CardPostHorizontal from '../component/CardPostHorizontal'
 import { PostForm } from '../component/post/PostForm'
+import { TabPostManager } from '../component/tab/PostOfOwner'
+import { TabMemberSaveNews } from '../component/tab/TabMemberSaveNews'
+import CardUser from '../component/CardUser'
+import Search from '../component/SearchForm'
+import SearchAdvance from '../component/form/searchAdvance'
 
 const Home =() =>{
     return (
         <div>
             <Menu />
+            <SearchAdvance />
             <Padding />
+            <TabPostManager />
+            <div className="container">
+                <CardUser /> 
+            </div>
+            <Padding />
+            <TabMemberSaveNews />
             <PostForm />
             <Slider />
             <Padding />
