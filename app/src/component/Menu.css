@@ -1,0 +1,15 @@
+.logo {
+    width: 150px;
+    border-radius: 20px;
+}
+
+.menu_homepage {
+    background-image: linear-gradient( #11998e,#38ef7d );
+    color: #fff;
+}
+
+#navbarSupportedContent ul li a{
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+}

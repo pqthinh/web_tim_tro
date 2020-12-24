@@ -1,0 +1,16 @@
+.carduser-name-user {
+    font-weight: bold;
+    font-size: 16px;
+}
+.avatar {
+    vertical-align: middle;
+    border-radius: 5px;
+    /* margin-top: 20px; */
+    /* margin-top: auto;
+    margin-bottom: auto;*/
+    /* display: table-cell;  */
+}
+
+.Star-of-user {
+    /* text-align: center; */
+}

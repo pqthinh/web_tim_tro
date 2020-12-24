@@ -1,0 +1,39 @@
+ justify-content-center align-self-center : canh mot khoi nam giua the div theo chieu ngang va doc
+
+
+// temp search form
+ <div className="container-search-form">
+    <div className="row-search-form">
+        <div>Chọn khu vuc/ khu vuc lan can</div>
+        {/* La input  */}
+
+        {/* La dropdown */}
+        <div>Chon loai phong</div>
+
+        <div>Chon khoang gia</div>
+
+        <div>Chon khoang dien tich</div>
+
+        <div>Co so vat chat</div>
+
+        {/* dung bootstrap dropdown */}
+    </div>
+
+    <div>Sologan: Kham pha danh muc</div>
+    <div className="filter-row-search-form">
+
+    </div>
+</div>
+
+<ul>
+    <li><a href="">Điều kiện</a></li>
+    <li><a href="">Khoảng giá</a></li>
+    <li>Diện tích
+        <ul class="submenu">
+            <li><a href="">shop1</a></li>
+            <li><a href="">shop2</a></li>
+            <li><a href="">shop2</a></li>
+        </ul>
+    </li>
+    <li><a href="">Loại phòng</a></li>
+</ul>
