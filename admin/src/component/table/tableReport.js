@@ -19,6 +19,7 @@ const TableReport = () => {
         if(result.data.review.length !== row.length) {
             var temp  = result.data.review
             setRes(result.data.review)
+
             temp.map(x=> {
               // console.log(x)
               return(
@@ -96,11 +97,12 @@ const columns = [
         field: 'content',
         sort: 'asc',
         width: 100
+
     },
     {
       label: 'Action',
       field: 'action',
       sort: 'asc',
       width: 100
-  },
+    },
 ]
