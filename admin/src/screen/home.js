@@ -3,8 +3,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Link,
-  useParams,
-  useRouteMatch
+  // useParams,
+  // useRouteMatch
 } from "react-router-dom";
 
 import PrivateRoute from '../Utils/PrivateRoute'
@@ -16,6 +16,10 @@ import MessageBoxComponent from "../component/menu/message";
 import BoxItemComponent from "../component/menu/ItemBox";
 import TableOwner from "../component/table/tableOwner";
 import TableMember from "../component/table/tableMember";
+import TableReview from "../component/table/tableComment";
+import TablePost from "../component/table/tablePost";
+import TableReport from "../component/table/tableReport";
+import PostForm  from "../component/post/postForm";
 
 export default function NestingExample(props) {
   const user = getUser()
@@ -31,7 +35,7 @@ export default function NestingExample(props) {
         {user?
         <div>
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <Link className="navbar-brand" href="/"><img src = {"http://localhost:3000/logo.png"} className="logo" alt="logo app rental house"/></Link>
+            <Link className="navbar-brand" href="/"><img src = {"http://localhost:2999/logo.png"} className="logo" alt="logo app rental house"/></Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -39,10 +43,10 @@ export default function NestingExample(props) {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
-                  <a className="nav-link" href="/home">Trang chủ <span className="sr-only">(current)</span></a>
+                  <a className="nav-link" href="/">Trang chủ <span className="sr-only">(current)</span></a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/up">Đăng tin</a>
+                  <Link className="nav-link" to="/postNew">Đăng tin</Link>
                 </li>
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle" href="/manager" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -51,7 +55,9 @@ export default function NestingExample(props) {
                   <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                     <Link className="dropdown-item" to="/customer">Quản lý Chủ nhà</Link>
                     <Link className="dropdown-item" to="/member">Quản lý thành viên</Link>
-                    <a className="dropdown-item" href="/post">Quản lý tin đăng</a>
+                    <Link className="dropdown-item" to="/review">Quản lý nhận xét về tin</Link>
+                    <Link className="dropdown-item" to="/managePost">Quản lý về tin đăng</Link>
+                    <Link className="dropdown-item" to="/manageReport">Quản lý về báo cáo</Link>
                     <div className="dropdown-divider"></div>
                     <a className="dropdown-item" href="/duyet">Phê duyệt</a>
                   </div>
@@ -101,20 +107,20 @@ export default function NestingExample(props) {
           <PrivateRoute exact path="/">
               <TableOwner /> 
           </PrivateRoute>
+          <PrivateRoute path="/chat">
+              <Chat />
+          </PrivateRoute>
           <PrivateRoute path="/notifycations">
               <Chat />
           </PrivateRoute>
+
           <PrivateRoute path="/customer" component={TableOwner} />
           <PrivateRoute path="/member" component={TableMember} />
-          <PrivateRoute path="/posts">
-              <Chat />
-          </PrivateRoute>
-          <PrivateRoute path="/chats">
-              <Chat />
-          </PrivateRoute>
-          <PrivateRoute path="/statistical">
-              <Chat />
-          </PrivateRoute>
+          <PrivateRoute path="/review" component={TableReview} />
+          <PrivateRoute path="/managePost" component={TablePost} />
+          <PrivateRoute path="/manageReport" component={TableReport} />
+          <PrivateRoute path="/postNew" component={PostForm}/>
+
           <PrivateRoute path="/information">
               <Chat />
           </PrivateRoute>

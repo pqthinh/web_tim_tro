@@ -13,7 +13,6 @@ export const FormInput = ({
     rows,
     minLength,
     typeInput,
-    typeWidth,
     label,
     required,
     error,
@@ -71,12 +70,12 @@ export const FormInput = ({
         );
     }
     return (
-        <div className={`input ${typeWidth}`}>
-        <label htmlFor={name}>
-            {label} <span>{required && "*"}</span>
-        </label>
-        {input}
-        {error && touched && <span>{error}</span>}
+        <div className={'input'}>
+            <label htmlFor={name}>
+                {label} <span>{required && "*"}</span>
+            </label>
+            {input}
+            {error && touched && <span>{error}</span>}
         </div>
     );
 };

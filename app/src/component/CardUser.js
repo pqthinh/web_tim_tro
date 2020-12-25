@@ -1,15 +1,32 @@
 import './CardUser.css'
+import FormRepassword from './FormRepassword'
+import { ModalCustom } from './ModalCustom'
+import FormEditRenter from './form/FormEditRenter'
 
 const CardUser = () =>{
     return (
         <>
             <div id="home" class="tab-pane in active">
-					<div class="row">
-						<div class="col-xs-12 col-sm-4 center justify-content-center align-self-center">
+					<div style={{display: 'flex',justifyContent: 'center'}}>
+						<div class="justify-content-center align-self-center">
                             <img src="images/img1.jpg" alt="Avatar" class="avatar-card-user img-fluid"/> 
+							<div style={{marginTop: 10}}>
+								<ModalCustom 
+									title="Báo cáo tin đăng"
+									button = {<span className="btn btn-success"><span class="text-button-modal" >Đổi mật khẩu</span> <i class="fas fa-tools"></i> </span>}
+									body = {<FormRepassword />}
+									id="modal_re_pasword"
+								/>
+								<ModalCustom 
+									title="Báo cáo tin đăng"
+									button = {<span className="btn btn-success"><span class="text-button-modal" >Cập nhật thông tin</span> <i class="fas fa-tools"></i> </span>}
+									body = {<FormEditRenter />}
+									id="modal_update_renter"
+								/>
+							</div>
 						</div>
 
-						<div class="col-xs-12 col-sm-8">
+						<div style={{margin: 20}}>
                             <div className="mt-3"></div>
 							<h4 class="carduser-name-user">
                                 <i class="fas fa-user-tie"></i>

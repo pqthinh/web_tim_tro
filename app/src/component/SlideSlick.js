@@ -2,6 +2,8 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import uriClient from '../fetch/uriClient'
+
 const image = [
     'images/img1.jpg',
     'images/img2.jpg',
@@ -12,7 +14,7 @@ const image = [
 ]
 export default function SlideSlick({images, styles}) {
     const listImg = images || image
-    const styleSlide =  styles || {width: '100%', height: 'auto'}
+    var styleSlide =  styles || {width: '100%', height: 'auto'}
     var settings = {
         dots: true,
         infinite: true,
@@ -27,7 +29,7 @@ export default function SlideSlick({images, styles}) {
             {listImg.map(img => (
                 <div className="each-slide">
                     <div className="image-container">
-                        <img src={img} alt={img} style={styleSlide}/>
+                        <img src={uriClient+'/'+img} alt={img} style={styleSlide}/>
                     </div>
                 </div>
             ))}

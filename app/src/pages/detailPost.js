@@ -13,10 +13,11 @@ const DetailPost = ({news}) =>{
 
 	const { id } = useParams()
 	const { state } = useLocation()
-	alert(JSON.stringify(state))
-	alert(id)
+	console.log(id,  state)
+	// alert(JSON.stringify(state))
+	// alert(id)
 
-	const data = news || fakeNews
+	const data = state || fakeNews
 	// xu ly dky thi se xac thuc dc nguoi dung hien tai => co id va thong tin nguoi dung  quyen(admin| owner)
 	const ReportNews = async(id) =>{
 		// goi api them vao bang report tren csdl

@@ -9,8 +9,10 @@ import getData from "../../Utils/DataAddress";
 import { FormInput } from "../FormInput";
 import Note from "../Note";
 import Padding from "../padding";
+import ModalViewPost from "../modal/viewPost";
 
-export const PostForm = () => {
+
+const PostForm = () => {
     const province = getData.province();
     const districtValue = getData.district();
     const communeValue = getData.commune();
@@ -78,7 +80,7 @@ export const PostForm = () => {
     };
     const handleSelectedDistrict = (e) => {
         var newCommune = communeValue.filter(
-            (item) => item.parent_code === e.target.value
+        (item) => item.parent_code === e.target.value
         );
         setCommune(newCommune);
     };
@@ -105,7 +107,7 @@ export const PostForm = () => {
         catch(err) {
             console.log(err)
         }
-        alert(JSON.stringify(data))
+        // alert(JSON.stringify(data))
     }
 
     const ConvertNearBytoPlace = (data) =>{
@@ -124,7 +126,7 @@ export const PostForm = () => {
         width: '100'
     };
 
-    const { handleSubmit, handleChange, errors, touched } = useFormik({
+    const { handleSubmit, handleChange, errors, touched , values} = useFormik({
         initialValues: {
             // dia chi phong
             province: "",
@@ -233,7 +235,6 @@ export const PostForm = () => {
     });
     return (
         <div className="container">
-            <h2>Đăng tin</h2>
             <form action="" onSubmit={handleSubmit}>
                 <h3>Lấy địa chỉ</h3>
                 <div className="row" style={{margin: 0, justifyContent: "space-between"}}>
@@ -319,7 +320,6 @@ export const PostForm = () => {
                         error={errors.numberOfRoom}
                         touched={touched}
                         placeholder="Số phòng"
-                        
                         type="number"
                     />
                 </div>
@@ -402,6 +402,7 @@ export const PostForm = () => {
                         touched={touched}
                         onChange={handleChange}
                         typeInput="select"
+                        
                     />
                     <FormInput
                         name="balcony"
@@ -500,6 +501,8 @@ export const PostForm = () => {
                 </Note>
                 <Padding />
                 <div className="">
+                    {/* <ModalViewPost post={values} /> */}
+                    {/* {console.log(values)} */}
                     <Button
                         children="Post tin đăng"
                         type="submit"></Button>
@@ -508,3 +511,5 @@ export const PostForm = () => {
         </div>
     );
 };
+
+export default PostForm

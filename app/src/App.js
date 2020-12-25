@@ -11,6 +11,9 @@ import RegisterRenterScreen from "./pages/register/register-renter";
 import RegisterOwnerScreen from "./pages/register/register-owner";
 import NotFoundScreen from "./pages/notfound";
 import DetailPost from "./pages/detailPost";
+import SearchScreen from './pages/searchPost'
+import PostNews from "./pages/postNews";
+import ProfileOwner from "./pages/ProflieOwner";
 
 function App() {
   return (
@@ -18,7 +21,10 @@ function App() {
       <Router >
         <Switch>
           <Route exact path='/' component={Home} />
+          <Route path='/search' component={SearchScreen } />
+          <Route path='/up' component={PostNews } />
           <PublicRoute path="/post/:id" component={DetailPost} />
+          <PrivateRoute path="/profile" component={ProfileOwner} />
           <PublicRoute path='/login' component={Login} />
           <PublicRoute path="/register" component={Register} />
           <PublicRoute path="/forgotpass" component={ForgotPassword} />

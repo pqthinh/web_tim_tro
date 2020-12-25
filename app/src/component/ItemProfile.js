@@ -1,4 +1,5 @@
 
+import { Link } from 'react-router-dom'
 import {getUser , removeUserSession} from '../Utils/Common'
 
 const fake = {
@@ -18,7 +19,9 @@ const UserItem = ({props})=> {
             {/* <li className="nav-item dropdown no-arrow"> */}
                 <div className="nav-link dropdown-toggle" id="userDropdown" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style ={{display: 'inline-block'}}>
-                    <span className="mr-2 d-none d-lg-inline text-gray-600 small">{user.name}</span>
+                    <Link to="profile">
+                        <span className="mr-2 d-none d-lg-inline text-gray-600 small">{user.name}</span>
+                    </Link>
                     <img src={user.avatar} className="img-profile rounded-circle avatar" alt="profile"/>
                 </div>
                 {/* <!-- Dropdown - User Information --> */}

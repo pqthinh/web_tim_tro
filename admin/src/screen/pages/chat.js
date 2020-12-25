@@ -1,5 +1,4 @@
 import React from 'react'
-// import { getUser, removeUserSession } from '../Utils/Common';
 import Messenger from '../../component/chat/Messenger';
 
 function Chat() {

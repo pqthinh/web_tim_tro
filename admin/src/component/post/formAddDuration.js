@@ -1,14 +1,22 @@
-import React from 'react'
+import React, {useState} from 'react'
 import * as Yup from 'yup'
 import { useFormik } from 'formik' 
 import { FormInput } from "../FormInput"
 
-// id_member , id_post , content
-const AddTimeNews = ({id_post, id_owner}) => {
+import axios from '../../fetch/axios'
+import baseUrl from '../../fetch/baseurl'
 
-    const handleSendReport = (data) =>{
-        console.log(data)
-        // api them thong bao nay vao bang `thongbao`
+// id_member , id_post , content
+const AddTimeNews = ({post}) => {
+    const id_post =  post.postID, id_owner =  post.id_owner
+    const [respon, setRespon] = useState(null)
+    const handleRespon = async (data) =>{
+        const resp1 =  await axios.post(`${baseUrl}/post/admin/duration`, data)
+        // cap nhat hạn cho post
+        setRespon(resp1.data.msg)
+        // api them thong bao nay vao bang `thongbaoAdmin`
+        let res =  await axios.post(`${baseUrl}/notification/post/giahan`, data)
+        console.log(res.data)
     }
 
     const { handleSubmit, handleChange, errors, touched} = useFormik({
@@ -17,25 +25,24 @@ const AddTimeNews = ({id_post, id_owner}) => {
             duration: '',
         },
         validationSchema: Yup.object({
-            description: Yup.string()
-            .required("Không được để trống trường này")
-            .min(10, 'Độ dài tối thiểu là 10')
-            .max(250, 'Tối đa 250 ký tự'),
+            description: Yup.string(),
             duration: Yup.number().required("Phải nhâp số ngày cần gia hạn")
         }),
         onSubmit: (values)=> {
-            console.log(values)
+            
             let data = {
                 content: values.description,
                 id_owner: id_owner,
                 id_post: id_post,
                 duration: values.duration,
             }
-            handleSendReport(data)
+            // console.log(data)
+            handleRespon(data)
         }
     })
     return (
         <>
+            <p style={{color: 'red', textAlign: 'center'}}>{respon}</p>
             <form action= "" onSubmit={handleSubmit}>
                 <FormInput
                     name="duration"
