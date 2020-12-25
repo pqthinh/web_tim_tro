@@ -27,7 +27,6 @@ export const FormInput = ({
             input = (
                 <select
                 name={name}
-                id=""
                 onChange={onChange}
                 className={error && touched ? "input-form error" : "input-form"}
                 >

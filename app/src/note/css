@@ -37,3 +37,24 @@
     </li>
     <li><a href="">Loại phòng</a></li>
 </ul>
+
+
+
+=== form search ===
+import {useFormik} from 'formik'
+import * as Yup from 'yup'
+
+const { handleSubmit, handleChange, errors, touched } = useFormik({
+    initialValues: {
+        place: ""
+    },
+    validationSchema: Yup.object({
+        place: Yub.string().require("Bạn chưa nhập thông tin")
+    }),
+    onSubmit: (value) => {
+        let data = {
+            place: value.place
+        }
+        console.log(data)
+    }
+})

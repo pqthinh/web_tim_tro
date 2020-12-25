@@ -10,7 +10,7 @@ const FormReport = ({id_post, id_member}) => {
         console.log(data)
     }
 
-    const { handleSubmit, handleChange, errors} = useFormik({
+    const { handleSubmit, handleChange, errors, touched} = useFormik({
         initialValues: {
             description: ''
         },
@@ -41,7 +41,7 @@ const FormReport = ({id_post, id_member}) => {
                     required={true}
                     placeholder="Mô tả thông tin bạn cho là vi phạm/không hợp lệ ..."
                     error={errors.description}
-                    
+                    touched={touched.description}
                 />
                 <button type="submit" className="btn btn-danger">Báo cáo tin</button>
             </form>

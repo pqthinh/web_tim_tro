@@ -78,7 +78,7 @@ export const PostForm = () => {
     };
     const handleSelectedDistrict = (e) => {
         var newCommune = communeValue.filter(
-        (item) => item.parent_code === e.target.value
+            (item) => item.parent_code === e.target.value
         );
         setCommune(newCommune);
     };
@@ -233,6 +233,7 @@ export const PostForm = () => {
     });
     return (
         <div className="container">
+            <h2>Đăng tin</h2>
             <form action="" onSubmit={handleSubmit}>
                 <h3>Lấy địa chỉ</h3>
                 <div className="row" style={{margin: 0, justifyContent: "space-between"}}>
@@ -401,7 +402,6 @@ export const PostForm = () => {
                         touched={touched}
                         onChange={handleChange}
                         typeInput="select"
-                        
                     />
                     <FormInput
                         name="balcony"

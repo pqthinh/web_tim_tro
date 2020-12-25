@@ -11,13 +11,19 @@ import { TabPostManager } from '../component/tab/PostOfOwner'
 import { TabMemberSaveNews } from '../component/tab/TabMemberSaveNews'
 import CardUser from '../component/CardUser'
 import Search from '../component/SearchForm'
-import SearchAdvance from '../component/form/searchAdvance'
+import SliderImg from '../component/SliderImg'
+import SlideSlick from '../component/SlideSlick'
+// import SearchAdvance from '../component/form/searchAdvance'
+// import Ranger from '../component/form/ranger'
 
 const Home =() =>{
     return (
         <div>
             <Menu />
-            <SearchAdvance />
+            <Search />
+            <SliderImg />
+            {/* <SlideSlick styles={{height: 400}}/> */}
+            
             <Padding />
             <TabPostManager />
             <div className="container">

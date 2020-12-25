@@ -1,6 +1,7 @@
 import React from 'react';
 import { Fade } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
+import uriClient from '../fetch/uriClient'
 
 const fadeImages = [
   'images/image1.jpg',
@@ -18,13 +19,14 @@ const properties = {
 const SliderImg = ({images , styles}) => {
     console.log(images)
     const listimage = images || fadeImages
+    var styleSlide =  styles || {width: '100%', height: 'auto'}
     return (
-        <div className="wrap">
+        <div className="container">
         <Fade {...properties}>
             {listimage.map(img => (
                 <div className="each-slide">
                     <div className="image-container">
-                        <img src={img} alt={img} style={styles}/>
+                        <img src={uriClient+'/'+img} alt={img} style={styleSlide}/>
                     </div>
                 </div>
             ))}

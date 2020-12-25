@@ -11,7 +11,7 @@ const AddTimeNews = ({id_post, id_owner}) => {
         // api them thong bao nay vao bang `thongbao`
     }
 
-    const { handleSubmit, handleChange, errors} = useFormik({
+    const { handleSubmit, handleChange, errors, touched} = useFormik({
         initialValues: {
             description: '',
             duration: '',
@@ -44,6 +44,7 @@ const AddTimeNews = ({id_post, id_owner}) => {
                     required={true}
                     error={errors.duration}
                     type="number"
+                    touched={touched.duration}
                 />
                 <FormInput
                     typeInput="textaria"
@@ -53,6 +54,7 @@ const AddTimeNews = ({id_post, id_owner}) => {
                     required={true}
                     placeholder="Nhắn  ..."
                     error={errors.description}
+                    touched={touched.description}
                 />
                 <button type="submit" className="btn btn-danger">Thông báo gia hạn tin</button>
             </form>

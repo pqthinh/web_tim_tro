@@ -1,12 +1,11 @@
-// Tim kiem co : theo loai phong + theo khu vuc + theo gia + theo Khu vuc lan can + theo csvc
-
-// csvc: dieu hoa + nong lanh + ban cong + dien nuoc
-
-// sort view + sort time + sort gia
-
+import React, {useState} from 'react'
+import { Link } from 'react-router-dom'
 import './SearchForm.css'
 
 const Search = ()=>{
+
+    const [place, setPlace] = useState("")
+
     return (
         <div className="container">
         <div className="form-search">
@@ -14,8 +13,13 @@ const Search = ()=>{
                 <div class="right">
                     <div class="box-search">
                         <button class="nut"><i class="fas fa-search"></i></button>
-                        <input type="text" placeholder="Tìm theo khu vực, tên trường học,..." />
-                        <button type="button" class="btntim">Tìm kiếm</button>
+                        <input type="text" value={place}  onChange={(data)=> setPlace(data.target.value)} placeholder="Tìm theo khu vực, tên trường học,..." />
+                        <Link to={{
+                            pathname: "/search",
+                            place: place
+                            }} >
+                            <button type="button" class="btntim">Tìm kiếm</button>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -23,7 +27,9 @@ const Search = ()=>{
                 <p>
                     Tìm kiếm phòng theo địa điểm, giá, cơ sở vật chất
                 </p>
-                <button type="button" class="btnreview">Tìm kiếm nâng cao</button>
+                <Link to="search">
+                    <button type="button" class="btnreview" > Tìm kiếm nâng cao</button>
+                </Link>
             </div>
         </div>
         </div>

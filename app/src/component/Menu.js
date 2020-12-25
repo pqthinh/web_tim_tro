@@ -21,7 +21,7 @@ const Menu = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
-                  <a className="nav-link" href="/home">Trang chủ <span className="sr-only">(current)</span></a>
+                  <a className="nav-link" href="/">Trang chủ <span className="sr-only">(current)</span></a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/up">Đăng tin</a>
@@ -30,7 +30,7 @@ const Menu = () => {
                   <a className="nav-link" href="/up">Tìm phòng</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/manager"> Tin tức</a>
+                  <a className="nav-link" href="/news"> Tin tức</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/manager"> Liên hệ</a>

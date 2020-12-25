@@ -5,10 +5,10 @@
 .avatar {
     vertical-align: middle;
     border-radius: 5px;
-    /* margin-top: 20px; */
-    /* margin-top: auto;
-    margin-bottom: auto;*/
-    /* display: table-cell;  */
+}
+.avatar-card-user {
+    height: 100px;
+    border-radius: 20px;
 }
 
 .Star-of-user {
