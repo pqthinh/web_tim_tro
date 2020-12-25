@@ -26,5 +26,5 @@ yarn-error.log*
 /src/temp
 
 # vendor
-/public/vendor/
-/public/css/
+#/public/vendor/
+#/public/css/

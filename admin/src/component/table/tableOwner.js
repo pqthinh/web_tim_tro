@@ -19,23 +19,26 @@ const TableOwner = () => {
       setLoading(true)
       const result =await axios.get(`${baseUrl}/user/owner`)
       if(result.data.length !== row.length) {
-        if(JSON.stringify(result.data) !== JSON.stringify(res)) {
+        //if(JSON.stringify(result.data) !== JSON.stringify(res)) {
           var temp  = result.data
           setRes(result.data)
           temp.map(x=> {
+            console.log(x)
             return(
               x.action = <div>
                   {x.status!=="active"?
                     <button className="btn btn-success" onClick={() => Active(x.id_owner)}>active</button> :
                     <button className="btn btn-danger" onClick={() => Block(x.id_owner)}>block</button> 
                   }
-                  <span onClick={()=> Edit(x.id_owner)}><ModalEditOwner /></span>
+                  
+                  <span onClick={()=> Edit(x.id_owner)}><ModalEditOwner user={x}/></span>
                   
                 </div>
             )
+            
           })
           setRow(temp)
-        }
+        // }
       }
       else {
         const temp = {columns: columns, rows: row}

@@ -11,11 +11,15 @@ import PrivateRoute from '../Utils/PrivateRoute'
 import { removeUserSession , getUser} from '../Utils/Common'
 import Chat from './pages/chat'
 import '../css/menu.css'
-import ImageUpload from "../component/postNews/imageuploadtest";
+// import ImageUpload from "../component/postNews/imageuploadtest";
 import MessageBoxComponent from "../component/menu/message";
 import BoxItemComponent from "../component/menu/ItemBox";
 import TableOwner from "../component/table/tableOwner";
 import TableMember from "../component/table/tableMember";
+import TableReview from "../component/table/tableComment";
+import TablePost from "../component/table/tablePost";
+import TableReport from "../component/table/tableReport";
+import { PostForm } from "../component/post/postForm";
 
 export default function NestingExample(props) {
   const user = getUser()
@@ -42,7 +46,7 @@ export default function NestingExample(props) {
                   <a className="nav-link" href="/home">Trang chủ <span className="sr-only">(current)</span></a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/up">Đăng tin</a>
+                  <Link className="nav-link" to="/postNew">Đăng tin</Link>
                 </li>
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle" href="/manager" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -51,7 +55,9 @@ export default function NestingExample(props) {
                   <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                     <Link className="dropdown-item" to="/customer">Quản lý Chủ nhà</Link>
                     <Link className="dropdown-item" to="/member">Quản lý thành viên</Link>
-                    <a className="dropdown-item" href="/post">Quản lý tin đăng</a>
+                    <Link className="dropdown-item" to="/review">Quản lý nhận xét về tin</Link>
+                    <Link className="dropdown-item" to="/managePost">Quản lý về tin đăng</Link>
+                    <Link className="dropdown-item" to="/manageReport">Quản lý về báo cáo</Link>
                     <div className="dropdown-divider"></div>
                     <a className="dropdown-item" href="/duyet">Phê duyệt</a>
                   </div>
@@ -99,13 +105,17 @@ export default function NestingExample(props) {
       <div className ="container">
         <Switch>
           <PrivateRoute exact path="/">
-              <Topic /> 
+              <TableOwner /> 
           </PrivateRoute>
           <PrivateRoute path="/notifycations">
-              <Home />
+              <Chat />
           </PrivateRoute>
           <PrivateRoute path="/customer" component={TableOwner} />
           <PrivateRoute path="/member" component={TableMember} />
+          <PrivateRoute path="/review" component={TableReview} />
+          <PrivateRoute path="/managePost" component={TablePost} />
+          <PrivateRoute path="/manageReport" component={TableReport} />
+          <PrivateRoute path="/postNew" component={PostForm}/>
           <PrivateRoute path="/posts">
               <Chat />
           </PrivateRoute>
@@ -113,69 +123,14 @@ export default function NestingExample(props) {
               <Chat />
           </PrivateRoute>
           <PrivateRoute path="/statistical">
-              <Topics />
+              <Chat />
           </PrivateRoute>
           <PrivateRoute path="/information">
-              <Home />
+              <Chat />
           </PrivateRoute>
         </Switch>
       </div>
   </div>
   </Router>
-  );
-}
-
-function Home() {
-  return (
-    <div>
-      <ImageUpload />
-    </div>
-  );
-}
-
-function Topics() {
-  // The `path` lets us build <Route> paths that are
-  // relative to the parent route, while the `url` lets
-  // us build relative links.
-  let { path, url } = useRouteMatch();
-
-  return (
-    <div>
-      <h2>Topics</h2>
-      <ul>
-        <li>
-          <Link to={`${url}/rendering`}>Rendering with React</Link>
-        </li>
-        <li>
-          <Link to={`${url}/components`}>Components</Link>
-        </li>
-        <li>
-          <Link to={`${url}/props-v-state`}>Props v. State</Link>
-        </li>
-      </ul>
-
-      <Switch>
-        <PrivateRoute exact path={path}>
-          <h3>Please select a topic.</h3>
-        </PrivateRoute>
-        <PrivateRoute path={`${path}/:topicId`}>
-          <Topic />
-        </PrivateRoute>
-      </Switch>
-    </div>
-  );
-}
-
-function Topic() {
-  // The <Route> that rendered this component has a
-  // path of `/topics/:topicId`. The `:topicId` portion
-  // of the URL indicates a placeholder that we can
-  // get from `useParams()`.
-  let { topicId } = useParams();
-
-  return (
-    <div>
-      <h3>{topicId}</h3>
-    </div>
   );
 }
