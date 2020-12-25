@@ -15,18 +15,11 @@ const TableNotiAdmin = () => {
     useEffect(()=>{
         async function fetchdata() {
             setLoading(true)
-            const result =await axios.get(`${baseUrl}/user/member`)
+            const result =await axios.get(`${baseUrl}/noti/all`)
             if(result.data.length !== row.length) {
-                if(JSON.stringify(result.data) !== JSON.stringify(res)) {
-                    var temp  = result.data
-                    setRes(result.data)
-                    temp.map(x=> {
-                        return (
-                            x.img = <img src ={x.avatar} alt= {`avatar của ${x.name}`} width = {50} height = {50}/>
-                        )
-                    })
-                    setRow(temp)
-                }
+                var temp  = result.data
+                setRes(result.data)
+                setRow(temp)
             }
             else {
                 const temp = {columns: columns, rows: row}

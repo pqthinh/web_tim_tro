@@ -22,7 +22,6 @@ const TableOwner = () => {
           var temp  = result.data
           setRes(result.data)
           temp.map(x=> {
-            console.log(x)
             return(
               x.action = x.status!=="active"? buttonActive(x): buttonDeactive(x) 
             )
@@ -32,7 +31,6 @@ const TableOwner = () => {
       }
       else {
         const temp = {columns: columns, rows: row}
-        // console.log(temp)
         setData(temp)
       }
       setLoading(false)
@@ -48,7 +46,7 @@ const TableOwner = () => {
           x.action= buttonDeactive(x)
           Active(x.id_owner)
         }}>active</button>
-        <span onClick={()=> Edit(x.id_owner)}><ModalEditOwner user={x}/></span>
+        <span ><ModalEditOwner user={x}/></span>
       </>
     )
   }
@@ -61,7 +59,7 @@ const TableOwner = () => {
           x.action = buttonActive(x)
           Block(x.id_owner)
         }}>block</button> 
-        <span onClick={()=> Edit(x.id_owner)}><ModalEditOwner user={x}/></span>
+        <span><ModalEditOwner user={x}/></span>
       </div>
     )
   }
@@ -75,10 +73,6 @@ const TableOwner = () => {
     console.log(result.data.msg)
   }
   
-  const Edit = (data) =>{
-
-  }
-
   return (
     <div>
       

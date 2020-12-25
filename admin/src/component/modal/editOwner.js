@@ -20,7 +20,6 @@ function ModalEditOwner({user}) {
     const updateOwner = async (user) => {
       const result = await axios.post(`${baseUrl}/user/owner/update`, user)
       setResp(result.data.status)
-      // console.log(result.data)
     }
 
     const { handleSubmit, handleChange, errors, touched ,values } = useFormik({

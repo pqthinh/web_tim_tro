@@ -115,10 +115,6 @@ export default function NestingExample(props) {
           <PrivateRoute path="/chat">
               <Chat />
           </PrivateRoute>
-          <PrivateRoute path="/notifycations">
-              <Chat />
-          </PrivateRoute>
-
           <PrivateRoute path="/customer" component={TableOwner} />
           <PrivateRoute path="/member" component={TableMember} />
           <PrivateRoute path="/review" component={TableReview} />

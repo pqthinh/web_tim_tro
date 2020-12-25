@@ -12,6 +12,7 @@ import NotFoundScreen from './screen/notFound';
 import "./css/menu.css"
 import TestTable from './component/table/tableOwner';
 import Chat from './screen/pages/chat';
+import TableNoti from './component/table/tableNoti';
 
 function App() {
   const [authLoading, setAuthLoading] = useState(true);
@@ -48,9 +49,9 @@ function App() {
           <div>
             <Switch>
               <PrivateRoute exact path="/" component={Home} />
-              {/* <PrivateRoute  path="/chat" component={Chat} /> */}
               <PublicRoute path="/login" component={Login} />
               <PrivateRoute path="/customer" component={TestTable} />
+              <PrivateRoute path="/manageNoti" component={TableNoti} />
               <Route component={NotFoundScreen} />
             </Switch>
           </div>

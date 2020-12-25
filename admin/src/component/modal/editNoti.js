@@ -35,10 +35,7 @@ function ModalEditNoti({}) {
     });
     return (
       <>
-        {/* <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button> */}
-            <Button variant="primary" onClick={handleShow}>
+        <Button variant="primary" onClick={handleShow}>
             Edit  <i class="fas fa-user-edit"></i>
         </Button>
   
