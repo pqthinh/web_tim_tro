@@ -25,13 +25,14 @@ const ReportToAdmin = {
     // Lay tat ca cac report cua post
     GetReportPost : async (req ,res , next) =>{
         let conn 
-        const body = req.body , id_member = body.id_member ?  `id_member = ${body.id_member}` : " 1 ", id_post =  body.id_post ?  `id_post = ${body.id_post}` : " 1 " , status = body.status? `status = ${body.status}` : " status ='pendding' "
+        const body = req.body , id_member = body.id_member ?  `r.id_member = ${body.id_member}` : " 1 ", id_post =  body.id_post ?  `r.id_post = ${body.id_post}` : " 1 " , status = body.status? `r.status = ${body.status}` : " r.status ='pending' "
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql, result
-            sql = `select * from report join member on member.id = report.id_member where ${id_member} and ${id_post} and  ${status}`
+            sql = `select r.id, r.id_post, r.id_member, r.content, r.status , r.createAt, member.email, member.avatar, member.name from report r join member on member.id = r.id_member where ${id_member} and ${id_post} and  ${status}`
             result = await conn.query(sql)
+            // console.log(sql)
             await conn.commit()
             res.json({review: result[0]})
         }

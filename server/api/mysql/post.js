@@ -1,6 +1,6 @@
 const dbs = require("./dbs")
 var fs = require('fs');
-const baseUrl = "http://192.168.101.109:4000"
+const baseUrl = "http://localhost:4000"
 
 const Post = {
     getPost: async (req, res, next) =>{ 
@@ -288,16 +288,16 @@ const Post = {
     // Gia han tin dang
     updateDurationPost : async (req, res, next) =>{
         let conn 
-        const body = req.body , day = body.duration , id = body.postID
+        const body = req.body , day = body.duration , id = body.id_post
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
 
-            let sql  = "update post set duration = ? where postID = ?"
+            let sql  = "update post set duration = ? , updateAt = CURRENT_DATE() where postID = ?"
             await conn.query(sql, [day, id])
             await conn.commit()
             res.status(200).json({
-                msg: `Them ${status } days for post id ${id}`
+                msg: `Them ${day } days for post id ${id}`
             })
 
         }

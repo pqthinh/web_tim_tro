@@ -34,8 +34,8 @@ const Owner = {
             await conn.release()
         }
     },
-    getMemberID: async (req, res, next)=>{
-        if(req.userData.role !== "admin")
+    getOwnerID: async (req, res, next)=>{
+        if(req.userData.role === "member")
             res.status(403).send({ message: 'Authentication failed!' });
             
         let conn
@@ -45,7 +45,7 @@ const Owner = {
             // const body = req.body, uid = body.uid
             uid = req.params.id
             let sql, result
-            sql = `select * from owner where id = ?`
+            sql = `select * from owner where id_owner = ?`
 
             result = await conn.query(sql, [uid])
             await conn.commit()
@@ -95,8 +95,8 @@ const Owner = {
         }
     },
     AddOwner: async (req, res, next)=>{
-        if(req.userData.role !== "admin")
-            res.status(403).send({ message: 'Authentication failed!' });
+        // if(req.userData.role !== "admin")
+        //     res.status(403).send({ message: 'Authentication failed!' });
             
         let conn
         try {
@@ -128,7 +128,7 @@ const Owner = {
                 const myPlaintextPassword = upass;
                 const hash = bcrypt.hashSync(myPlaintextPassword, saltRounds);
 
-                sql = `insert into onwer(name, email,phone,place, password, cmt) value(?,?,?,?,?,?)`
+                sql = `insert into owner(name, email,phone,place, password, cmt) value(?,?,?,?,?,?)`
                 result = await conn.query(sql, [uname, email,uphone,uplace, hash, cmt])
                 await conn.commit()
             }
@@ -306,7 +306,7 @@ const Owner = {
             const myPlaintextPassword = newpass;
             const hash = bcrypt.hashSync(myPlaintextPassword, saltRounds);
 
-            sql = `update member set password = ?  where email = ? `
+            sql = `update owner set password = ?  where email = ? `
             await conn.query(sql, [hash, emailto])
             await conn.commit()
             res.json({ status: "200 OK", msg: "Check your email to reset password" });
@@ -342,7 +342,67 @@ const Owner = {
         finally {
             await conn.release()
         }
-    }
+    },
+    //update owner
+    updateOwner: async (req, res, next) =>{
+        if(req.userData.role !== "admin")
+            res.status(403).send({ message: 'Authentication failed!' });
+
+        let conn
+        try {
+            conn = await dbs.getConnection()
+            await conn.beginTransaction()
+            var body = req.body, uname =  body.name ,newpass = body.newpass || oldpass , oldpass = body.oldpass , email = body.email, uphone = body.phone , uplace = body.place ,cmt = body.cmt
+            if(!uname && !uphone && !uplace ) 
+                return res.status(400).json({msg: "Khong co su thay doi"})
+
+            let sqlcheckexist = "select * from owner where email=?"
+            resCheckExist = await conn.query(sqlcheckexist, [email])
+            await conn.commit()
+
+            if(resCheckExist[0].length == 0) {
+                return res.status(401).json({
+                    error: true,
+                    message: "Phat hien gian lan"
+                });
+            } else if(resCheckExist[0].length > 1){
+                return res.status(401).json({
+                    error: true,
+                    message: "Loi he thong"
+                });
+            } else {
+                // check password
+                // const hash = resCheckExist[0][0].password
+                // if(!bcrypt.compareSync(oldpass, hash)) {
+                //     return res.status(401).json({
+                //         error: true,
+                //         message: "Nhap sai mat khau cu."
+                //     });
+                // }
+                // Inser into table admin
+                let sql, result
+
+                // // Hash password
+                newpass = !newpass? oldpass: newpass
+                var myPlaintextPassword1 = newpass;
+                const hash1 = bcrypt.hashSync(myPlaintextPassword1, saltRounds);
+
+                sql = `update owner set name= ?,phone = ?,place = ?, password = ? , cmt =? where email = ?`
+                result = await conn.query(sql, [uname,uphone,uplace, hash1, cmt , email])
+                await conn.commit()
+                
+                res.json({ status: "Update success" });
+            }
+            
+        }
+        catch (err) {
+            await conn.rollback()
+            next(err)
+        }
+        finally {
+            await conn.release()
+        }
+    },
 }
 
 module.exports = Owner

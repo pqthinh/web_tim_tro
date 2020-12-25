@@ -51,8 +51,9 @@ const Comment = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql, result
-            sql = "select * from review join member on member.id = review.id_member join post on post.postId = review.id_post where  and status = 'pendding'"
+            sql = "select r.*, m.name, m.email, m.phone, m.place , m.avatar, m.createAt, p.id_owner, p.title , p.address, p.duration , p.price , p.views , p.discription, p.images, p.available from review r join member m on m.id = r.id_member join post p on p.postId = r.id_post where not p.available = 'rented' "
             result = await conn.query(sql)
+            // console.log(sql)
             await conn.commit()
             res.json({review: result[0]})
         }

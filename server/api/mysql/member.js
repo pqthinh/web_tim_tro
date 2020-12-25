@@ -144,7 +144,7 @@ const Member = {
         if(req.userData.role === "owner")
             res.status(403).send({ message: 'Authentication failed!' });
 
-        let con
+        let conn
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
