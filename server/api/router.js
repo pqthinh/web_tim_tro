@@ -82,6 +82,7 @@ router.get("/report/all", report.GetReportPost)     // truyền vào id_port ho�
 router.post("/report/add", report.AddReport)        // id_member , id_post , content 
 router.post("/report/handle", report.ActiveReport)  // active report ve tin dang      : id (report)
 router.post("/report/giahan", report.GiahanTinDang)  // Gia han tin dang tu owner gui len
+router.get("/noti/all", report.getThongBaotoAdmin)  // lấy hết thông báo để admin quản lý
 
 // notification (thong bao cho chu tro va nguoi di thue ve tin dang / comment)
 const notification = require('./mysql/reportTocustomer')

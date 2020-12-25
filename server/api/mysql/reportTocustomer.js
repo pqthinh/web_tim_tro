@@ -4,7 +4,7 @@ const ReporttoCustomer = {
     // Thong bao trang thai cua tin
     ThongbaoTrangThaiTin: async (req, res, next) =>{
         let conn
-        const body = req.body ,id_owner = body.id_owner, content = body.content || "Tin của bạn đã được duyệt", warning = body.warning || "Thongbao"
+        const body = req.body ,id_owner = body.id_owner, content = body.content || "Tin của bạn đã được duyệt", warning = body.warning || "Đã thông báo"
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
@@ -43,12 +43,12 @@ const ReporttoCustomer = {
     },
     GetNotification : async(req, res, next)=>{
         let conn
-        const body = req.body ,id = body.id, role = body.role || "owner"
+        const body = req.body ,id = body.id? ` id_nguoinhan = ${body.id} ` : " 1 ", role = body.role || "owner"
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
-            let sql = `select * from thongbao where id_nguoinhan = ? and role = ? `
-            const result = await conn.query(sql,[id, role])
+            let sql = `select * from thongbao where ${id} and role = ? `
+            const result = await conn.query(sql,[role])
             conn.commit()
 
             res.json(result[0])
