@@ -22,6 +22,7 @@ import TableReport from "../component/table/tableReport";
 import PostForm  from "../component/post/postForm";
 import TableNoti from "../component/table/tableNoti"
 import TableNotiAdmin from "../component/table/tableNotiAdmin"
+
 export default function NestingExample(props) {
   const user = getUser()
   // handle click event of logout button
@@ -61,6 +62,7 @@ export default function NestingExample(props) {
                     <Link className="dropdown-item" to="/manageReport">Quản lý về báo cáo</Link>
                     <Link className="dropdown-item" to="/manageNoti">Quản lý thông báo</Link>
                     <Link className="dropdown-item" to="/manageNotiAdmin">Quản lý thông báo admin</Link>
+  
                     <div className="dropdown-divider"></div>
                     <a className="dropdown-item" href="/duyet">Phê duyệt</a>
                   </div>

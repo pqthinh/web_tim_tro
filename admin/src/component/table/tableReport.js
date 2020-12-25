@@ -15,17 +15,18 @@ const TableReport = () => {
     useEffect(()=>{
       async function fetchdata() {
         setLoading(true)
-        const result =await axios.get(`${baseUrl}/user/owner`)
-        if(result.data.length !== row.length) {
-            var temp  = result.data
-            setRes(result.data)
+        const result =await axios.get(`${baseUrl}/report/all`)
+        if(result.data.review.length !== row.length) {
+            var temp  = result.data.review
+            setRes(result.data.review)
+
             temp.map(x=> {
               // console.log(x)
               return(
                 x.action = <div>
                     {x.status!=="active"?
-                      <button className="btn btn-success" onClick={() => Active(x.id_owner)}>active</button> :
-                      <button className="btn btn-danger" onClick={() => Block(x.id_owner)}>block</button> 
+                      <button className="btn btn-success" onClick={() => Active(x.id)}>active</button> :
+                      <button className="btn btn-danger" onClick={() => Block(x.id)}>block</button> 
                     }
                   </div>
               )
@@ -43,13 +44,13 @@ const TableReport = () => {
   
     const Active = async(data)=> {
       setLoading(true)
-      const result = await axios.post(`${baseUrl}/user/owner/Status`, {id_owner: data, status: "active"})
+      const result = await axios.post(`${baseUrl}/report/handle`, {id: data, status: "active"})
       console.log(result.data.msg)
       setLoading(false)
     }
     const Block = async (data)=> {
       setLoading(true)
-      const result = await axios.post(`${baseUrl}/user/owner/Status`, {id_owner: data, status: "deactive"})
+      const result = await axios.post(`${baseUrl}/report/handle`, {id_owner: data, status: "deactive"})
       console.log(result.data.msg)
       setLoading(false)
     }
@@ -96,5 +97,12 @@ const columns = [
         field: 'content',
         sort: 'asc',
         width: 100
-    }
+
+    },
+    {
+      label: 'Action',
+      field: 'action',
+      sort: 'asc',
+      width: 100
+    },
 ]

@@ -26,13 +26,14 @@ function initialize() {
     // app.use(CheckToken.auth)
     app.use("/api", require("./api/router"))
     app.use("/data", express.static("data"));
-    
+    app.use("/images", express.static("images"));
     httpServer = http.createServer(app)
     httpServer.listen(port, err => {
       if (err) {
         reject(err)
         return
       }
+      console.log("Started server ")
       resolve()
     })
     httpServer.setTimeout(60000)

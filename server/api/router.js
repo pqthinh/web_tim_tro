@@ -42,13 +42,14 @@ router.post("/images/upload/base64", img.addImageBase64)            // anh dang 
 //owner
 const owner = require('./mysql/owner')
 router.get('/user/owner' ,auth , owner.getowner)
-router.get('/user/owner/get/:id',auth , owner.getMemberID) 
+router.get('/user/owner/get/:id',auth , owner.getOwnerID) 
 router.post('/user/member/search',auth , owner.Search)            // body req : id , email , password , phone , name, place ,cmt , status (state)
 router.post('/user/owner/repass', owner.UpdatePassOwner)    // newpass, email , oldpass
 router.post('/user/owner/signup', owner.AddOwner)            // name , password ,email, phone ,place,  cmt
 router.post('/user/owner/forgotpass', owner.sendEmailResetPass)  // body req :email
 router.post('/user/owner/login', owner.loginOwner)            // email, pass  (pass: pqthinh)
 router.post('/user/owner/Status',auth , owner.StatusOwner)          // id_owner , status pendding => (active / deactive)
+router.post('/user/owner/update',auth , owner.updateOwner)   // name , newpass ,oldpass , email, .phone , place ,cmt
 
 // member
 const member  = require('./mysql/member')

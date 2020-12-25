@@ -8,7 +8,7 @@ const ReporttoCustomer = {
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
-            let sql = `insert into thongbao values(id_nguoinhan, role, content) values (?, 'owner', ?)`
+            let sql = `insert into thongbao (id_nguoinhan, role, content) values (?, 'owner', ?)`
             const result = await conn.query(sql,[id_owner, content])
             conn.commit()
             res.json({msg: warning})
@@ -28,7 +28,7 @@ const ReporttoCustomer = {
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
-            let sql = `insert into thongbao values(id_nguoinhan, role, content) values (?, 'owner', ?)`
+            let sql = `insert into thongbao(id_nguoinhan, role, content) values (?, 'owner', ?)`
             const result = await conn.query(sql,[id_owner, content])
             conn.commit()
             res.json({msg: warning})
