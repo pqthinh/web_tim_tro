@@ -13,29 +13,22 @@ const TableOwner = () => {
   const [row, setRow] = useState([])
   const [res, setRes] = useState([])
   const [loading, setLoading] = useState(false)
-
+  
   useEffect(()=>{
     async function fetchdata() {
       setLoading(true)
       const result =await axios.get(`${baseUrl}/user/owner`)
       if(result.data.length !== row.length) {
-        if(JSON.stringify(result.data) !== JSON.stringify(res)) {
           var temp  = result.data
           setRes(result.data)
           temp.map(x=> {
+            console.log(x)
             return(
-              x.action = <div>
-                  {x.status!=="active"?
-                    <button className="btn btn-success" onClick={() => Active(x.id_owner)}>active</button> :
-                    <button className="btn btn-danger" onClick={() => Block(x.id_owner)}>block</button> 
-                  }
-                  <span onClick={()=> Edit(x.id_owner)}><ModalEditOwner /></span>
-                  
-                </div>
+              x.action = x.status!=="active"? buttonActive(x): buttonDeactive(x) 
             )
+            
           })
           setRow(temp)
-        }
       }
       else {
         const temp = {columns: columns, rows: row}
@@ -47,18 +40,41 @@ const TableOwner = () => {
     fetchdata()
   },[row, res])
 
+  const buttonActive = (x) => {
+    return (
+      <>
+        <button className="btn btn-success" onClick={() => { 
+          x.status = "active"
+          x.action= buttonDeactive(x)
+          Active(x.id_owner)
+        }}>active</button>
+        <span onClick={()=> Edit(x.id_owner)}><ModalEditOwner user={x}/></span>
+      </>
+    )
+  }
+  
+  const buttonDeactive = (x) => {
+    return (
+      <div>
+        <button className="btn btn-danger" onClick={() => {
+          x.status="deactive"
+          x.action = buttonActive(x)
+          Block(x.id_owner)
+        }}>block</button> 
+        <span onClick={()=> Edit(x.id_owner)}><ModalEditOwner user={x}/></span>
+      </div>
+    )
+  }
+
   const Active = async(data)=> {
-    setLoading(true)
     const result = await axios.post(`${baseUrl}/user/owner/Status`, {id_owner: data, status: "active"})
     console.log(result.data.msg)
-    setLoading(false)
   }
   const Block = async (data)=> {
-    setLoading(true)
     const result = await axios.post(`${baseUrl}/user/owner/Status`, {id_owner: data, status: "deactive"})
     console.log(result.data.msg)
-    setLoading(false)
   }
+  
   const Edit = (data) =>{
 
   }
