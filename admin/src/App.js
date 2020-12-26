@@ -11,7 +11,6 @@ import NotFoundScreen from './screen/notFound';
 
 import "./css/menu.css"
 import TestTable from './component/table/tableOwner';
-import Chat from './screen/pages/chat';
 import TableNoti from './component/table/tableNoti';
 
 function App() {
