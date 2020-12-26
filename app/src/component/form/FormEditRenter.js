@@ -1,22 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import * as Yup from 'yup'
 import { useFormik } from 'formik' 
 import { FormInput } from "../FormInput"
 
+import axios from "../../fetch/axios";
+import baseUrl from '../../fetch/baseurl'
+
 // id_member , id_post , content
 // newpass, email , oldpass
-const FormEditRenter = ({email}) => {
-
-    const handleSendRepassword = (data) =>{
-        console.log(data)
+const FormEditRenter = ({user}) => {
+    const [resp,setResp] = useState(null)
+    const handleSendRepassword = async (data) =>{
+        const res = await axios.post(`${baseUrl}/user/member/update`, data)
+        setResp(res.data.status)
+        console.log(res.data)
     }
 
-    const { handleSubmit, handleChange, errors, touched} = useFormik({
+    const { handleSubmit, handleChange, errors, touched ,  values} = useFormik({
         initialValues: {
-            name: "",
-            phone: "",
-            place: "",
-            oldpass: '',
+            name: user.name,
+            phone: user.phone,
+            place: user.place,
+            oldpass: "",
             newpass: "",
             repass: "",
         },
@@ -25,7 +30,7 @@ const FormEditRenter = ({email}) => {
             phone: Yup.string().required('Không được để trống'),
             place: Yup.string().required('Không được để trống'),
             oldpass: Yup.string().required('Password is required'),
-            newpass: Yup.string().required('Password is required'),
+            // newpass: Yup.string().required('Password is required'),
             repass: Yup.string()
                 .oneOf([Yup.ref('newpass'), null], 'Phải nhập khớp mật khẩu mới')
         }),
@@ -35,15 +40,16 @@ const FormEditRenter = ({email}) => {
                 name: values.name,
                 phone: values.phone,
                 place: values.place,
-                oldpass: values.description,
+                oldpass: values.oldpass,
                 newpass: values.newpass,
-                email: email,
+                email: user.email,
             }
             handleSendRepassword(data)
         }
     })
     return (
         <>
+            <p style={{color: 'red', textAlign: 'center'}}>{resp}</p>
             <form action= "" onSubmit={handleSubmit}>
                 <FormInput
                     name="name"
@@ -54,6 +60,7 @@ const FormEditRenter = ({email}) => {
                     placeholder="Họ tên" // thay neu get dc curent user
                     type="text"
                     touched={touched.name}
+                    value={values.name}
                 />
                 <FormInput
                     name="phone"
@@ -64,6 +71,7 @@ const FormEditRenter = ({email}) => {
                     placeholder="SĐT" // thay neu get dc curent user
                     type="text"
                     touched={touched.phone}
+                    value={values.phone}
                 />
                 <FormInput
                     name="place"
@@ -74,6 +82,7 @@ const FormEditRenter = ({email}) => {
                     placeholder="Địa chỉ" // thay neu get dc curent user
                     type="text"
                     touched={touched.place}
+                    value={values.place}
                 />
                 <FormInput
                     name="oldpass"
@@ -88,7 +97,7 @@ const FormEditRenter = ({email}) => {
                 <FormInput
                     name="newpass"
                     label="Mật khẩu mới"
-                    required={true}
+                    // required={true}
                     onChange={handleChange}
                     error={errors.newpass}
                     placeholder="mat khau cu" // thay neu get dc curent user
@@ -98,7 +107,7 @@ const FormEditRenter = ({email}) => {
                 <FormInput
                     name="repass"
                     label="Nhập lại mật khẩu mới"
-                    required={true}
+                    // required={true}
                     onChange={handleChange}
                     error={errors.repass}
                     placeholder="mat khau cu" // thay neu get dc curent user

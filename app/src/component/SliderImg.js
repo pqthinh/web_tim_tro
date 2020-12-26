@@ -17,7 +17,7 @@ const properties = {
 }
 
 const SliderImg = ({images , styles}) => {
-    console.log(images)
+    // console.log(images)
     const listimage = images || fadeImages
     var styleSlide =  styles || {width: '100%', height: 'auto'}
     return (

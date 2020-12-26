@@ -24,7 +24,7 @@ const CommentItem = ({comment}) =>{
 	    <div class="card-body">
 	        <div class="row">
         	    <div class="col-md-2">
-        	        <img src={data.avatar} class="img img-rounded img-fluid" alt={data.avatar}/>
+        	        <img src={data.avatar} class="img img-rounded img-fluid avatar" alt={data.avatar}/>
         	    </div>
         	    <div class="col-md-10">
                     <p>

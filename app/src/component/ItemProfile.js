@@ -1,5 +1,5 @@
 
-import { Link } from 'react-router-dom'
+import { Link , useHistory } from 'react-router-dom'
 import {getUser , removeUserSession} from '../Utils/Common'
 
 const fake = {
@@ -7,12 +7,13 @@ const fake = {
     avatar: "http://localhost:3000/favicon.png"
 }
 
-const UserItem = ({props})=> {
+const UserItem = ()=> {
+    let history = useHistory()
     const user = getUser() || fake
     // handle click event of logout button
     const handleLogout = () => {
         removeUserSession();
-        props.history.push('/login');
+        history.push('/login');
     }
     return (
         <div>

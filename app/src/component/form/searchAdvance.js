@@ -1,9 +1,4 @@
-// Tim kiem co : theo loai phong + theo khu vuc + theo gia + theo Khu vuc lan can + theo csvc
-
-// csvc: dieu hoa + nong lanh + ban cong + dien nuoc
-
-// sort view + sort time + sort gia
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { FormInput} from'../FormInput'
 import { Range } from 'rc-slider';
@@ -11,12 +6,33 @@ import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import '../SearchForm.css'
 import { useLocation } from "react-router-dom";
+import axios from "axios";
+import baseUrl from "../../fetch/baseurl";
+import ListPost from "../ListPost";
 
 const SearchAdvance = ()=>{
     const {place} = useLocation() || ""
-    // console.log(place)
+    console.log(place)
     const [cost, setCost] = useState([500000,100000000])
     const [area, setArea] = useState([0,200])
+
+    const [post, setPost] = useState([])
+
+    const search = async(data) => {
+        const result = await axios.get(`${baseUrl}/post/all/search`, {address: data})
+        console.log(result.data)
+        setPost(result.data)
+    }
+
+    useEffect(()=> {
+        if(place) {
+            console.log(place)
+            search(place)
+            // console.log(result.data)
+            // setPost(result.data)
+        }
+    },[post])
+
     const { handleSubmit, handleChange } = useFormik({
         initialValues: {
             place: place,
@@ -55,6 +71,7 @@ const SearchAdvance = ()=>{
             };
             console.log(data)
             // api search
+
         },
     });
 
@@ -154,6 +171,7 @@ const SearchAdvance = ()=>{
 
         <div>
             {/* Show kết quả tìm kiếm ở đây */}
+            <ListPost news = {post}/>
         </div>
     </div>
     )

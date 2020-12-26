@@ -4,10 +4,11 @@ import { getToken } from './Common';
 
 // handle the public routes
 function PublicRoute({ component: Component, ...rest }) {
+  // console.log(rest, Component)
   return (
     <Route
       {...rest}
-      render={(props) => !getToken() ? <Component {...props} /> : <Redirect to={{ pathname: '/dashboard' }} />}
+      render={(props) => <Component {...props} />}
     />
   )
 }

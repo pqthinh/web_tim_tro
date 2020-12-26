@@ -15,3 +15,8 @@ axios.interceptors.response.use(
     }
 );
 export default axios;
+
+
+// axios.defaults.baseURL = "http://localhost:4000/api";
+// axios.defaults.headers.common['Authorization'] = token;
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';

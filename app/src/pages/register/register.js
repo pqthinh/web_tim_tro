@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useHistory } from 'react-router-dom'
 
 export default function Register() {
+    let history = useHistory()
     return (
         <div className="limiter">
             <div className="container-login100">
+                <div style={{position: "absolute", top: 1 , left: 1}} onClick={()=> history.goBack()}>
+                    <i class="fas fa-hand-point-left"></i> Back
+                </div>
                 <div className="wrap-login100">
                     <div className="login100-pic js-tilt" data-tilt>
                         <img src="https://previews.123rf.com/images/perhapzzz/perhapzzz1603/perhapzzz160301101/54368918-real-estate-concept-notepad-with-buy-or-rent-message-pen-and-flower-office-supplies-on-desk-table-to.jpg" alt="img of register selection" />

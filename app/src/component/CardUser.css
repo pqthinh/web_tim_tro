@@ -5,6 +5,8 @@
 .avatar {
     vertical-align: middle;
     border-radius: 5px;
+    /* height: 50px; */
+    width: 50px;
 }
 .avatar-card-user {
     height: 100px;
@@ -13,4 +15,5 @@
 
 .Star-of-user {
     /* text-align: center; */
+    color: yellow;
 }

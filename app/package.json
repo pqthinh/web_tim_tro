@@ -22,6 +22,7 @@
     "react-slick": "^0.27.13",
     "react-slideshow-image": "^3.4.3",
     "react-timeago": "^5.2.0",
+    "reactjs-alert": "^1.2.5",
     "slick-carousel": "^1.8.1",
     "web-vitals": "^0.2.4",
     "yup": "^0.32.8"

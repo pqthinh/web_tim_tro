@@ -9,6 +9,7 @@ const FormRepassword = ({email}) => {
 
     const handleSendRepassword = (data) =>{
         console.log(data)
+        // cho owner
     }
 
     const { handleSubmit, handleChange, errors , touched} = useFormik({
@@ -26,7 +27,7 @@ const FormRepassword = ({email}) => {
         onSubmit: (values)=> {
             console.log(values)
             let data = {
-                oldpass: values.description,
+                oldpass: values.oldpass,
                 newpass: values.newpass,
                 email: email,
             }

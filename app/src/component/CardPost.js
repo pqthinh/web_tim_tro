@@ -2,14 +2,15 @@ import React from 'react'
 import './CardPost.css'
 import { Link } from 'react-router-dom'
 
-const CardPost = ({props}) =>{
+const CardPost = ({news}) =>{
     // props được thay bằng thông tin giới thiệu của bài đăng đó
+    const data = news || fakeNews
     return (
         <>
             <div class="col-6 col-sm-4 col-md-3 cardpost">
                 <Link to={{
                     pathname: "/post/2",
-                    state: {news: fakeNews}
+                    state: {news: data}
                 }}>
                     <div class="room detail-room">
                         <div class="image-room">
@@ -18,20 +19,20 @@ const CardPost = ({props}) =>{
                         </div>
                         <div class="cap">
                             <div class="title-1">
-                                Phòng trọ giá rẻ Mễ Trì
+                                {data.title}
                             </div>
                             <div class="title-3">
                                 <i class="fas fa-coins"></i>
-                                <span className="content">1,6 triệu/tháng</span>
+                                <span className="content">{data.price}/tháng</span>
                             </div>
                             <div class="title-2">
                                 <i class="fas fa-house-user"></i>
-                                <span className="content">Pham Quang Thinh</span>
+                                <span className="content">{data.name}</span>
                             </div>
                         </div>
                         <div class="cap-foot">
                             <i class="fas fa-home"></i>
-                            <span className="content">Hà Nội</span>
+                            <span className="content">{data.address}</span>
                         </div>
                     </div>
                 </Link>
