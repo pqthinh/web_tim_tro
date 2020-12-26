@@ -141,6 +141,7 @@ const Member = {
     // Dung cho ca thanh vien va nguoi cho thue nha
     // chua test
     updateMember: async (req, res, next) =>{
+        // console.log(req.userData)
         if(req.userData.role === "owner")
             res.status(403).send({ message: 'Authentication failed!' });
 
@@ -169,6 +170,7 @@ const Member = {
             } else {
                 // check password
                 const hash = resCheckExist[0][0].password
+                // console.log(oldpass, hash)
                 if(!bcrypt.compareSync(oldpass, hash)) {
                     return res.status(401).json({
                         error: true,
@@ -237,13 +239,14 @@ const Member = {
                 }
 
             }
-            // generate token
-            const token = utils.generateToken(result[0][0]);
             // get basic user details
             const userObj = utils.getCleanUser(result[0][0]);
             userObj.role= "member"
             // return the token along with user details
             // console.log(userObj)
+            // generate token
+            const token = utils.generateToken(userObj);
+
             res.json({ user: userObj, token });
         }
         catch (err) {
@@ -258,6 +261,8 @@ const Member = {
         const newpass =  Math.random().toString(36).slice(-12);
         const emailto =  req.body.email
 
+        let conn = await dbs.getConnection()
+        await conn.beginTransaction()
 
         let sqlcheckexist = "select * from member where email=?"
         resCheckExist = await conn.query(sqlcheckexist, [emailto])
@@ -299,7 +304,6 @@ const Member = {
         });
 
         // Cap nhat mat khau moi vao csdl
-        let conn
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()

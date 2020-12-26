@@ -72,14 +72,37 @@ const Post = {
     // nếu truyền id vào body thì tìm theo id người bán
 
     // search post
+    // address:  value.address,
+    // nearby: value.nearby,
+    // roomType: value.typeroom,
+    // area: area,
+    // price: cost,
+    // shared: value.with_owner,
+    // bathroom: value.bathroom,
+    // nonglanh: value.heater,
+    // kitchen: value.kitchen,
+    // airConditioner: value.airconditional,
+    // balcony: value.balcony,
+    // typeCostElectric: value.electric_water_price,
+    // sort: value.sort
     SearchPost:  async (req, res, next)=>{
+        console.log("deo goi api dc")
+        console.log(req.body)
         let conn
-        const body = req.body, id_owner = body.id_owner, status = body.status , place =  node.place , date1 = body.date1 , date2 = body.date2
+        let body = req.body, status = body.status , place =  body.address , sort = body.sort
+        status= status? status: "active"
+        place = place? `p.address like '%${place}%' ` : " 1 "
+        sort = sort === 0 ? ' order by p.price '  : sort === 1 ? ' order by p.updateAt desc '  : sort === 1 ? ' order by p.view desc ' : ''
+
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
+            let sql = `select * from post p join room r on p.roomId = r.id join owner o on o.id_owner= p.id_owner where p.status = ? and ${place}  ${sort}`
+            console.log(sql)
+            const result = await conn.query(sql, [status])
+            await conn.commit()
 
-
+            res.json(result[0])
         }
         catch(err) {
             await conn.rollback()

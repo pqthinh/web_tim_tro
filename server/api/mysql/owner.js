@@ -257,6 +257,8 @@ const Owner = {
         const newpass =  Math.random().toString(36).slice(-12);
         const emailto =  req.body.email
 
+        let conn = await dbs.getConnection()
+        await conn.beginTransaction()
 
         let sqlcheckexist = "select * from owner where email=?"
         resCheckExist = await conn.query(sqlcheckexist, [email])
@@ -297,7 +299,6 @@ const Owner = {
         });
 
         // Cap nhat mat khau moi vao csdl
-        let conn
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()

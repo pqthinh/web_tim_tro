@@ -16,9 +16,11 @@ const post = require('./mysql/post')
 router.get("/post/infor" , post.getPost)         // tat ca cac tin torng bang post
 router.get('/post/all', post.getAllInforPost)   // thong tin chi tiet cua bai dang (user + room + thong tin bai dang)
 router.post('/post/create', post.createPost)    // upload anh len server truoc
+
 // post tin body request: room :: id_owner, typeRoom ,area, chungchu , bathroom , kitchen, dieuhoa , bancong , diennuoc ,dien , nuoc , nearby
 // post:: address ,thoihan ,quantity ,price , discription , images(array lay dc sau khi upload anh)
-router.post('/post/search', post.SearchPost)    // Chưa viết xong
+
+router.post('/post/all/search', post.SearchPost)    // Chưa viết xong
 router.post('/post/update', post.update)        // Update thong tin ve post , va room // khong update anh
 router.post('/post/update/anh', post.updateAnh) 
 router.get('/post/owner', post.getPostOwner)    // body: id_owner
@@ -59,7 +61,7 @@ router.post('/user/member/search',auth , member.Search)                   // bod
 router.post('/user/member/login', member.loginMember)               // body req : email , password 
 router.post('/user/member/signup', member.addMember)               // body req : email , password , phone , name, place
 router.post('/user/member/forgotpass', member.sendEmailResetPass)  // body req :email
-router.post('/user/member/update', member.updateMember)            // body: name ,newpass ,oldpass ,email, phone , place
+router.post('/user/member/update',auth, member.updateMember)            // body: name ,newpass ,oldpass ,email, phone , place
 
 // admin
 const admin = require('./mysql/admin')

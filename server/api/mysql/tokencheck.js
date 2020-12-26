@@ -31,7 +31,7 @@ module.exports = {
                 return;
             }
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-            // console.log(decodedToken)
+            console.log(decodedToken)
             req.userData = { userId: decodedToken.id, role: decodedToken.role };
             next();
         } catch (err) {

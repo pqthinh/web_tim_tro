@@ -10,7 +10,9 @@ function generateToken(user) {
       name: user.name,
       email: user.email,
       role: user.role,
-      avatar: user.avatar
+      avatar: user.avatar,
+      phone: user.phone,
+      place: user.place
     };
 
     return jwt.sign(u, process.env.JWT_SECRET, {
@@ -26,7 +28,9 @@ function getCleanUser(user) {
     name: user.name,
     email: user.email ,
     avatar: user.avatar,
-    role: user.role
+    role: user.role,
+    phone: user.phone,
+    place: user.place
   };
 }
 
