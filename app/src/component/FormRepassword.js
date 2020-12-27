@@ -2,14 +2,17 @@ import React from 'react'
 import * as Yup from 'yup'
 import { useFormik } from 'formik' 
 import { FormInput } from "./FormInput"
+import axios from 'axios'
 
 // id_member , id_post , content
 // newpass, email , oldpass
 const FormRepassword = ({email}) => {
 
-    const handleSendRepassword = (data) =>{
+    const handleSendRepassword = async(data) =>{
         console.log(data)
         // cho owner
+        let res = await axios.post('/user/owner/repass', {data})
+        alert(res.data.status)
     }
 
     const { handleSubmit, handleChange, errors , touched} = useFormik({

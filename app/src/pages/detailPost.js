@@ -1,4 +1,4 @@
-import { useHistory , useParams , useLocation} from 'react-router-dom'
+import { useParams , useLocation} from 'react-router-dom'
 
 import CardUser from '../component/CardUser'
 import Padding from '../component/padding'
@@ -41,7 +41,7 @@ const DetailPost = () =>{
 		}
 		getDetail(id)
 		getcomment(id)
-	},[data, id])
+	},[id])
 
 	// lay nguoi dung hien tai
 	const currentUser = getUser()
@@ -55,6 +55,11 @@ const DetailPost = () =>{
 	const Like = async (id)=>{
 		let temp = await axios.post(`/post/countlike/${id}`)
 		console.log(temp.data)
+	}
+
+	const DaChoThue = async (id)=>{
+		let temp = await axios.post(`/post/owner/state/${id}`)
+		alert(temp.data.msg)
 	}
 
     return (
@@ -73,8 +78,8 @@ const DetailPost = () =>{
 							Giá:<span class="gia price-news">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.price)}  /tháng</span>
 						</div>
 						<div style={{color: "#2ECC71"}}>
-							<span onClick={Like(id)}>{data.like + " "}<i class="far fa-thumbs-up"></i></span>
-							<span></span>
+							<span onClick={()=>Like(id)}>{data.like + " "}<i class="far fa-thumbs-up"></i></span>
+							<span>{'  '}</span>
 							<span>{data.views + " "}<i class="far fa-eye"></i></span>
 						</div>
 						<div class="col-3">
@@ -96,14 +101,19 @@ const DetailPost = () =>{
 							</div>}
 							{/* Danh cho owner de gia han tin */}
 							{!currentUser || currentUser.role ==="member" || currentUser.id !== data.id_owner? null :
-							<div class="follow">
+							<><div class="follow">
 								<ModalCustom 
 									title="Gia hạn cho tin đăng"
 									button = {<span><span class="text-button-modal" >Gia hạn</span> <i class="far fa-calendar-plus"></i> </span>}
-									body = {<AddTimeNews />}
+									body = {<AddTimeNews  id_post={id} id_owner={currentUser.id}/>}
 									id="modal_giahan_news"
 								/>
-							</div>}
+							</div>
+							{currentUser.id === data.id_owner?
+							<div class="follow">
+								<span><span class="text-button-modal" onClick={()=> DaChoThue(id)}>Tin đã cho thuê</span> <i class="far fa-calendar-plus"></i> </span>
+							</div>: null}
+							</>}
 						</div>						
 					</div>
 					<span class="location"><i class="fa fa-map-marker" aria-hidden="true"></i><p className="" >{data.address}</p></span>
@@ -154,43 +164,3 @@ const DetailPost = () =>{
     )
 }
 export default DetailPost
-
-
-const fakeNews = {
-    "postID": 6,
-    "roomID": 11,
-    "id_owner": 1,
-    "title": "Phòng trọ giá rẻ Mễ Trì Hạ",
-    "address": "Số 17 ngách 126 ngõ 14 Mễ Trì Hạ, Mễ Trì, Nam Từ Liêm, Hà Nội",
-    "duration": 30,
-    "quantity": 4,
-    "price": 2000000,
-    "tiencoc": 1000000,
-    "views": 1,
-    "discription": "Mieu ta ......",
-    "images": "[\"http://192.168.101.109:4000/data/uploads/image/1608577015647_0.jpg\",\"http://192.168.101.109:4000/data/uploads/image/1608577015651_1.jpg\",\"http://192.168.101.109:4000/data/uploads/image/1608577015653_2.jpg\"]",
-    "available": "'not rented'",
-    "createAt": "2020-12-03T00:43:04.000Z",
-    "status": "deactive",
-    "updateAt": "2020-12-03T00:43:08.000Z",
-    "id": 11,
-    "roomType": "0",
-    "area": 20,
-    "shared": 1,
-    "bathroom": "1",
-    "kitchen": "1",
-    "airConditioner": 1,
-    "nonglanh": 1,
-    "balcony": 1,
-    "typeCostElectric": 0,
-    "electricity": 4000,
-    "water": 25000,
-    "near_place": "[\"Tòa nhà Keangnam\",\"Cung triển lãm quy hoạch quốc gia\"]",
-    "other": "",
-    "name": "Phạm Quang Thịnh",
-    "email": "thinh@gmamil.com",
-    "phone": "0987654321",
-    "place": "Thái Thụy - Thái Bình",
-    "cmt": "022355568927",
-    "password": "$2b$10$X1SD4FHxXQHE8pfRZ/ICouIF6wK3tmI09ZC8kqvoaIZd.igH30eJO"
-}

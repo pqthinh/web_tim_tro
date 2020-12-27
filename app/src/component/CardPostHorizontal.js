@@ -13,7 +13,7 @@ const CardPostHorizontal = ({news})=>{
     const redirect = (data) => {
         history.push({
             pathname: `post/${data.postID}`,
-            news: news
+            state: news
         })
         increView(data.postID)
     }

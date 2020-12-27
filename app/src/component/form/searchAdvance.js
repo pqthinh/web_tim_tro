@@ -182,7 +182,7 @@ const SearchAdvance = ()=>{
             </div>
         </div>
 
-        <div class="container">
+        {/* <div class="container"> */}
             {/* Show kết quả tìm kiếm ở đây */}
             <div onClick={()=> setTypeShow(!typeShow)} style={{float: "right"}}>
                 {typeShow?
@@ -196,7 +196,7 @@ const SearchAdvance = ()=>{
                     <div style={{clear: 'both'}}></div>
                 </div>
             }
-        </div>
+        {/* </div> */}
     </div>
     )
 }

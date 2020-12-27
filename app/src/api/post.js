@@ -27,6 +27,9 @@ const post = {
     },
     getDetail: (id) =>{
         return axios.get(`post/${id}`)
-    }
+    },
+    addreport: (id_post, id_member, content)=>{
+        return axios.post("/report/giahan", {id_member: id_member, id_post:id_post, content: content})
+    },
 }
 export default post

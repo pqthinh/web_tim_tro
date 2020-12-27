@@ -2,13 +2,16 @@ import React from 'react'
 import * as Yup from 'yup'
 import { useFormik } from 'formik' 
 import { FormInput } from "../FormInput"
+import axios from '../../fetch/axios'
 
 // id_member , id_post , content
 const AddTimeNews = ({id_post, id_owner}) => {
 
-    const handleSendReport = (data) =>{
+    const handleSendReport =async (data) =>{
         console.log(data)
         // api them thong bao nay vao bang `thongbao`
+        let res = await axios.post("/report/giahan", data)
+        alert(res.data.msg)
     }
 
     const { handleSubmit, handleChange, errors, touched} = useFormik({
@@ -26,7 +29,7 @@ const AddTimeNews = ({id_post, id_owner}) => {
         onSubmit: (values)=> {
             console.log(values)
             let data = {
-                content: values.description,
+                content: values.description + "muon them: "+  values.duration + " ngay",
                 id_owner: id_owner,
                 id_post: id_post,
                 duration: values.duration,
