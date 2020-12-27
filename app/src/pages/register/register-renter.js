@@ -141,7 +141,7 @@ export default function RegisterRenterScreen() {
                         </div>
                         
                         <div className="container-login100-form-btn">
-                            <input type="button"  className="login100-form-btn" onClick={()=> handleRegister()} value={loading ? 'Loading...' : 'Register'}  disabled={loading} value= 'Register' />
+                            <input type="button"  className="login100-form-btn" onClick={()=> handleRegister()} value={loading ? 'Loading...' : 'Register'}  disabled={loading} />
                         </div>
                         <div className="text-center p-t-12">
                             <span className="text-center">

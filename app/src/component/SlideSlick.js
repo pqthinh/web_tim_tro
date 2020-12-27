@@ -5,12 +5,12 @@ import "slick-carousel/slick/slick-theme.css";
 import uriClient from '../fetch/uriClient'
 
 const image = [
-    'images/img1.jpg',
-    'images/img2.jpg',
-    'images/img3.jpg',
-    'images/img1.jpg',
-    'images/img2.jpg',
-    'images/img3.jpg'
+    `${uriClient}/images/img1.jpg`,
+    `${uriClient}/images/img2.jpg`,
+    `${uriClient}/images/img3.jpg`,
+    `${uriClient}/images/img1.jpg`,
+    `${uriClient}/images/img2.jpg`,
+    `${uriClient}/images/img3.jpg`
 ]
 export default function SlideSlick({images, styles}) {
     const listImg = images || image
@@ -29,7 +29,7 @@ export default function SlideSlick({images, styles}) {
             {listImg.map(img => (
                 <div className="each-slide">
                     <div className="image-container">
-                        <img src={uriClient+'/'+img} alt={img} style={styleSlide}/>
+                        <img src={img} alt={img} style={styleSlide}/>
                     </div>
                 </div>
             ))}

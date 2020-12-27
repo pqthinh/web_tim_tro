@@ -8,15 +8,18 @@ import SlideSlick from '../component/SlideSlick'
 import { ModalCustom } from '../component/ModalCustom'
 import FormReport from '../component/FormReport'
 import AddTimeNews from '../component/form/addTimePost'
+import Footer from '../component/Footer'
+import Menu from '../component/Menu'
 
 const DetailPost = ({news}) =>{
 
 	const { id } = useParams()
 	const { state } = useLocation()
 	console.log(id,  state)
-	// alert(JSON.stringify(state))
-	// alert(id)
 
+	const img = JSON.parse(state.images)
+	console.log(img)
+	
 	const data = state || fakeNews
 	// xu ly dky thi se xac thuc dc nguoi dung hien tai => co id va thong tin nguoi dung  quyen(admin| owner)
 	const ReportNews = async(id) =>{
@@ -35,14 +38,14 @@ const DetailPost = ({news}) =>{
 	}
 
     return (
+		<>
+		<Menu />
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-8">
 				<h3 className="title-of-details-post" style={{fontWeight: 'bold', marginTop: 10, marginBottom: 10}}>Phòng {data.postID}</h3>
-				{/* ImageSliderBootstrap truyen vao tham so la images : mang chua link anh */}
-				{/* <ImageSliderBoostrap />  */}
-				{/* <SliderImg /> */}
-				<SlideSlick />
+			
+				<SlideSlick images={img}/>
 				<div class="content">
 					<div class="row">
 						<div class="col-9 title-of-details-post">
@@ -102,9 +105,9 @@ const DetailPost = ({news}) =>{
 			</div>
 
 			<div class="col-sm-12 col-md-4">
-				<CardUser />
+				<CardUser owner={{name: data.name, role: 'owner', id: data.id_owner, email: data.email, phone: data.phone, avatar: data.avatar, place: data.place}}/>
 				<div class="contact">
-					<i class="fa fa-phone" aria-hidden="true"></i>{data.phone}
+					<i class="fa fa-phone" aria-hidden="true"></i>{data.phone|| "09999999999"}
 				</div>
 				<div class="contact">
 					<i class="fa fa-facebook"></i> Nhắn tin
@@ -114,6 +117,9 @@ const DetailPost = ({news}) =>{
 			</div>
 		</div>
 	</div>
+	<Padding />
+	<Footer />
+	</>
     )
 }
 export default DetailPost

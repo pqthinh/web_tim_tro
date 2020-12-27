@@ -1,14 +1,18 @@
 import React from 'react'
-import {Link } from 'react-router-dom'
+import {Link, useHistory } from 'react-router-dom'
 
 import UserItem from './ItemProfile'
 import Message from './Message'
 import Notifycation from './Notifycation'
 import Favourite from './Favourite'
 
+import { getUser } from '../Utils/Common'
 import './Menu.css'
 
 const Menu = () => {
+    const user = getUser()
+    // console.log(user)
+    let history = useHistory()
     return (
         <div className="menu_homepage">
           <nav className="navbar navbar-expand-lg">
@@ -27,23 +31,36 @@ const Menu = () => {
                   <a className="nav-link" href="/up">Đăng tin</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/up">Tìm phòng</a>
+                  <a className="nav-link" href="/search">Tìm phòng</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/news"> Tin tức</a>
+                  <a className="nav-link" href="#footer"> Tin tức</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/manager"> Liên hệ</a>
+                  <a className="nav-link" href="#footer"> Liên hệ</a>
                 </li>
               </ul>
-              
-              <Notifycation />
-              <Message />
-              <Favourite />
-              <div className="topbar-divider d-none d-sm-block"></div>
-              <UserItem />
-              <div className="topbar-divider d-none d-sm-block"></div>
-
+              {!user ? 
+                <span className="btn btn-success">
+                  <i class="far fa-user"></i>{' '}
+                  <span class="text-button-modal" onClick={()=> history.push('/login')}>Đăng nhập </span> 
+                  <i class="fas fa-sign-in-alt"></i> </span> 
+                  : 
+                  user.role === "owner" ?
+                <>
+                  <Notifycation />
+                  <Message />
+                  <div className="topbar-divider d-none d-sm-block"></div>
+                    <UserItem />
+                  <div className="topbar-divider d-none d-sm-block"></div>
+                </> :
+                <>
+                  <Favourite />
+                  <div className="topbar-divider d-none d-sm-block"></div>
+                  <UserItem />
+                  <div className="topbar-divider d-none d-sm-block"></div>
+                </>
+              }
             </div>
           </nav>
         </div>

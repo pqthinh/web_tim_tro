@@ -11,12 +11,11 @@ const ListPost = ({header, news})=>{
                 <h2>{title}</h2>
                 <div class="items">
                     <div class="row">
-                        {
-                            data && data.map(
-                                (x, index)=>
-                                <CardPost key={index} news={x}/>
-                            )
-                        }
+                        {data && data.map(
+                            (x, index)=>
+                            <CardPost key={index} news={x}/>
+                        )}
+                        {!data? <h2 style={{color: 'red'}}>Không có tin nào</h2>: null}
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@ import './Footer.css'
 const Footer = ()=> {
     return (
         <>
-            <footer>
+            <footer id="footer">
                 <div class="row">
                     <div></div>
                     <div class="col-6 col-md-3 col">

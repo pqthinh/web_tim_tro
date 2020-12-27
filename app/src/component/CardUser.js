@@ -1,32 +1,59 @@
+import { useHistory, useLocation } from 'react-router-dom'
 import './CardUser.css'
 import FormRepassword from './FormRepassword'
 import { ModalCustom } from './ModalCustom'
 import FormEditRenter from './form/FormEditRenter'
 
 import { getUser } from '../Utils/Common'
+import post from '../api/owner/getListPostOwner'
+import { useState } from 'react'
 
-const CardUser = () =>{
-	// console.log(getUser())
-	const currentUser = getUser() || {}
+// chac chan da co user ? guest chuwa xet :)
+
+// khi nguoi vao xem trang owner 
+const CardUser = ({owner}) =>{
+	let history = useHistory()
+	const {state} = useLocation()
+	const viewOwner = state
+	const user = getUser()
+	// console.log(user,viewOwner , owner)
+	const currentUser = owner || viewOwner || user
+
+	const redirectToProfileOwner = (data) =>{
+		history.push({
+			pathname: `/profile/owner/${data.id}`,
+			owner: data
+		})
+	}
     return (
         <>
+		{/* Chuyến hướng toi trang ca nhan cua owner */}
             <div id="home" class="tab-pane in active">
 					<div style={{display: 'flex',justifyContent: 'center'}}>
 						<div class="justify-content-center align-self-center">
-                            <img src="images/img1.jpg" alt="Avatar" class="avatar-card-user img-fluid"/> 
+                            <img src={currentUser.avatar} alt="Avatar" class="avatar-card-user img-fluid"/> 
+							
 							<div style={{marginTop: 10}}>
-								<ModalCustom 
-									title="Cập nhật mật khẩu"
-									button = {<span className="btn btn-success"><span class="text-button-modal" >Đổi mật khẩu</span> <i class="fas fa-tools"></i> </span>}
-									body = {<FormRepassword email={currentUser.email}/>}
-									id="modal_re_pasword"
-								/>
-								<ModalCustom 
-									title="Cập nhật thông tin"
-									button = {<span className="btn btn-success"><span class="text-button-modal" >Cập nhật thông tin</span> <i class="fas fa-tools"></i> </span>}
-									body = {<FormEditRenter user={currentUser}/>}
-									id="modal_update_renter"
-								/>
+								{
+									!owner || !user ? null :
+									currentUser.role === "member" ?
+									<ModalCustom 
+										title="Cập nhật thông tin"
+										button = {<span className="btn btn-success"><span class="text-button-modal" >Cập nhật thông tin</span> <i class="fas fa-tools"></i> </span>}
+										body = {<FormEditRenter user={currentUser}/>}
+										id="modal_update_renter"
+									/> : 
+									currentUser.email === user.email ? 
+									<ModalCustom 
+										title="Cập nhật mật khẩu"
+										button = {<span className="btn btn-success"><span class="text-button-modal" >Đổi mật khẩu</span> <i class="fas fa-tools"></i> </span>}
+										body = {<FormRepassword email={currentUser.email}/>}
+										id="modal_re_pasword"
+									/> :
+									null
+								}
+								
+								
 							</div>
 						</div>
 
@@ -34,21 +61,23 @@ const CardUser = () =>{
                             <div className="mt-3"></div>
 							<h4 class="carduser-name-user">
                                 <i class="fas fa-user-tie"></i>
-								<a href="!#"><span class="content">Name: Thinh</span></a>
+								
+								{/* kiem tra neu la owner thi chuyen trang */}
+								<span class="content" onClick={()=> redirectToProfileOwner(currentUser)}>Name: {currentUser.name}</span>
 							</h4>
 
 							<div class="profile-user-info">
 								<div class="profile-info-row">
 									<div class="profile-info-value">
                                         <i class="fas fa-envelope"></i>
-										<span className="content">email@email.email</span>
+										<span className="content">{currentUser.email}</span>
 									</div>
 								</div>
 
 								<div class="profile-info-row">
 									<div class="profile-info-value">
                                         <i class="fas fa-home"></i>
-                                        <span className="content">Hà Nội</span>
+                                        <span className="content">{currentUser.place}</span>
 									</div>
 								</div>
 							</div>
@@ -57,11 +86,13 @@ const CardUser = () =>{
 								<div class="profile-info-row">
 									<div class="profile-info-name">
 									<i class="fas fa-phone-square"></i>
-                                        <span  className="content"> sdt</span>
+                                        <span  className="content"> {currentUser.phone}</span>
 									</div>
 								</div>
 							</div>
-
+							{/* api lấy tin đăng của 1 người */}
+							{currentUser.role=== "owner" ?
+							<>
 							<div class="profile-user-info">
 								<div class="profile-info-row">
 									<div class="profile-info-name">
@@ -73,7 +104,8 @@ const CardUser = () =>{
 							
 							<div className="Star-of-user">
 								<span>Đánh giá: 5 <i class="fas fa-star" style={{color: "yellow"}}></i></span>
-							</div>
+							</div> </>
+							: null}
 						</div>
 					</div>
                     

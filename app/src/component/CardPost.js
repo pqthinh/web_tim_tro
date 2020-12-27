@@ -1,41 +1,43 @@
 import React from 'react'
 import './CardPost.css'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const CardPost = ({news}) =>{
     // props được thay bằng thông tin giới thiệu của bài đăng đó
     const data = news || fakeNews
+    let history = useHistory()
+    const redirect = (data) => {
+        history.push({
+            pathname: `post/${data.postID}`,
+            news: news
+        })
+    }
     return (
         <>
-            <div class="col-6 col-sm-4 col-md-3 cardpost">
-                <Link to={{
-                    pathname: "/post/2",
-                    state: {news: data}
-                }}>
-                    <div class="room detail-room">
-                        <div class="image-room">
-                            <div class="image"><img src="images/img1.jpg" alt="can-ho" id="cardPost-img"/></div>
-                            <div class="follow"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+            <div class="col-6 col-sm-4 col-md-3 cardpost" onClick={()=> redirect(data)} >
+                <div class="room detail-room">
+                    <div class="image-room">
+                        <div class="image"><img src="images/img1.jpg" alt="can-ho" id="cardPost-img"/></div>
+                        <div class="follow"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+                    </div>
+                    <div class="cap">
+                        <div class="title-1">
+                            {data.title}
                         </div>
-                        <div class="cap">
-                            <div class="title-1">
-                                {data.title}
-                            </div>
-                            <div class="title-3">
-                                <i class="fas fa-coins"></i>
-                                <span className="content">{data.price}/tháng</span>
-                            </div>
-                            <div class="title-2">
-                                <i class="fas fa-house-user"></i>
-                                <span className="content">{data.name}</span>
-                            </div>
+                        <div class="title-3">
+                            <i class="fas fa-coins"></i>
+                            <span className="content">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.price)}/tháng</span>
                         </div>
-                        <div class="cap-foot">
-                            <i class="fas fa-home"></i>
-                            <span className="content">{data.address}</span>
+                        <div class="title-2">
+                            <i class="fas fa-house-user"></i>
+                            <span className="content">{data.name}</span>
                         </div>
                     </div>
-                </Link>
+                    <div class="cap-foot">
+                        <i class="fas fa-home"></i>
+                        <span className="content">{data.address}</span>
+                    </div>
+                </div>
             </div>
         </>
     )

@@ -53,7 +53,7 @@ export default function RegisterOwnerScreen() {
         }
 
         // check id 
-        var part = new RegExp(/^([0-9]){9,12}$/)
+        part = new RegExp(/^([0-9]){9,12}$/)
         if(!part.test(cmt.value)) {
             setError("Cmt not validation")
             return
@@ -159,7 +159,7 @@ export default function RegisterOwnerScreen() {
                         </div>
                         
                         <div className="container-login100-form-btn">
-                            <input type="button"  className="login100-form-btn" onClick={()=> handleRegister()} value={loading ? 'Loading...' : 'Register'}  disabled={loading} value= 'Register'  />
+                            <input type="button"  className="login100-form-btn" onClick={()=> handleRegister()} value={loading ? 'Loading...' : 'Register'}  disabled={loading}  />
                         </div>
                         <Link to="#"> 
                             <button class="btn btn-google btn-user btn-block p-t-10" >

@@ -1,12 +1,14 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 
-const CardPostOfSlick = ({props}) =>{
+const CardPostOfSlick = ({news}) =>{
+    const data = news || fakeNews
+
     return (
         <>
             <Link to={{
-                pathname: "/post/2",
-                state: {news: fakeNews}
+                pathname: `/post/${data.postID}`,
+                state:  data
             }}>
                 <div class="room detail_room_card_post">
                     <div class="image-room">
@@ -15,20 +17,20 @@ const CardPostOfSlick = ({props}) =>{
                     </div>
                     <div class="cap">
                         <div class="title-1">
-                            Phòng trọ giá rẻ Mễ Trì
+                            {data.title}
                         </div>
                         <div class="title-3">
                             <i class="fas fa-coins"></i>
-                            <span className="content">1,6 triệu/tháng</span>
+                            <span className="content">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.price)}/tháng</span>
                         </div>
                         <div class="title-2">
                             <i class="fas fa-house-user"></i>
-                            <span className="content">Pham Quang Thinh</span>
+                            <span className="content">{data.name}</span>
                         </div>
                     </div>
                     <div class="cap-foot">
                         <i class="fas fa-home"></i>
-                        <span className="content">Hà Nội</span>
+                        <span className="content">{data.address}</span>
                     </div>
                 </div>
             </Link>

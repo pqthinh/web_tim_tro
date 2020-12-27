@@ -1,12 +1,63 @@
-import { useState } from "react"
+import axios from "../../fetch/axios"
+import { useEffect, useState } from "react"
 import ListPost from "../ListPost"
 import ListPostHorizontal from "../ListPostHorizontal"
+// import { useHistory } from "react-router-dom"
 
-const role = ["admin" , "owner"]
-const currentUserRole = "renter"
-export const TabPostManager =  ()=>{
-
+const allpri = ["admin" , "owner"]
+var notpri = "renter"
+export const TabPostManager = ({id_owner, role})=>{
+    
+    const currentUserRole = role || notpri
+    console.log(currentUserRole , id_owner)
     const [typeShow, setTypeShow] = useState(1)
+
+    const [all, setAll] = useState([])
+    const [selling, setSelling] = useState([])
+    const [selled, setSelled] = useState([])
+    const [pending, setPending] = useState([])
+    const [block, setBlock] = useState([])
+    const [expire, setExpire] = useState([])
+
+    // check role de fetch api
+    useEffect(() => {
+        const forMem = async () =>{
+            const resSelling  = await  axios.get('/post/owner/type', {status: "active", id_owner: id_owner, available: "not rented"})
+            console.log(resSelling.data)
+            setSelling(resSelling.data)
+
+            const resSelled  = await  axios.get('/post/owner/type', {available: "rented", id_owner: id_owner, available: "rented"})
+            console.log(resSelled.data)
+            setSelled(resSelled.data)
+
+            // setAll([...all, selled, selling])
+            setAll(selled.concat(selling).concat(pending))
+        }
+        const forOwner = async ()=>{
+            const resSelling  = await  axios.get('/post/owner/type', {status: "active", id_owner: id_owner, available: "not rented"})
+            console.log(resSelling.data)
+            setSelling(resSelling.data)
+
+            const resSelled  = await  axios.get('/post/owner/type', {available: "rented", id_owner: id_owner, available: "rented"})
+            console.log(resSelled.data)
+            setSelled(resSelled.data)
+
+            const resPending  = await  axios.get('/post/owner/type', {status: "pending", id_owner: id_owner})
+            console.log(resPending.data)
+            setPending(resPending.data)
+
+            const resBlock  = await  axios.get('/post/owner/type', {available: "deactive", id_owner: id_owner})
+            console.log(resBlock.data)
+            setBlock(resBlock.data)
+
+            const res = await axios.get('/post/owner', {id_owner: id_owner})
+            setExpire(res.data)
+            setAll(selled.concat(selling).concat(pending).concat(block).concat(expire))
+
+        }
+        allpri.includes(currentUserRole) ?
+            forOwner() : forMem()
+    },[currentUserRole, id_owner])
 
     return (
         <div class="container">
@@ -20,7 +71,7 @@ export const TabPostManager =  ()=>{
 
                             {/* phân quyền */}
                             
-                            {role.includes(currentUserRole)? <>
+                            {allpri.includes(currentUserRole)? <>
                             <a class="nav-item nav-link" id="nav-pendding-tab" data-toggle="tab" href="#nav-pendding" role="tab" aria-controls="nav-pendding" aria-selected="false">Tin đợi duyệt</a>
                             <a class="nav-item nav-link" id="nav-expire-tab" data-toggle="tab" href="#nav-expire" role="tab" aria-controls="nav-expire" aria-selected="false">Tin đã bị hết hạn</a>
                             <a class="nav-item nav-link" id="nav-deactive-tab" data-toggle="tab" href="#nav-deactive" role="tab" aria-controls="nav-deactive" aria-selected="false">Tin đã bị hủy</a> </>
@@ -36,43 +87,43 @@ export const TabPostManager =  ()=>{
 
                         <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
                             {typeShow?
-                            <ListPost header={"Tất cả tin của bạn"} />:
-                            <ListPostHorizontal header={"Tất cả tin của bạn"} />
+                            <ListPost header={"Tất cả tin của bạn"} news={all}/>:
+                            <ListPostHorizontal header={"Tất cả tin của bạn"} news={all}/>
                             }
                         </div>
 
                         <div class="tab-pane fade" id="nav-posting" role="tabpanel" aria-labelledby="nav-posting-tab">
                             {typeShow?
-                            <ListPost header={"Tin đang bán"} />:
-                            <ListPostHorizontal header={"Tin đang bán"} />
+                            <ListPost header={"Tin đang bán"} news={selling}/>:
+                            <ListPostHorizontal header={"Tin đang bán"} news={selling}/>
                             }
                         </div>
 
                         <div class="tab-pane fade" id="nav-pendding" role="tabpanel" aria-labelledby="nav-pendding-tab">
                             {typeShow?
-                            <ListPost header={"Tin đang chờ duyệt"} />:
-                            <ListPostHorizontal header={"Tin đang chờ duyệt"} />
+                            <ListPost header={"Tin đang chờ duyệt"} news={pending}/>:
+                            <ListPostHorizontal header={"Tin đang chờ duyệt"}  news={pending}/>
                             }
                         </div>
 
                         <div class="tab-pane fade" id="nav-rented" role="tabpanel" aria-labelledby="nav-rented-tab">
                             {typeShow?
-                            <ListPost header={"Tin đã cho thuê"} />:
-                            <ListPostHorizontal header={"Tin đã cho thuê"} />
+                            <ListPost header={"Tin đã cho thuê"} news={selled}/>:
+                            <ListPostHorizontal header={"Tin đã cho thuê"}  news={selled}/>
                             }
                         </div>
 
                         <div class="tab-pane fade" id="nav-expire" role="tabpanel" aria-labelledby="nav-expire-tab">
                             {typeShow?
-                            <ListPost header={"Tin đã hết hạn đăng"} />:
-                            <ListPostHorizontal header={"Tin đã hết hạn đăng"} />
+                            <ListPost header={"Tin đã hết hạn đăng"} news={expire}/>:
+                            <ListPostHorizontal header={"Tin đã hết hạn đăng"}  news={expire}/>
                             }
                         </div>
 
                         <div class="tab-pane fade" id="nav-deactive" role="tabpanel" aria-labelledby="nav-deactive-tab">
                             {typeShow?
-                            <ListPost header={"Tin bị cấm đăng"} />:
-                            <ListPostHorizontal header={"Tin bị cấm đăng"} />
+                            <ListPost header={"Tin bị cấm đăng"} news={block}/>:
+                            <ListPostHorizontal header={"Tin bị cấm đăng"}  news={block}/>
                             }
                         </div>
                     </div>

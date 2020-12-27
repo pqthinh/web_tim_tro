@@ -4,13 +4,13 @@ import Menu from '../component/Menu'
 import Padding from '../component/padding'
 import { PostForm } from '../component/post/PostForm'
 import SliderImg from '../component/SliderImg'
-import SlideSlick from '../component/SlideSlick'
+// import SlideSlick from '../component/SlideSlick'
 
 const PostNews = () =>{
     return(
         <>
         <Menu />
-        <SlideSlick />
+        <SliderImg />
         <Padding/>
         <PostForm />
         <Footer />

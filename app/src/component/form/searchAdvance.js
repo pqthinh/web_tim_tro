@@ -6,34 +6,38 @@ import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import '../SearchForm.css'
 import { useLocation } from "react-router-dom";
-import axios from "axios";
-import baseUrl from "../../fetch/baseurl";
+import axios from "../../fetch/axios";
+// import baseUrl from "../../fetch/baseurl";
 import ListPost from "../ListPost";
 
 const SearchAdvance = ()=>{
     const {place} = useLocation() || ""
-    console.log(place)
+    // console.log(place)
     const [cost, setCost] = useState([500000,100000000])
     const [area, setArea] = useState([0,200])
 
     const [post, setPost] = useState([])
 
-    const search = async(data) => {
-        const result = await axios.get(`${baseUrl}/post/all/search`, {address: data})
+    const searchPlace = async() => {
+        const result = await axios.post(`/post/all/search`, {address: place})
         console.log(result.data)
         setPost(result.data)
     }
 
     useEffect(()=> {
-        if(place) {
+        if(place && place!== "") {
             console.log(place)
-            search(place)
-            // console.log(result.data)
-            // setPost(result.data)
+            searchPlace()
         }
-    },[post])
+    },[place])
 
-    const { handleSubmit, handleChange } = useFormik({
+    const search = async(data) => {
+        const result = await axios.post(`/post/all/search`, data)
+        console.log(result.data)
+        setPost(result.data)
+    }
+
+    const { handleSubmit, handleChange , values } = useFormik({
         initialValues: {
             place: place,
             typeroom: "",
@@ -53,8 +57,7 @@ const SearchAdvance = ()=>{
         onSubmit: (value) => {
             // console.log(value);
             let data = {
-                address:  value.address,
-                nearby: value.nearby,
+                address:  value.place,
                 roomType: value.typeroom,
                 area: area,
                 price: cost,
@@ -71,7 +74,7 @@ const SearchAdvance = ()=>{
             };
             console.log(data)
             // api search
-
+            search(data)
         },
     });
 
@@ -82,7 +85,7 @@ const SearchAdvance = ()=>{
                 <form action="" onSubmit={handleSubmit}>
                     <div class="box-search" style={{width: '100%'}}>
                         <button class="nut"><i class="fas fa-search"></i></button>
-                        <input type="text" value={place} placeholder="Tìm theo khu vực, tên trường học,..." />
+                        <input type="text" value={values.place} onChange={handleChange} name="place" placeholder="Tìm theo khu vực, tên trường học,..." />
                         <button type="submit" class="btntim">Tìm kiếm</button>
                     </div>
                     <div>
@@ -99,6 +102,7 @@ const SearchAdvance = ()=>{
                         <div className="row" style={{justifyContent: "space-between", marginLeft: 10, marginRight: 10}}>
                             <FormInput
                                 name="typeroom"
+                                label= "Loại phòng"
                                 placeholder="Loại phòng"
                                 listOption={typeRoomData}
                                 onChange={handleChange}
@@ -106,6 +110,7 @@ const SearchAdvance = ()=>{
                             />
                             <FormInput
                                 name="with_owner"
+                                label = "Chung chủ"
                                 placeholder="Chung chủ"
                                 listOption={option}
                                 onChange={handleChange}
@@ -113,6 +118,7 @@ const SearchAdvance = ()=>{
                             />
                             <FormInput
                                 name="airconditional"
+                                label="Điều hoà"
                                 placeholder="Điều hoà"
                                 listOption={option}
                                 onChange={handleChange}
@@ -120,6 +126,7 @@ const SearchAdvance = ()=>{
                             />
                             <FormInput
                                 name="heater"
+                                label="Nóng lạnh"
                                 placeholder="Nóng lạnh"
                                 listOption={option}
                                 onChange={handleChange}
@@ -127,6 +134,7 @@ const SearchAdvance = ()=>{
                             />
                             <FormInput
                                 name="kitchen"
+                                label="Khu bếp"
                                 placeholder="Khu bếp"
                                 listOption={option}
                                 onChange={handleChange}
@@ -134,6 +142,7 @@ const SearchAdvance = ()=>{
                             />
                             <FormInput
                                 name="bathroom"
+                                label="Phòng tắm"
                                 placeholder="Phòng tắm"
                                 listOption={option}
                                 onChange={handleChange}
@@ -141,6 +150,7 @@ const SearchAdvance = ()=>{
                             />
                             <FormInput
                                 name="balcony"
+                                label="Ban công"
                                 placeholder="Ban công"
                                 listOption={option}
                                 onChange={handleChange}
@@ -148,6 +158,7 @@ const SearchAdvance = ()=>{
                             />
                             <FormInput
                                 name="electric_water_price"
+                                label="Điện giá dân"
                                 placeholder="Điện giá dân"
                                 listOption={option}
                                 onChange={handleChange}
@@ -171,7 +182,7 @@ const SearchAdvance = ()=>{
 
         <div>
             {/* Show kết quả tìm kiếm ở đây */}
-            <ListPost news = {post}/>
+            <ListPost news = {post} header="Kết quả tìm kiếm"/>
         </div>
     </div>
     )
@@ -182,15 +193,18 @@ const sort = [
     {code: 0, name: "Giá thấp trước"},
     {code: 1, name: "Đăng gần đây nhất"},
     {code: 2, name: "View cao nhất"},
+    { name: ""}
 ]
 const typeRoomData = [
     { code: 0, name: "Phòng trọ" },
     { code: 1, name: "Chung cư mini" },
     { code: 2, name: "Nhà nguyên căn" },
     { code: 3, name: "Chung cư" },
+    { name: ""}
 ];
 
 const option = [
+    { name: ""},
     { code: 1, name: "Có" },
     { code: 0, name: "Không" },
 ];

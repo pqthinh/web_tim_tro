@@ -12,9 +12,6 @@ import { TabMemberSaveNews } from '../component/tab/TabMemberSaveNews'
 import CardUser from '../component/CardUser'
 import Search from '../component/SearchForm'
 import SliderImg from '../component/SliderImg'
-import SlideSlick from '../component/SlideSlick'
-// import SearchAdvance from '../component/form/searchAdvance'
-// import Ranger from '../component/form/ranger'
 
 const Home =() =>{
     return (
@@ -22,28 +19,16 @@ const Home =() =>{
             <Menu />
             <Search />
             <SliderImg />
-            {/* <SlideSlick styles={{height: 400}}/> */}
-            
             <Padding />
-            <TabPostManager />
-            <div className="container">
-                <CardUser /> 
-            </div>
+            <ListPostSlick news={null} header ="Tin đang được quan tâm"/>
             <Padding />
-            <TabMemberSaveNews />
-            <PostForm />
-            <Slider />
-            <Padding />
-            <div>
-                <CardPostHorizontal />
-            </div>
+            <ListPostSlick news={null} header ="Tin đang được xem nhiều nhất"/>
             <Padding />
             <ListPost />
-            <Padding />
-            <ListPostSlick />
             <Padding />
             <Footer />
         </div>
     )
 }
 export default Home;
+

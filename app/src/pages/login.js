@@ -8,7 +8,7 @@ import uriClient from '../fetch/uriClient'
 
 const useFormInput = initialValue => {
     const [value, setValue] = useState(initialValue)
-  
+    
     const handleChange = e => {
         const target = e.target;
         const value = target.type === 'checkbox' ? !target.checked : target.value;
@@ -68,6 +68,9 @@ export default function Login() {
         <div className="limiter">
             <div className="container-login100">
                 <div className="wrap-login100">
+                    <div style={{position: "absolute", top: 1 , left: 1}} onClick={()=> history.goBack()}>
+                        <i class="fas fa-hand-point-left"></i> Back
+                    </div>
                     <div className="login100-pic js-tilt" data-tilt>
                         <img src={`${uriClient}/images/img-01.png`} alt="IMG" />
                     </div>

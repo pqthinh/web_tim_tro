@@ -20,6 +20,7 @@ import {getToken,  removeUserSession, setUserSession } from './Utils/Common'
 import axios from './fetch/axios';
 import OwnerRoute from './Utils/OwnerRoute';
 import MemberRoute from './Utils/MemberRoute';
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 function App() {
   // const [authLoading, setAuthLoading] = useState(true);
@@ -58,7 +59,9 @@ function App() {
           <OwnerRoute path='/up' component={PostNews } />
           <PublicRoute path="/post/:id" component={DetailPost} />
           {/* <PrivateRoute path="/profile" component={ProfileOwner} /> */}
-          <MemberRoute path="/profile" component={ProfileOwner} />
+          <PublicRoute path="/profile" exact component={ProfileOwner} />
+          
+          <PublicRoute path="/profile/owner/:id" exact component={ProfileOwner} />
           
           <PublicRoute path='/login' component={Login} />
           <PublicRoute path="/register" component={Register} />
@@ -68,6 +71,10 @@ function App() {
           <Route component={NotFoundScreen} />
         </Switch>
       </Router>
+      <MessengerCustomerChat
+        pageId="105594764796304"
+        appId="1552657571597902"
+      />,
     </>
   )
 }
