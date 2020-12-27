@@ -236,6 +236,7 @@ const Owner = {
 
             }
             // get basic user details
+            result[0][0].id = result[0][0].id_owner
             const userObj = utils.getCleanUser(result[0][0]);
             userObj.role = "owner"
             // generate token
