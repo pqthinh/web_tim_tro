@@ -25,12 +25,13 @@ const Comment = {
     // comment da dc duyet
     GetCommentPost : async (req ,res , next) =>{
         let conn 
-        const body = req.body , id_member = (body.id_member ?  `id_member = '${body.id_member}'` : " 1 "), id_post = ( body.id_post ?  `id_post =  '${body.id_post}' `: " 1 " )
+        const body = req.params , id_member = (body.id_member ?  `review.id_member = '${body.id_member}'` : " 1 "), id_post = ( body.id ?  `review.id_post =  '${body.id}' `: " 1 " )
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql, result
-            sql = `select * from review join member on member.id = review.id_member where ${id_member} and ${id_post} and status = 'active'`
+            sql = `select * from review join member on member.id = review.id_member where ${id_member} and ${id_post} and review.status = 'active'`
+            console.log(sql)
             result = await conn.query(sql)
             await conn.commit()
             res.json({review: result[0]})

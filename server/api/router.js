@@ -13,9 +13,13 @@ const auth = require('./mysql/tokencheck').auth
 
 // post
 const post = require('./mysql/post')
-router.get("/post/infor" , post.getAllPostActive)         // tat ca cac tin torng bang post
+router.get("/post/infor/:type" , post.getAllPostActive)         // tat ca cac tin torng bang post
 router.get('/post/owner/type', post.getAllInforPost)   // thong tin chi tiet cua bai dang (user + room + thong tin bai dang)
+router.get('/post/all', post.getAllInfor)
+router.get('/post/:id', post.getDetail)
 router.post('/post/create', post.createPost)    // upload anh len server truoc
+router.post('/post/countview/:id', post.countView)
+router.post('/post/countlike/:id', post.countLike)
 
 // post tin body request: room :: id_owner, typeRoom ,area, chungchu , bathroom , kitchen, dieuhoa , bancong , diennuoc ,dien , nuoc , nearby
 // post:: address ,thoihan ,quantity ,price , discription , images(array lay dc sau khi upload anh)
@@ -72,7 +76,7 @@ router.post("/user/admin/:id", auth , admin.editDataAdmin)      // {"username":"
 
 // Comment + Review
 const comment = require('./mysql/comment')
-router.get('/comment/post', comment.GetCommentPost)   // body request :  id_post (null)  , id_member (null)  // lay thong tin tin dang theo id_post | xem cac binh luan cua 1 nguoi
+router.get('/comment/post/:id', comment.GetCommentPost)   // body request :  id_post (null)  , id_member (null)  // lay thong tin tin dang theo id_post | xem cac binh luan cua 1 nguoi
 router.post('/comment/post', comment.AddComment )    // body request :  id_post  , id_member  , comment , star
 //for admin (lay comment dang cho duyet va active hoac huy)
 router.get('/comment/admin/all', comment.GetCommentPostToAdmin)    // lay het comment cho duyet

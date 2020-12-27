@@ -3,21 +3,99 @@ var fs = require('fs');
 const baseUrl = "http://localhost:4000"
 
 const Post = {
+    getDetail: async (req, res, next) =>{
+        try {
+            conn = await dbs.getConnection()
+            await conn.beginTransaction()
+            let sql, id_post =req.params.id
+            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where postId=?`
+            console.log(sql)
+            result = await conn.query(sql, [id_post])
+            res.json(result[0][0])
+            await conn.commit()
+        }
+        catch (err) {
+            await conn.rollback()
+            next(err)
+        }
+        finally {
+            await conn.release()
+        }
+    },
+    countView:  async (req, res, next) =>{ 
+        try {
+            conn = await dbs.getConnection()
+            await conn.beginTransaction()
+            let sql, id_post =req.params.id
+            sql = `update post set views = views +1 where postID = ?`
+            console.log(sql)
+            result = await conn.query(sql, [id_post])
+            res.json({msg: "+1"})
+            await conn.commit()
+        }
+        catch (err) {
+            await conn.rollback()
+            next(err)
+        }
+        finally {
+            await conn.release()
+        }
+    },
+    countLike:  async (req, res, next) =>{ 
+        try {
+            conn = await dbs.getConnection()
+            await conn.beginTransaction()
+            let sql, id_post =req.params.id
+            sql = "update post set `like` = `like` +1 where postID = ?"
+            console.log(sql)
+            result = await conn.query(sql, [id_post])
+            res.json({msg: "+1 like"})
+            await conn.commit()
+        }
+        catch (err) {
+            await conn.rollback()
+            next(err)
+        }
+        finally {
+            await conn.release()
+        }
+    },
     getAllPostActive: async (req, res, next) =>{ 
         let conn
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql, result, con = ""
-            let filter = req.body.type
+            let filter = req.params.type
             // sap tin theo view
             // theo thoi gian 
             // all
 
-            if(filter===0) con = ` order by p.updateAt `
-            if(filter===1) con = ` order by p.view `
+            if(filter==0) con = ` order by p.updateAt `
+            if(filter==1) con = ` order by p.views desc  limit 8`
+            if(filter==2) con = ` order by p.like desc  limit 8`
             // if(filter===0) con = ` order by p.updateAt `
             sql = `select * from post p join room r on p.roomid = r.id join owner o on o.id_owner = p.id_owner where datediff(CURRENT_DATE, p.updateAt) < p.duration and p.status ='active' ${con}`
+            console.log(sql)
+            result = await conn.query(sql)
+            await conn.commit()
+            res.json(result[0])
+        }
+        catch (err) {
+            await conn.rollback()
+            next(err)
+        }
+        finally {
+            await conn.release()
+        }
+    },
+    getAllInfor: async (req, res , next) =>{
+        let con
+        try {
+            conn = await dbs.getConnection()
+            await conn.beginTransaction()
+            let sql, result
+            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner `
             result = await conn.query(sql)
             await conn.commit()
             res.json(result[0])
