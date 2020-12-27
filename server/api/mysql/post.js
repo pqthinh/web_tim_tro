@@ -4,6 +4,7 @@ const baseUrl = "http://localhost:4000"
 
 const Post = {
     getDetail: async (req, res, next) =>{
+        let conn
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
@@ -23,6 +24,7 @@ const Post = {
         }
     },
     countView:  async (req, res, next) =>{ 
+        let conn
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
@@ -42,13 +44,14 @@ const Post = {
         }
     },
     countLike:  async (req, res, next) =>{ 
+        let conn
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql, id_post =req.params.id
             sql = "update post set `like` = `like` +1 where postID = ?"
             console.log(sql)
-            result = await conn.query(sql, [id_post])
+            let result = await conn.query(sql, [id_post])
             res.json({msg: "+1 like"})
             await conn.commit()
         }
@@ -90,7 +93,7 @@ const Post = {
         }
     },
     getAllInfor: async (req, res , next) =>{
-        let con
+        let conn
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
@@ -109,8 +112,9 @@ const Post = {
         }
     },
     getAllInforPost: async (req, res , next) =>{
-        let con
-        let body = req.body , id_owner = body.id_owner, status= body.status, available = body.available
+        let conn
+        console.log(req.query)
+        let body = req.query , id_owner = body.id_owner, status= body.status, available = body.available
         status =  status? status : "active"   // active / deactive / pending
         // not rented // rented
         available =  available ? available : "not rented"
@@ -119,10 +123,10 @@ const Post = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql, result
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ? and post.status = ? and ${consql} `
+            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_owner} and post.status = '${status}' and ${consql} `
             console.log(sql)
 
-            result = await conn.query(sql, [id_owner, status, available])
+            result = await conn.query(sql)
             await conn.commit()
             res.json(result[0])
         }
@@ -137,17 +141,18 @@ const Post = {
     // Lay dang sach tin theo id nguoi cho thue
     // tin het han
     getPostOwner: async (req, res , next) =>{
-        let con
+        let conn
+        const body = req.body , id_owner = body.id_owner || req.query.id_owner
+        console.log(id_owner)
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
-            const body = req.body , id_owner = body.id_owner
             let sql, result
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where owner.id_owner = ? and datediff(CURRENT_DATE, post.updateAt) > post.duration `
+            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where owner.id_owner = ${id_owner} and datediff(CURRENT_DATE, post.updateAt) > post.duration `
             console.log(sql)
-            result = await conn.query(sql, [id_owner])
+            result = await conn.query(sql)
             await conn.commit()
-            res.json(result[0])
+            res.json(result[0][0])
         }
         catch (err) {
             await conn.rollback()
@@ -369,12 +374,12 @@ const Post = {
     },
     updateAvailablePost :  async (req, res, next) =>{
         let conn 
-        const body = req.body ,id = body.postID
+        const body = req.query ,id = body.postID
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
 
-            let sql  = "update post set status = 'rented' where postID = ?"
+            let sql  = "update post set availabel = 'rented' where postID = ?"
             await conn.query(sql, [status, id])
             await conn.commit()
             res.status(200).json({

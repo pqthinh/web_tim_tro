@@ -144,7 +144,7 @@ const Owner = {
     },
     // Dung cho ca thanh vien va nguoi cho thue nha
     UpdatePassOwner: async (req, res, next) =>{
-        let con
+        let conn
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
