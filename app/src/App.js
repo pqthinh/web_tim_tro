@@ -16,40 +16,12 @@ import SearchScreen from './pages/searchPost'
 import PostNews from "./pages/postNews";
 import ProfileOwner from "./pages/ProflieOwner";
 
-import {getToken,  removeUserSession, setUserSession } from './Utils/Common'
-import axios from './fetch/axios';
 import OwnerRoute from './Utils/OwnerRoute';
-import MemberRoute from './Utils/MemberRoute';
+// import MemberRoute from './Utils/MemberRoute';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 function App() {
-  // const [authLoading, setAuthLoading] = useState(true);
-  // useEffect(() => {
-  //   const token = getToken();
-  //   if (!token) {
-  //     return;
-  //   }
-
-  //   axios.get(`http://localhost:4000/api/verifyToken?token=${token}`).then(response => {
-  //     console.log(response.data.user)
-  //     setUserSession(response.data.token, response.data.user)
-  //     setAuthLoading(false);
-  //     console.log("Load token")
-  //     axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
-  //   }).catch(error => {
-  //     console.log("remove token")
-  //     removeUserSession();
-  //     setAuthLoading(false);
-  //     delete axios.defaults.headers.common.Authorization
-  //   });
-    
-  // }, []);
-
-  // if (authLoading && getToken()) {
-  //   return (
-  //     <div className="App"> Checking Authentication...</div>
-  //   )
-  // }
+  
   return (
     <>
       <Router >

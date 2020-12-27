@@ -4,12 +4,12 @@ import 'react-slideshow-image/dist/styles.css'
 import uriClient from '../fetch/uriClient'
 
 const fadeImages = [
-  'images/image1.jpg',
-  'images/image2.jpg',
-  'images/image3.jpg',
-  'images/image1.jpg',
-  'images/image2.jpg',
-  'images/image3.jpg'
+  `${uriClient}/images/image1.jpg`,
+  `${uriClient}/images/image2.jpg`,
+  `${uriClient}/images/image3.jpg`,
+  `${uriClient}/images/image1.jpg`,
+  `${uriClient}/images/image2.jpg`,
+  `${uriClient}/images/image3.jpg`
 ];
 const properties = {
     duration: 2000,
@@ -26,7 +26,7 @@ const SliderImg = ({images , styles}) => {
             {listimage.map(img => (
                 <div className="each-slide">
                     <div className="image-container">
-                        <img src={uriClient+'/'+img} alt={img} style={styleSlide}/>
+                        <img src={img} alt={img} style={styleSlide}/>
                     </div>
                 </div>
             ))}

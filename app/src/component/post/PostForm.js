@@ -4,13 +4,25 @@ import * as Yup from "yup";
 import MultiImageInput from 'react-multiple-image-input';
 import axios from 'axios'
 
-import {Button} from 'react-bootstrap'
+import {Button, Modal} from 'react-bootstrap'
 import getData from "../../Utils/DataAddress";
 import { FormInput } from "../FormInput";
 import Note from "../Note";
 import Padding from "../padding";
+import { getUser } from "../../Utils/Common";
+import PreView from "./PostPreview";
 
 export const PostForm = () => {
+    const user = getUser()
+    const id_owner = user.id
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [news, setNews] = useState({})
+
     const province = getData.province();
     const districtValue = getData.district();
     const communeValue = getData.commune();
@@ -83,19 +95,8 @@ export const PostForm = () => {
         setCommune(newCommune);
     };
 
-    // button upload ảnh lên server trước
-    // up luon anh cung voi chi tiet tin 
-    // const handleSubmitImages =async (images) => {
-    //     // console.log(images)
-    //     const result = await axios.post("http://localhost:4000/api/images/upload/base64", {file: images} )
-    //     const path = result.data.path
-    //     console.log(path)
-    //     setLinkimg(path)
-
-    //     // Làm cách này thì set images: ở phần onsubmit thành (linkimgs)
-    // }
-
     const handlePostNewsToDB = async (data) => {
+        setShow(false)
         try {
             const result = await axios.post("http://localhost:4000/api/post/create", data )
             const res = result.data
@@ -105,11 +106,11 @@ export const PostForm = () => {
         catch(err) {
             console.log(err)
         }
-        alert(JSON.stringify(data))
+        // alert(JSON.stringify(data))
     }
 
     const ConvertNearBytoPlace = (data) =>{
-        alert(JSON.stringify(data))
+        // alert(JSON.stringify(data))
         var arr = []
         data.map(x=> arr.push(x.value))
         console.log(arr)
@@ -183,7 +184,7 @@ export const PostForm = () => {
             description: Yup.string()
             .required(message)
             .min(10, 'Độ dài tối thiểu là 10')
-            .max(250, 'Tối đa 250 ký tự')
+            .max(2000, 'Tối đa 2000 ký tự')
 
             // images: Yup
             // images: Yup.array().min(1).max(10).required(message),
@@ -216,7 +217,7 @@ export const PostForm = () => {
 
                 // tieu de va noi dung
                 title: value.title,
-                description: value.description,
+                discription: value.description,
                 duration: value.duration,
 
                 // anh cua tin dang
@@ -225,10 +226,13 @@ export const PostForm = () => {
 
                 typeCostElectric: 0,
                 // sua khi có đăng nhập
-                id_owner: 1,
+                id_owner: id_owner,
             };
             console.log(data);
-            handlePostNewsToDB(data)
+            setNews(data)
+            setShow(true)
+            // preview(data)
+            // handlePostNewsToDB(data)
         },
     });
     return (
@@ -505,6 +509,25 @@ export const PostForm = () => {
                         type="submit"></Button>
                 </div>
             </form>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Preview</Modal.Title>
+                </Modal.Header>
+                    <Modal.Body>
+                        <PreView news ={news}/>
+                    </Modal.Body>
+                    <Button variant="success" onClick={()=>
+                        handlePostNewsToDB(news)
+                    }>
+                        Đăng tin 
+                    </Button>
+                <Modal.Footer>
+
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 };

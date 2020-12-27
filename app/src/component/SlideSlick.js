@@ -26,8 +26,8 @@ export default function SlideSlick({images, styles}) {
     return (
     <div className="container">
         <Slider {...settings}>
-            {listImg.map(img => (
-                <div className="each-slide">
+            {listImg.map((img, index) => (
+                <div key={index} className="each-slide">
                     <div className="image-container">
                         <img src={img} alt={img} style={styleSlide}/>
                     </div>
