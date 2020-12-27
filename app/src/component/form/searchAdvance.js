@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import axios from "../../fetch/axios";
 // import baseUrl from "../../fetch/baseurl";
 import ListPost from "../ListPost";
+import ListPostHorizontal from "../ListPostHorizontal";
 
 const SearchAdvance = ()=>{
     const {place} = useLocation() || ""
@@ -17,6 +18,7 @@ const SearchAdvance = ()=>{
     const [area, setArea] = useState([0,200])
 
     const [post, setPost] = useState([])
+    const [typeShow, setTypeShow] = useState(1)
 
     const searchPlace = async() => {
         const result = await axios.post(`/post/all/search`, {address: place})
@@ -180,9 +182,20 @@ const SearchAdvance = ()=>{
             </div>
         </div>
 
-        <div>
+        <div class="container">
             {/* Show kết quả tìm kiếm ở đây */}
-            <ListPost news = {post} header="Kết quả tìm kiếm"/>
+            <div onClick={()=> setTypeShow(!typeShow)} style={{float: "right"}}>
+                {typeShow?
+                <span><i class="fas fa-th-large"></i></span>:
+                <span><i class="fas fa-th-list"></i></span>}
+            </div>
+            {typeShow?
+                <ListPost news = {post} header="Kết quả tìm kiếm"/>:
+                <div class="container">
+                    <ListPostHorizontal news = {post} header="Kết quả tìm kiếm"/>
+                    <div style={{clear: 'both'}}></div>
+                </div>
+            }
         </div>
     </div>
     )

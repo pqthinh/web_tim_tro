@@ -2,11 +2,11 @@
 import TimeAgo from 'react-timeago'
 
 const fake ={
-    user: "Pham quang thinh",
+    name: "Pham quang thinh",
     avatar: "https://images.squarespace-cdn.com/content/54b7b93ce4b0a3e130d5d232/1519987165674-QZAGZHQWHWV8OXFW6KRT/icon.png?content-type=image%2Fpng",
-    content: "Phong tro rat dep",
+    comment: "Phong tro rat dep",
     star: 4,
-    time: new Date()
+    createAt: new Date()
 }
 
 const CommentItem = ({comment}) =>{
@@ -28,15 +28,15 @@ const CommentItem = ({comment}) =>{
         	    </div>
         	    <div class="col-md-10">
                     <p>
-                        <a class="float-left" href="!#"><strong>{data.user}</strong></a>
+                        <a class="float-left" href="!#"><strong>{data.name}</strong></a>
                         {(rateStar(data.star)).map(i=><span class="float-right" key={i}><i class="text-warning fa fa-star"></i></span>)}
                 
                     </p>
                     <div class="clearfix"></div>
-                    <p class="text-secondary text-center float-left"><TimeAgo date={data.time}/></p>
+                    <p class="text-secondary text-center float-left"><TimeAgo date={data.createAt}/></p>
         	        <div class="clearfix"></div>
 
-        	        <p>{data.content}</p>
+        	        <p>{data.comment}</p>
         	        <p>
         	            <a class="float-right btn btn-outline-primary ml-2" href="!#"> <i class="fa fa-reply"></i> Reply</a>
         	            <a class="float-right btn text-white btn-danger" href="!#"> <i class="fa fa-heart"></i> Like</a>

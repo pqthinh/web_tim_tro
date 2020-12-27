@@ -19,6 +19,8 @@ import ProfileOwner from "./pages/ProflieOwner";
 import OwnerRoute from './Utils/OwnerRoute';
 // import MemberRoute from './Utils/MemberRoute';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
+import MemberRoute from './Utils/MemberRoute';
+import ProfileRenter from './pages/ProfileRenter';
 
 function App() {
   
@@ -31,9 +33,10 @@ function App() {
           <OwnerRoute path='/up' component={PostNews } />
           <PublicRoute path="/post/:id" component={DetailPost} />
           {/* <PrivateRoute path="/profile" component={ProfileOwner} /> */}
-          <PublicRoute path="/profile" exact component={ProfileOwner} />
-          
-          <PublicRoute path="/profile/owner/:id" exact component={ProfileOwner} />
+          <PrivateRoute path="/profile" exact component={ProfileRenter} />
+
+          {/* <MemberRoute path='/fav' component={ProfileRenter } /> */}
+          <PublicRoute path="/profile/owner/:id" component={ProfileOwner} />
           
           <PublicRoute path='/login' component={Login} />
           <PublicRoute path="/register" component={Register} />

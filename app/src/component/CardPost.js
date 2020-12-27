@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom'
 const CardPost = ({news}) =>{
     // props được thay bằng thông tin giới thiệu của bài đăng đó
     const data = news || fakeNews
+    const img = JSON.parse(data.images)
     let history = useHistory()
     const redirect = (data) => {
         history.push({
@@ -17,7 +18,7 @@ const CardPost = ({news}) =>{
             <div class="col-6 col-sm-4 col-md-3 cardpost" onClick={()=> redirect(data)} >
                 <div class="room detail-room">
                     <div class="image-room">
-                        <div class="image"><img src="images/img1.jpg" alt="can-ho" id="cardPost-img"/></div>
+                        <div class="image"><img src={img[0]} alt="can-ho" id="cardPost-img"/></div>
                         <div class="follow"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
                     </div>
                     <div class="cap">

@@ -34,14 +34,8 @@ export const TabPostManager = ({id_owner, role})=>{
             setAll(selled.concat(selling).concat(pending))
         }
         const forOwner = async ()=>{
-            const resSelling  = await  axios.get('/post/owner/type', {status: "active", id_owner: id_owner, available: "not rented"})
-            console.log(resSelling.data)
-            setSelling(resSelling.data)
-
-            const resSelled  = await  axios.get('/post/owner/type', {available: "rented", id_owner: id_owner, available: "rented"})
-            console.log(resSelled.data)
-            setSelled(resSelled.data)
-
+            await forMem()
+            
             const resPending  = await  axios.get('/post/owner/type', {status: "pending", id_owner: id_owner})
             console.log(resPending.data)
             setPending(resPending.data)

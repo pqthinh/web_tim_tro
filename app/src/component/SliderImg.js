@@ -19,14 +19,14 @@ const properties = {
 const SliderImg = ({images , styles}) => {
     // console.log(images)
     const listimage = images || fadeImages
-    var styleSlide =  styles || {width: '100%', height: 'auto'}
+    var styleSlide =  styles || {width: '100%', height: 300}
     return (
         <div className="container">
         <Fade {...properties}>
             {listimage.map(img => (
                 <div className="each-slide">
                     <div className="image-container">
-                        <img src={img} alt={img} style={styleSlide}/>
+                        <img src={img} alt={img} style={styleSlide} />
                     </div>
                 </div>
             ))}

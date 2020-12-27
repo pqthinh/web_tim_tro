@@ -2,12 +2,12 @@ import CommentForm from "./CommentForm"
 import CommentList from './CommentList'
 import './Comment.css'
 
-const Comment = () => {
+const Comment = ({comment}) => {
     return (
         <>
             <CommentForm/>
             <div className="mt-3" ></div>
-            <CommentList />
+            <CommentList comment={comment}/>
         </>
     )
 }

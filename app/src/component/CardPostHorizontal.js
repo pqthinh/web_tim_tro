@@ -1,25 +1,31 @@
 
 import {  useHistory } from 'react-router-dom'
 import './CardPostHorizontal.css'
+import post from '../api/post'
 
 const CardPostHorizontal = ({news})=>{
     const data =  news || fake
+    const img = JSON.parse(data.images)
     let history = useHistory()
+    const increView = async(id) =>{
+        await post.countview(id)
+    }
     const redirect = (data) => {
         history.push({
             pathname: `post/${data.postID}`,
             news: news
         })
+        increView(data.postID)
     }
     return (
         <>  
             <div className="container-card" onClick={()=> redirect(data)}>
                 <div className="card-horizontal">
                     <div className="Card-H-img">
-                        <img src={data.img} alt="" class="img-thumbnail rounded" height='60px'/>
+                        <img src={img[0]} alt="" class="img-thumbnail rounded" height='60px'/>
                         
                         <div className="Card-img-number">
-                            <span className="number">{data.number}</span>
+                            <span className="number">{img.length}</span>
                         </div>
                     </div>
                     <div className="Card-H-content">
@@ -33,7 +39,7 @@ const CardPostHorizontal = ({news})=>{
                             </div>
                             <div class="title-2">
                                 <i class="fas fa-prescription-bottle"></i>
-                                <span className="content">Miêu tả : Diện tích 26 m2 , khép kín</span>
+                                <span className="content">Miêu tả : {data.discription? data.discription.slice(0,20): "Phòng đẹp giá hợp lý"}</span>
                             </div>
                             <div class="title-2">
                                 <i class="fas fa-house-user"></i>

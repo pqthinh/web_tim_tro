@@ -1,39 +1,46 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import post from '../api/post'
 
 const CardPostOfSlick = ({news}) =>{
     const data = news || fakeNews
-
+    const img = JSON.parse(data.images)[0]
+    let history = useHistory()
+    const increView = async(id) =>{
+        await post.countview(id)
+    }
+    const redirect = (data) => {
+        history.push({
+            pathname: `post/${data.postID}`,
+            state:  data
+        })
+        increView(data.postID)
+    }
     return (
         <>
-            <Link to={{
-                pathname: `/post/${data.postID}`,
-                state:  data
-            }}>
-                <div class="room detail_room_card_post">
-                    <div class="image-room">
-                        <div class="image"><img src="images/img1.jpg" alt="can-ho" /></div>
-                        <div class="follow"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
-                    </div>
-                    <div class="cap">
-                        <div class="title-1">
-                            {data.title}
-                        </div>
-                        <div class="title-3">
-                            <i class="fas fa-coins"></i>
-                            <span className="content">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.price)}/tháng</span>
-                        </div>
-                        <div class="title-2">
-                            <i class="fas fa-house-user"></i>
-                            <span className="content">{data.name}</span>
-                        </div>
-                    </div>
-                    <div class="cap-foot">
-                        <i class="fas fa-home"></i>
-                        <span className="content">{data.address}</span>
-                    </div>
+        <div class="room detail_room_card_post" onClick={()=> redirect(data)}>
+            <div class="image-room">
+                <div class="image"><img src={img} alt="can-ho" /></div>
+                <div class="follow"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+            </div>
+            <div class="cap">
+                <div class="title-1">
+                    {data.title}
                 </div>
-            </Link>
+                <div class="title-3">
+                    <i class="fas fa-coins"></i>
+                    <span className="content">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.price)}/tháng</span>
+                </div>
+                <div class="title-2">
+                    <i class="fas fa-house-user"></i>
+                    <span className="content">{data.name}</span>
+                </div>
+            </div>
+            <div class="cap-foot">
+                <i class="fas fa-home"></i>
+                <span className="content">{data.address}</span>
+            </div>
+        </div>
         </>
     )
 }

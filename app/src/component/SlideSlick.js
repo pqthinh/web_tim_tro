@@ -14,7 +14,7 @@ const image = [
 ]
 export default function SlideSlick({images, styles}) {
     const listImg = images || image
-    var styleSlide =  styles || {width: '100%', height: 'auto'}
+    var styleSlide =  styles || { maxWidth: '100%', height: 400}
     var settings = {
         dots: true,
         infinite: true,
@@ -29,7 +29,7 @@ export default function SlideSlick({images, styles}) {
             {listImg.map((img, index) => (
                 <div key={index} className="each-slide">
                     <div className="image-container">
-                        <img src={img} alt={img} style={styleSlide}/>
+                        <img src={img} alt={img} style={styleSlide} />
                     </div>
                 </div>
             ))}

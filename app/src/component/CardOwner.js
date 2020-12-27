@@ -2,27 +2,21 @@ import { useHistory, useLocation } from 'react-router-dom'
 import './CardUser.css'
 import FormRepassword from './FormRepassword'
 import { ModalCustom } from './ModalCustom'
-import FormEditRenter from './form/FormEditRenter'
-
 import { getUser } from '../Utils/Common'
-// import post from '../api/owner/getListPostOwner'
-// import { useState } from 'react'
-// onClick={()=> redirectToProfileOwner(currentUser)} // khong lam chuyen trang nua
 // chac chan da co user ? guest chuwa xet :)
 
 // khi nguoi vao xem trang owner 
-const CardUser = ({owner}) =>{
+const CardOwner = ({owner}) =>{
 	let history = useHistory()
 	const {state} = useLocation()
 	const viewOwner = state
-	const user = getUser()
 	// console.log(user,viewOwner , owner)
-	const currentUser = owner || viewOwner || user
-
+	const currentUser = owner || viewOwner
+    const user = getUser()
 	const redirectToProfileOwner = (data) =>{
 		history.push({
 			pathname: `/profile/owner/${data.id}`,
-			owner: data
+			state: data
 		})
 	}
     return (
@@ -35,14 +29,6 @@ const CardUser = ({owner}) =>{
 							
 							<div style={{marginTop: 10}}>
 								{
-									!owner || !user ? null :
-									currentUser.role === "member" ?
-									<ModalCustom 
-										title="Cập nhật thông tin"
-										button = {<span className="btn btn-success"><span class="text-button-modal" >Cập nhật thông tin</span> <i class="fas fa-tools"></i> </span>}
-										body = {<FormEditRenter user={currentUser}/>}
-										id="modal_update_renter"
-									/> : 
 									currentUser.email === user.email ? 
 									<ModalCustom 
 										title="Cập nhật mật khẩu"
@@ -59,11 +45,11 @@ const CardUser = ({owner}) =>{
 
 						<div style={{margin: 20}}>
                             <div className="mt-3"></div>
-							<h4 class="carduser-name-user">
+							<h4 class="cardOwner-name-user">
                                 <i class="fas fa-user-tie"></i>
 								
 								{/* kiem tra neu la owner thi chuyen trang */}
-								<span class="content" >Name: {currentUser.name}</span>
+								<span class="content" onClick={()=> redirectToProfileOwner(currentUser)}>Name: {currentUser.name}</span>
 							</h4>
 
 							<div class="profile-user-info">
@@ -101,7 +87,10 @@ const CardUser = ({owner}) =>{
 									</div>
 								</div>
 							</div>
-							</>
+							
+							<div className="Star-of-user">
+								<span>Đánh giá: 5 <i class="fas fa-star" style={{color: "yellow"}}></i></span>
+							</div> </>
 							: null}
 						</div>
 					</div>
@@ -111,4 +100,4 @@ const CardUser = ({owner}) =>{
         </>
     )
 }
-export default CardUser
+export default CardOwner

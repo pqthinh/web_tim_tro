@@ -4,8 +4,13 @@ import Slider from "react-slick";
 import CardPostOfSlick from "./CardPostOfSlick";
 import NoResult from "./noresult";
 import Padding from "./padding";
+import post from '../api/post'
 
 export default function ListPostSlick({header, news}) {
+    // tinh view
+    const increView = async(id) =>{
+        await post.countview(id)
+    }
     var title = header || "Tin đang được quan tâm"
     const data = news
     var settings = {
@@ -49,7 +54,7 @@ export default function ListPostSlick({header, news}) {
         <Slider {...settings}>
             {!data? <NoResult />: data.map(
                 (x, index) =>
-                <CardPostOfSlick key={index} news={x}/>
+                <CardPostOfSlick key={index} news={x} onClick={()=> increView(x.postID)}/>
             )}
         </Slider>
     </div>

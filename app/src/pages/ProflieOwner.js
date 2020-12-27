@@ -9,6 +9,7 @@ import {useLocation , useParams } from 'react-router-dom'
 import { useEffect, useState } from "react"
 import axios from "../fetch/axios"
 import NotFoundScreen from "./notfound"
+import CardOwner from "../component/CardOwner"
 
 const ProfileOwner = ({user})=>{
     let { id } = useParams() ;
@@ -34,7 +35,7 @@ const ProfileOwner = ({user})=>{
         <>
             <Menu/>
             {user?
-            <><CardUser owner={user}/>
+            <><CardOwner owner={user}/>
             <TabPostManager id_owner={user.id_owner} role={role} />
             </>:<><NotFoundScreen /></>}
             

@@ -2,8 +2,14 @@
 
 import React, { useState } from 'react'
 import ReactStars from "react-rating-stars-component";
+import { getUser } from '../Utils/Common';
+import axios from '../fetch/axios'
+import { useParams } from 'react-router-dom'
 
 export default function CommentForm ({props}) {
+    const { id } = useParams()
+
+    const currentUser = getUser()
     const [comment, setComment] = useState('')
     const [star, setStar] = useState(5)
 
@@ -14,11 +20,20 @@ export default function CommentForm ({props}) {
     const handleChange = (event)=>{    
         setComment(event.target.value);  
     }
-    const handleSubmit = (event) => {
-        alert('An essay was submitted: ' + comment + " star: "+ star);
+    const handleSubmit = async (event) => {
+        // alert('An essay was submitted: ' + comment + " star: "+ star);
         // upload to server
         // check quyen truoc : chi renter moi dc binh luan
         event.preventDefault();
+        let data = {
+            comment: comment,
+            id_member: currentUser.id,
+            id_post: id,
+            star: star
+        }
+        console.log(data)
+        let res = await axios.post('/comment/post', data)
+        alert(res.data.msg)
     }
     return (
         <>
@@ -37,7 +52,9 @@ export default function CommentForm ({props}) {
                     Đánh giá về tin đăng
                     <textarea value={comment} onChange={handleChange} />        
                 </label>
+                {!currentUser || currentUser.role ==="owner" ? null :
                 <input type="submit" value="Submit" className="Post-comment btn btn-success"/>
+                }
             </form>
         </>
     )

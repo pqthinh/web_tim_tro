@@ -2,12 +2,15 @@ import React from 'react'
 import * as Yup from 'yup'
 import { useFormik } from 'formik' 
 import { FormInput } from "./FormInput"
+import axios from 'axios'
 
 // id_member , id_post , content
 const FormReport = ({id_post, id_member}) => {
 
-    const handleSendReport = (data) =>{
+    const handleSendReport = async (data) =>{
         console.log(data)
+        let res = await axios.post("/report/add", data)
+        alert(res.data.msg)
     }
 
     const { handleSubmit, handleChange, errors, touched} = useFormik({
