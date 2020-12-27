@@ -35,8 +35,8 @@ const Owner = {
         }
     },
     getOwnerID: async (req, res, next)=>{
-        if(req.userData.role === "member")
-            res.status(403).send({ message: 'Authentication failed!' });
+        // if(req.userData.role === "member")
+        //     res.status(403).send({ message: 'Authentication failed!' });
             
         let conn
         try {
@@ -45,11 +45,11 @@ const Owner = {
             // const body = req.body, uid = body.uid
             uid = req.params.id
             let sql, result
-            sql = `select * from owner where id_owner = ?`
+            sql = `select id_owner,name, place, email , phone , avatar from owner where id_owner = ? and status ='active'`
 
             result = await conn.query(sql, [uid])
             await conn.commit()
-            res.json(result[0])
+            res.json(result[0][0])
         }
         catch (err) {
             await conn.rollback()
@@ -239,6 +239,7 @@ const Owner = {
             const userObj = utils.getCleanUser(result[0][0]);
             userObj.role = "owner"
             // generate token
+            console.log(userObj)
             const token = utils.generateToken(userObj);
             
             // return the token along with user details

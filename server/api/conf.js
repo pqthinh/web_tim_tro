@@ -3,7 +3,7 @@ module.exports = {
         host: 'localhost',
         user: 'root',
         password: '',
-        database: 'web',
+        database: 'rentalhouse',
         port: 3306
     }
 }

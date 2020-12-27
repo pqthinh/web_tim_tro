@@ -3,13 +3,21 @@ var fs = require('fs');
 const baseUrl = "http://localhost:4000"
 
 const Post = {
-    getPost: async (req, res, next) =>{ 
+    getAllPostActive: async (req, res, next) =>{ 
         let conn
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
-            let sql, result
-            sql = `select * from post join room on post.roomid = room.id`
+            let sql, result, con = ""
+            let filter = req.body.type
+            // sap tin theo view
+            // theo thoi gian 
+            // all
+
+            if(filter===0) con = ` order by p.updateAt `
+            if(filter===1) con = ` order by p.view `
+            // if(filter===0) con = ` order by p.updateAt `
+            sql = `select * from post p join room r on p.roomid = r.id join owner o on o.id_owner = p.id_owner where datediff(CURRENT_DATE, p.updateAt) < p.duration and p.status ='active' ${con}`
             result = await conn.query(sql)
             await conn.commit()
             res.json(result[0])
@@ -24,12 +32,19 @@ const Post = {
     },
     getAllInforPost: async (req, res , next) =>{
         let con
+        let body = req.body , id_owner = body.id_owner, status= body.status, available = body.available
+        status =  status? status : "active"   // active / deactive / pending
+        // not rented // rented
+        available =  available ? available : "not rented"
+        let consql = available==="rented" ? `post.available = 'rented' ` : `post.available = 'not rented' and datediff(CURRENT_DATE, post.updateAt) < post.duration ` 
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql, result
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner `
-            result = await conn.query(sql)
+            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ? and post.status = ? and ${consql} `
+            console.log(sql)
+
+            result = await conn.query(sql, [id_owner, status, available])
             await conn.commit()
             res.json(result[0])
         }
@@ -42,6 +57,7 @@ const Post = {
         }
     },
     // Lay dang sach tin theo id nguoi cho thue
+    // tin het han
     getPostOwner: async (req, res , next) =>{
         let con
         try {
@@ -49,7 +65,8 @@ const Post = {
             await conn.beginTransaction()
             const body = req.body , id_owner = body.id_owner
             let sql, result
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where owner.id_owner = ?`
+            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where owner.id_owner = ? and datediff(CURRENT_DATE, post.updateAt) > post.duration `
+            console.log(sql)
             result = await conn.query(sql, [id_owner])
             await conn.commit()
             res.json(result[0])
@@ -86,18 +103,30 @@ const Post = {
     // typeCostElectric: value.electric_water_price,
     // sort: value.sort
     SearchPost:  async (req, res, next)=>{
-        console.log("deo goi api dc")
         console.log(req.body)
         let conn
-        let body = req.body, status = body.status , place =  body.address , sort = body.sort
+        let body = req.body, status = body.status , place =  body.address , sort = body.sort , roomType = body.roomType , shared =  body.shared , bathroom = body.bathroom , nonglanh =  body.nonglanh ,kitchen = body.kitchen, airConditioner=body.airConditioner ,  balcony= body.balcony , typeCostElectric = body.typeCostElectric , area = body.area , price = body.price
+        // {"roomType":"2","area":[10,49],"price":[100000,4100000],"shared":"0","bathroom":"0","nonglanh":"1","kitchen":"1","airConditioner":"1","balcony":"0","typeCostElectric":"1","sort":"1"}        
+        
         status= status? status: "active"
-        place = place? `p.address like '%${place}%' ` : " 1 "
-        sort = sort === 0 ? ' order by p.price '  : sort === 1 ? ' order by p.updateAt desc '  : sort === 1 ? ' order by p.view desc ' : ''
+        place = place? `p.address like '%${place}%' or r.near_place like '%${place}%' ` : " 1 "
+        sort = sort === 0 ? ' order by p.price '  : sort === 1 ? ' order by p.updateAt desc '  : sort === 2 ? ' order by p.view desc ' : ''
+        roomType = roomType? `r.roomType = ${roomType}` : " 1 "
+        shared = shared ?  `r.shared = ${shared}` : " 1 "
+        bathroom = bathroom? `r.bathroom = ${bathroom}` : " 1 "
+        nonglanh = nonglanh? `r.nonglanh = ${nonglanh}` : " 1 "
+        kitchen = kitchen? `r.kitchen = ${kitchen}` : " 1 "
+        airConditioner = airConditioner? `r.airConditioner = ${airConditioner}` : " 1 "
+        balcony = balcony? `r.balcony = ${balcony}` : " 1 "
+        typeCostElectric = typeCostElectric? `r.typeCostElectric = ${typeCostElectric}` : " 1 "
+
+        areacon = area && typeof area === "undefined"? ` r.area between ${area[0]} and ${area[1]} ` : " 1 "
+        priceconn = price && typeof price === "undefined"?  ` p.price between ${price[0]} and ${price[1]} ` : " 1 "
 
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
-            let sql = `select * from post p join room r on p.roomId = r.id join owner o on o.id_owner= p.id_owner where p.status = ? and ${place}  ${sort}`
+            let sql = `select * from post p join room r on p.roomId = r.id join owner o on o.id_owner= p.id_owner where p.status = ? and ${place} and  ${roomType} and ${shared} and ${bathroom} and ${nonglanh} and ${kitchen} and ${airConditioner} and ${balcony} and ${typeCostElectric} and ${areacon}and ${priceconn} ${sort}`
             console.log(sql)
             const result = await conn.query(sql, [status])
             await conn.commit()

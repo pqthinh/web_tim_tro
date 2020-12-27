@@ -13,14 +13,14 @@ const auth = require('./mysql/tokencheck').auth
 
 // post
 const post = require('./mysql/post')
-router.get("/post/infor" , post.getPost)         // tat ca cac tin torng bang post
-router.get('/post/all', post.getAllInforPost)   // thong tin chi tiet cua bai dang (user + room + thong tin bai dang)
+router.get("/post/infor" , post.getAllPostActive)         // tat ca cac tin torng bang post
+router.get('/post/owner/type', post.getAllInforPost)   // thong tin chi tiet cua bai dang (user + room + thong tin bai dang)
 router.post('/post/create', post.createPost)    // upload anh len server truoc
 
 // post tin body request: room :: id_owner, typeRoom ,area, chungchu , bathroom , kitchen, dieuhoa , bancong , diennuoc ,dien , nuoc , nearby
 // post:: address ,thoihan ,quantity ,price , discription , images(array lay dc sau khi upload anh)
 
-router.post('/post/all/search', post.SearchPost)    // Chưa viết xong
+router.post('/post/all/search', post.SearchPost)    // ok
 router.post('/post/update', post.update)        // Update thong tin ve post , va room // khong update anh
 router.post('/post/update/anh', post.updateAnh) 
 router.get('/post/owner', post.getPostOwner)    // body: id_owner
@@ -44,7 +44,7 @@ router.post("/images/upload/base64", img.addImageBase64)            // anh dang 
 //owner
 const owner = require('./mysql/owner')
 router.get('/user/owner' ,auth , owner.getowner)
-router.get('/user/owner/get/:id',auth , owner.getOwnerID) 
+router.get('/user/owner/get/:id' , owner.getOwnerID) 
 router.post('/user/member/search',auth , owner.Search)            // body req : id , email , password , phone , name, place ,cmt , status (state)
 router.post('/user/owner/repass', owner.UpdatePassOwner)    // newpass, email , oldpass
 router.post('/user/owner/signup', owner.AddOwner)            // name , password ,email, phone ,place,  cmt

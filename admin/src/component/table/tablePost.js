@@ -49,13 +49,13 @@ const TablePost = () => {
 
   const Active = async(data)=> {
     setLoading(true)
-    const result = await axios.post(`${baseUrl}/post/admin/status`, {id_owner: data, status: "active"})
+    const result = await axios.post(`${baseUrl}/post/admin/status`, {postID: data, status: "active"})
     console.log(result.data.msg)
     setLoading(false)
   }
   const Block = async (data)=> {
     setLoading(true)
-    const result = await axios.post(`${baseUrl}/post/admin/status`, {id_owner: data, status: "deactive"})
+    const result = await axios.post(`${baseUrl}/post/admin/status`, {postID: data, status: "deactive"})
     console.log(result.data.msg)
     setLoading(false)
   }

@@ -3,7 +3,7 @@ const utils = require('../../utils');
 
 module.exports = {
     checkToken: (req, res)=>{
-        var token = req.headers.authorization.split(' ')[1] ||req.body.token || req.query.token;
+        var token = (req.header.authorization && req.headers.authorization.split(' ')[1]) || req.body.token || req.query.token;
         if (!token) {
             return res.status(400).json({
                 error: true,

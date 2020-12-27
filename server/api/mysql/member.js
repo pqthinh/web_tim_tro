@@ -243,7 +243,7 @@ const Member = {
             const userObj = utils.getCleanUser(result[0][0]);
             userObj.role= "member"
             // return the token along with user details
-            // console.log(userObj)
+            console.log(userObj)
             // generate token
             const token = utils.generateToken(userObj);
 
