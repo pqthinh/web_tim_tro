@@ -14,6 +14,13 @@ const auth = require('./mysql/tokencheck').auth
 // post
 const post = require('./mysql/post')
 router.get("/post/infor/:type" , post.getAllPostActive)         // tat ca cac tin torng bang post
+router.get("/post/tindangban/:id_owner" , post.getTindangban)
+router.get("/post/tindaban/:id_owner" , post.getTinDaban)
+router.get("/post/tinhethan/:id_owner" , post.getTinHethan)
+router.get("/post/choduyet/:id_owner" , post.getTinchoduyet)
+router.get("/post/tinhuy/:id_owner" , post.getTinHuy)
+router.get("/post/all/:id_owner" , post.getTin)
+
 router.get('/post/owner/type', post.getAllInforPost)   // thong tin chi tiet cua bai dang (user + room + thong tin bai dang)
 router.get('/post/all', post.getAllInfor)
 router.get('/post/:id', post.getDetail)

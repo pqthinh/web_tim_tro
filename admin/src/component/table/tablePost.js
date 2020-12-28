@@ -26,13 +26,12 @@ const TablePost = () => {
             // console.log(x)
             return(
               x.action = <div>
-                  {x.status!=="active"?
+                  {/* {x.status!=="active"?
                     <button className="btn btn-success" onClick={() => Active(x.postID)}>active</button> :
                     <button className="btn btn-danger" onClick={() => Block(x.postID)}>block</button> 
-                  }
-                  <span ><ModalEditPost post={x}/></span>
-                  <span ><ModalViewPost post={x}/> </span>
-                  <span ><ModalAddDuration post={x}/> </span>
+                  } */}
+                  {x.status!=="active"? buttonActive(x): buttonDeactive(x) }
+                  
                 </div>
             )
           })
@@ -47,6 +46,37 @@ const TablePost = () => {
     fetchdata()
   },[row, res])
 
+  const buttonActive = (x) => {
+    return (
+      <>
+        <button className="btn btn-success" onClick={() => { 
+          x.status = "active"
+          x.action= buttonDeactive(x)
+          Active(x.postID)
+        }}>active</button>
+        <span ><ModalEditPost post={x}/></span>
+        <span ><ModalViewPost post={x}/> </span>
+        <span ><ModalAddDuration post={x}/> </span>
+        {/* <span ><ModalEditOwner user={x}/></span> */}
+      </>
+    )
+  }
+  
+  const buttonDeactive = (x) => {
+    return (
+      <div>
+        <button className="btn btn-danger" onClick={() => {
+          x.status="deactive"
+          x.action = buttonActive(x)
+          Block(x.postID)
+        }}>block</button> 
+        <span ><ModalEditPost post={x}/></span>
+        <span ><ModalViewPost post={x}/> </span>
+        <span ><ModalAddDuration post={x}/> </span>
+        {/* <span><ModalEditOwner user={x}/></span> */}
+      </div>
+    )
+  }
   const Active = async(data)=> {
     setLoading(true)
     const result = await axios.post(`${baseUrl}/post/admin/status`, {postID: data, status: "active"})
@@ -138,6 +168,12 @@ const columns = [
   {
     label: 'Đã cho thuê',
     field: 'available',
+    sort: 'asc',
+    width: 100
+  },
+  {
+    label: 'Status',
+    field: 'status',
     sort: 'asc',
     width: 100
   },

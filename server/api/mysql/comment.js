@@ -52,7 +52,8 @@ const Comment = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql, result
-            sql = "select r.*, m.name, m.email, m.phone, m.place , m.avatar, m.createAt, p.id_owner, p.title , p.address, p.duration , p.price , p.views , p.discription, p.images, p.available from review r join member m on m.id = r.id_member join post p on p.postId = r.id_post where not p.available = 'rented' "
+            // where not p.available = 'rented'
+            sql = "select r.*, m.name, m.email, m.phone, m.place , m.avatar, m.createAt, p.id_owner, p.title , p.address, p.duration , p.price , p.views , p.discription, p.images, p.available from review r join member m on m.id = r.id_member join post p on p.postId = r.id_post  "
             result = await conn.query(sql)
             // console.log(sql)
             await conn.commit()

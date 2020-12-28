@@ -3,6 +3,132 @@ var fs = require('fs');
 const baseUrl = "http://localhost:4000"
 
 const Post = {
+    getTindangban: async (req, res, next) => {
+        let conn
+        let id_ownner = req.params.id_owner
+        try {
+            conn = await dbs.getConnection()
+            await conn.beginTransaction()
+            let sql
+            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_ownner} and post.status = 'active' and post.available = 'not rented' and datediff(CURRENT_DATE, post.updateAt) < post.duration `
+            console.log(sql)
+            let result = await conn.query(sql)
+            res.json(result[0])
+            await conn.commit()
+        }
+        catch (err) {
+            await conn.rollback()
+            next(err)
+        }
+        finally {
+            await conn.release()
+        }
+    },
+    getTinchoduyet: async (req, res, next) => {
+        let conn
+        let id_ownner = req.params.id_owner
+        try {
+            conn = await dbs.getConnection()
+            await conn.beginTransaction()
+            let sql
+            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_ownner} and post.status = 'pending'`
+            console.log(sql)
+            let result = await conn.query(sql)
+            res.json(result[0])
+            await conn.commit()
+        }
+        catch (err) {
+            await conn.rollback()
+            next(err)
+        }
+        finally {
+            await conn.release()
+        }
+    },
+    getTinDaban: async (req, res, next) => {
+        let conn
+        let id_ownner = req.params.id_owner
+        try {
+            conn = await dbs.getConnection()
+            await conn.beginTransaction()
+            let sql
+            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_ownner} and post.available = 'rented' `
+            console.log(sql)
+            let result = await conn.query(sql)
+            res.json(result[0])
+            await conn.commit()
+        }
+        catch (err) {
+            await conn.rollback()
+            next(err)
+        }
+        finally {
+            await conn.release()
+        }
+    },
+    getTinHuy: async (req, res, next) => {
+        let conn
+        let id_ownner = req.params.id_owner
+        try {
+            conn = await dbs.getConnection()
+            await conn.beginTransaction()
+            let sql
+            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_ownner} and post.status = 'deactive' `
+            // console.log(sql)
+            let result = await conn.query(sql)
+            res.json(result[0])
+            await conn.commit()
+        }
+        catch (err) {
+            await conn.rollback()
+            next(err)
+        }
+        finally {
+            await conn.release()
+        }
+    },
+    getTinHethan: async (req, res, next) => {
+        let conn
+        let id_ownner = req.params.id_owner
+        try {
+            conn = await dbs.getConnection()
+            await conn.beginTransaction()
+            let sql
+            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_ownner} and datediff(CURRENT_DATE, post.updateAt) < post.duration `
+            // console.log(sql)
+            let result = await conn.query(sql)
+            res.json(result[0])
+            await conn.commit()
+        }
+        catch (err) {
+            await conn.rollback()
+            next(err)
+        }
+        finally {
+            await conn.release()
+        }
+    },
+    getTin: async (req, res, next) => {
+        let conn
+        let id_ownner = req.params.id_owner
+        try {
+            conn = await dbs.getConnection()
+            await conn.beginTransaction()
+            let sql
+            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_ownner} `
+            // console.log(sql)
+            let result = await conn.query(sql)
+            res.json(result[0])
+            await conn.commit()
+        }
+        catch (err) {
+            await conn.rollback()
+            next(err)
+        }
+        finally {
+            await conn.release()
+        }
+    },
     getDetail: async (req, res, next) =>{
         let conn
         try {
@@ -192,7 +318,7 @@ const Post = {
         // {"roomType":"2","area":[10,49],"price":[100000,4100000],"shared":"0","bathroom":"0","nonglanh":"1","kitchen":"1","airConditioner":"1","balcony":"0","typeCostElectric":"1","sort":"1"}        
         
         status= status? status: "active"
-        place = place? `p.address like '%${place}%' or r.near_place like '%${place}%' ` : " 1 "
+        place = place? ` ( p.address like '%${place}%' or r.near_place like '%${place}%' )` : " 1 "
         sort = sort === 0 ? ' order by p.price '  : sort === 1 ? ' order by p.updateAt desc '  : sort === 2 ? ' order by p.view desc ' : ''
         roomType = roomType? `r.roomType = ${roomType}` : " 1 "
         shared = shared ?  `r.shared = ${shared}` : " 1 "
@@ -210,9 +336,9 @@ const Post = {
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
-            let sql = `select * from post p join room r on p.roomId = r.id join owner o on o.id_owner= p.id_owner where p.status = ? and ${place} and  ${roomType} and ${shared} and ${bathroom} and ${nonglanh} and ${kitchen} and ${airConditioner} and ${balcony} and ${typeCostElectric} and ${areacon}and ${priceconn} ${sort}`
+            let sql = `select * from post p join room r on p.roomId = r.id join owner o on o.id_owner= p.id_owner where p.status = "active" and ${place} and  ${roomType} and ${shared} and ${bathroom} and ${nonglanh} and ${kitchen} and ${airConditioner} and ${balcony} and ${typeCostElectric} and ${areacon}and ${priceconn} ${sort}`
             console.log(sql)
-            const result = await conn.query(sql, [status])
+            const result = await conn.query(sql)
             await conn.commit()
 
             res.json(result[0])
@@ -403,6 +529,7 @@ const Post = {
     updateStatusPost : async (req, res, next) =>{
         let conn 
         const body = req.body , status = body.status , id = body.postID
+        console.log(body)
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()

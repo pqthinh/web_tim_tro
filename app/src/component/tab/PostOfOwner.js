@@ -22,14 +22,21 @@ export const TabPostManager = ({id_owner, role})=>{
     // check role de fetch api
     useEffect(() => {
         const forMem = async () =>{
-            const resSelling  = await  axios.get(`/post/owner/type?status=active&id_owner=${id_owner}`)
+            const resSelling  = await  axios.get(`post/tindangban/${id_owner}`)
             console.log(resSelling.data)
             setSelling(resSelling.data)
 
             // let data1 ={available: "rented", id_owner: id_owner, available: "rented"}
-            const resSelled  = await  axios.get(`/post/owner/type?status=active&id_owner=${id_owner}&availabel=rented`)
+            const resSelled  = await  axios.get(`post/tindaban/${id_owner}`)
             console.log(resSelled.data)
             setSelled(resSelled.data)
+
+            const all  = await  axios.get(`/post/all/${id_owner}`)
+            setAll(all.data)
+
+            // const resSelled  = await  axios.get(`post/tindaban/${id_owner}`)
+            // console.log(resSelled.data)
+            // setSelled(resSelled.data)
 
             // setAll([...all, selled, selling])
             // setAll([...selling,...selled])
@@ -37,21 +44,24 @@ export const TabPostManager = ({id_owner, role})=>{
         const forOwner = async ()=>{
             await forMem()
 
-            const resPending  = await  axios.get(`/post/owner/type?status=pending&id_owner=${id_owner}`)
+            const resPending  = await  axios.get(`post/choduyet/${id_owner}`)
             console.log(resPending.data)
             setPending(resPending.data)
 
-            const resBlock  = await  axios.get(`/post/owner/type?status=deactive&id_owner=${id_owner}`)
+            const resBlock  = await  axios.get(`post/tinhuy/${id_owner}`)
             console.log(resBlock.data)
             setBlock(resBlock.data)
 
-            const res = await axios.get(`/post/owner?id_owner=${id_owner}`)
+            const res = await axios.get(`post/tinhethan/${id_owner}`)
             setExpire(res.data)
 
+            const all  = await  axios.get(`/post/all/${id_owner}`)
+            setAll(all.data)
         }
         allpri.includes(currentUserRole) ?
             forOwner() : forMem()
-        setAll([...selled,...selling,...pending,...block,...expire])
+        // setAll([...selled,...selling,...pending,...block,...expire])
+        
     },[id_owner])
 
     return (
