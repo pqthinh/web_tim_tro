@@ -105,6 +105,7 @@ router.get("/notification" , notification.GetNotification)   // id : id_owner , 
 
 // Lưu tin 
 const SaveNews = require('./mysql/SaveNews')                // id_post , id_member
+router.get("/save/post/:id", SaveNews.getFav)    
 router.post("/save/post", SaveNews.SaveNews)     
 router.post("/remove/post", SaveNews.RemoveNews)
 

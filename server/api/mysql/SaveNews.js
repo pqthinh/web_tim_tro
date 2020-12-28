@@ -40,6 +40,26 @@ const SaveNews = {
         finally {
             await conn.release()
         }
+    },
+    getFav : async(req, res, next) =>{
+        let conn
+        const id = req.params.id
+        try {
+            conn = await dbs.getConnection()
+            await conn.beginTransaction()
+            let sql, result
+            sql = `select p.* from favorites f join post p on f.id_post = p.postID where f.id_member= ${id}`
+            result = await conn.query(sql)
+            await conn.commit()
+            res.json(result[0])
+        }
+        catch (err) {
+            await conn.rollback()
+            next(err)
+        }
+        finally {
+            await conn.release()
+        }
     }
 }
 

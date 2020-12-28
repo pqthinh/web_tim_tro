@@ -5,6 +5,7 @@ import ListPostHorizontal from "../ListPostHorizontal"
 export const TabMemberSaveNews = ({news}) =>{
     const [typeShow, setTypeShow] = useState(1)
     const data = news || fake
+    
     return (
         <>
             <div className="container">
@@ -57,46 +58,6 @@ const fake =[
         "electricity": 3000,
         "water": 25000,
         "near_place": "[\"Bảo tàng Phòng Không Không Quân\"]",
-        "other": null,
-        "name": "Nguyen Tram",
-        "email": "tramnguyen@gmail.com",
-        "phone": "0567891012",
-        "place": "Bắc Giang",
-        "cmt": "1234567219",
-        "password": "123456",
-        "avatar": "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-    },
-    {
-        "postID": 20,
-        "roomID": 20,
-        "id_owner": 8,
-        "title": "Phòng trọ giá rẻ",
-        "address": "Hồ Tùng Mậu, Cầu Giấy, Hà Nội",
-        "duration": 7,
-        "quantity": 1,
-        "price": 5500000,
-        "tiencoc": 0,
-        "views": 1,
-        "like": 1,
-        "discription": null,
-        "images": "[\"https://cdn.chotot.com/7d8CCiJ93u7tTCXDAVfviCNo7pEKazyEamJ2um31GeM/preset:view/plain/064f69ab5bff963cb130e1fc7a215f46-2698945831614429744.jpg\",\"https://cdn.chotot.com/f5zX_JBBb_kzLIS8RGaDizpp6JdcILjaAf9pRrFvP3o/preset:view/plain/23c5131713db5e287fe8f1f0a7fa4188-2698945832624629360.jpg\",\"https://cdn.chotot.com/D51Kmv7x6Yz8eSrtJ_oFHHftMx87GAdElo1H6MbvBKQ/preset:view/plain/54ccf8f5c4db011b18ce3c1bf9ac0829-2698945833173356205.jpg\",\"https://cdn.chotot.com/ZreSqVbqerXu4v0rJQUbJNhuEHSWURYcfANj1eNhb-E/preset:view/plain/7c470a3bb2c70e9a88e1c0778ef983fd-2698945834352813680.jpg\",\"https://cdn.chotot.com/YWFLVlzrJB9vWKfWhTolZjRGYa5MnF6Ug8n8Krktlts/preset:view/plain/9900bc5c5b5ddc39501c6bab1cb9c455-2698945834682424723.jpg\"]",
-        "available": "not rented",
-        "createAt": "2020-12-24T08:17:15.000Z",
-        "status": "pendding",
-        "updateAt": "2020-12-24T08:17:15.000Z",
-        "id": 20,
-        "roomType": "0",
-        "area": 40,
-        "shared": 0,
-        "bathroom": "1",
-        "kitchen": "0",
-        "airConditioner": 0,
-        "nonglanh": 1,
-        "balcony": 0,
-        "typeCostElectric": 1,
-        "electricity": 4000,
-        "water": 35000,
-        "near_place": "[\"Đại học Thương Mại\"]",
         "other": null,
         "name": "Nguyen Tram",
         "email": "tramnguyen@gmail.com",
