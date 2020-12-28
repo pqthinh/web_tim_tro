@@ -95,7 +95,7 @@ function ModalEditPost({post}) {
 
     const handlePostNewsToDB = async (data) => {
         try {
-            const result = await axios.post("http://localhost:4000/api/post/create", data )
+            const result = await axios.post("http://localhost:4000/api/post/update", data )
             const res = result.data
             console.log(res)
             alert(res.msg)
@@ -530,7 +530,7 @@ function ModalEditPost({post}) {
                 <Padding />
                 <div className="">
                     <Button
-                        children="Post tin đăng"
+                        children="Cập nhật tin đăng"
                         type="submit"></Button>
                 </div>
             </form>

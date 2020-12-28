@@ -22,11 +22,7 @@ const TableReview = () => {
           console.log(temp)
           temp && temp.map(x=> {
             return(
-              x.action = <div>
-                  {x.status!=="active"?
-                    buttonActive(x): buttonDeactive(x) 
-                  }
-              </div>
+              x.action = x.status!=="active"? buttonActive(x): buttonDeactive(x) 
             )
           })
           setRow(temp)

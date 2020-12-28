@@ -14,6 +14,7 @@ import post from '../api/post'
 import { useEffect, useState } from 'react'
 import { getUser } from '../Utils/Common'
 import axios from '../fetch/axios'
+import ModalEditPost from '../component/post/editpost'
 
 const DetailPost = () =>{
 	const { id } = useParams()
@@ -110,9 +111,19 @@ const DetailPost = () =>{
 								/>
 							</div>
 							{currentUser.id === data.id_owner?
-							<div class="follow">
+							<><div class="follow">
 								<span><span class="text-button-modal" onClick={()=> DaChoThue(id)}>Tin đã cho thuê</span> <i class="far fa-calendar-plus"></i> </span>
+							</div>
+							{data.status === "pending"?
+							<div class="follow">
+								<ModalCustom 
+									title="Chỉnh sửa tin"
+									button = {<span><span class="text-button-modal" >Chỉnh sửa</span> <i class="far fa-calendar-plus"></i> </span>}
+									body = {<ModalEditPost  post={data}/>}
+									id="modal_chinhsua_news"
+								/>
 							</div>: null}
+							</>: null}
 							</>}
 						</div>						
 					</div>

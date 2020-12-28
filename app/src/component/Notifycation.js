@@ -1,9 +1,26 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useState, useEffect } from 'react'
+import { getUser } from '../Utils/Common'
 import ItemNotifycation from './ItemNotifycation'
 
-export default function Notifycation({props}) {
+export default function Notifycation({}) {
+    const currentUser = getUser()
+    // api lay thong bao
+    const [tb, setTb] = useState([])
+    useEffect(() =>{
+        const gettb = async () =>{
+            const res = await axios.get("http://localhost:4000/api/notification", {id: currentUser.id})
+            console.log(res.data)
+            setTb(res.data)
+        }
+        if(currentUser.role==="owner") {
+            gettb()
+        }
+    }, [])
+
+    
     const header = "Thong bao"
-    const data = [
+    let fake = [
         {
             img: 'bg-success',
             date: "2020-12-15",
@@ -25,6 +42,7 @@ export default function Notifycation({props}) {
             content: "123A new monthly report is ready to download!"
         }
     ]
+    const data = tb || fake
     return (
         <li className="nav-item dropdown no-arrow mx-1">
             <a className="nav-link dropdown-toggle" href="!#" id="alertsDropdown" role="button"
@@ -41,7 +59,7 @@ export default function Notifycation({props}) {
                 </h6>
                 {
                     data.map(x=> (
-                        <ItemNotifycation props={x} key={x}/>
+                        <ItemNotifycation thongbao={x} key={x}/>
                     ))
                 }
                 <a className="dropdown-item text-center small text-gray-500" href="!#">Show All Alerts</a>

@@ -5,10 +5,10 @@ import uriClient from '../fetch/uriClient'
 
 const fadeImages = [
   `${uriClient}/images/image1.jpg`,
-  `${uriClient}/images/image2.jpg`,
+  `${uriClient}/images/image2.png`,
   `${uriClient}/images/image3.jpg`,
   `${uriClient}/images/image1.jpg`,
-  `${uriClient}/images/image2.jpg`,
+  `${uriClient}/images/image2.png`,
   `${uriClient}/images/image3.jpg`
 ];
 const properties = {

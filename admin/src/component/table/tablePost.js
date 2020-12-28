@@ -172,6 +172,18 @@ const columns = [
     width: 100
   },
   {
+    label: 'View',
+    field: 'views',
+    sort: 'asc',
+    width: 100
+  },
+  {
+    label: 'Like',
+    field: 'like',
+    sort: 'asc',
+    width: 100
+  },
+  {
     label: 'Status',
     field: 'status',
     sort: 'asc',

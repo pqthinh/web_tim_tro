@@ -1,19 +1,22 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import React, { useState } from 'react'
+import {Modal, Button} from 'react-bootstrap'
 import MultiImageInput from 'react-multiple-image-input';
 import axios from 'axios'
+import * as Yup from "yup";
+import { useFormik } from "formik";
 
-import {Button , Modal} from 'react-bootstrap'
-import getData from "../../Utils/DataAddress";
-import { FormInput } from "../FormInput";
+import { FormInput } from '../FormInput'
+import getData  from '../../Utils/DataAddress'
 import Note from "../Note";
 import Padding from "../padding";
-import ModalViewPost from "../modal/viewPost";
-import PreView from "./PostPreview"
 
+function ModalEditPost({post}) {
+  console.log(post)
 
-const PostForm = () => {
+    // const [show, setShow] = useState(false);
+    // const handleClose = () => setShow(false);
+    // const handleShow = () => setShow(true);
+
     const province = getData.province();
     const districtValue = getData.district();
     const communeValue = getData.commune();
@@ -37,10 +40,6 @@ const PostForm = () => {
         { code: 0, name: "Không" },
     ];
 
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const [news, setNews] = useState({})
     const message = "Vui lòng nhập trường này!"
     const require_message = "Vui lòng nhập đúng định dạng!"
 
@@ -51,8 +50,11 @@ const PostForm = () => {
 
     // object images
     const [objImages, setObjImages] = useState({})
-    // up luon anh len cung voi tin thi ko can cai nay nua
-    // const [linkimg, setLinkimg] = useState([])
+    // image từu csdl
+    // console.log(typeof JSON.parse(post.images), post.id)
+    // var img = post.images
+    // img = JSON.parse(img)
+    // console.log(img.length)
 
     const handleAddNearbyForm = (e) => {
         setNearby([...nearby, { stt: nearby.length + 1, value: "" }]);
@@ -90,25 +92,12 @@ const PostForm = () => {
         setCommune(newCommune);
     };
 
-    // button upload ảnh lên server trước
-    // up luon anh cung voi chi tiet tin 
-    // const handleSubmitImages =async (images) => {
-    //     // console.log(images)
-    //     const result = await axios.post("http://localhost:4000/api/images/upload/base64", {file: images} )
-    //     const path = result.data.path
-    //     console.log(path)
-    //     setLinkimg(path)
-
-    //     // Làm cách này thì set images: ở phần onsubmit thành (linkimgs)
-    // }
-
     const handlePostNewsToDB = async (data) => {
         try {
-            const result = await axios.post("http://localhost:4000/api/post/create", data )
+            const result = await axios.post("http://localhost:4000/api/post/update", data )
             const res = result.data
             console.log(res)
-            alert(`Đăng tin ${res.msg} thành công`)
-            await axios.post(`http://localhost:4000/api/post/admin/status`, {postID: res.msg, status: "active"})
+            alert(res.msg)
         }
         catch(err) {
             console.log(err)
@@ -131,121 +120,122 @@ const PostForm = () => {
         aspect: 4 / 3,
         width: '100'
     };
+      
+    const { handleSubmit, handleChange, errors, touched, values } = useFormik({
+      initialValues: {
+          // dia chi phong
+          province: "",
+          district: "",
+          commune: "",
+          street: "",
+          // thong tin phong
+          typeroom: post.roomType,
+          numberOfRoom: post.quantity,
+          square: post.area,
+          price: post.price,
+          with_owner: post.shared,
+          pre_money: post.tiencoc,
 
-    const { handleSubmit, handleChange, errors, touched , values} = useFormik({
-        initialValues: {
-            // dia chi phong
-            province: "",
-            district: "",
-            commune: "",
-            street: "",
-            // thong tin phong
-            typeroom: "",
-            numberOfRoom: "",
-            square: "",
-            price: "",
-            with_owner: "",
-            pre_money: "",
+          // thong tin ve co so vat chat
+          bathroom: post.bathroom,
+          heater: post.nonglanh,
+          kitchen: post.kitchen,
+          airconditional: post.airConditioner,
+          balcony: post.balcony,
+          electric_price: post.electricity,
+          water_price: post.water,
+          other: post.other,
+          
+          // tieu de va mieu ta bai dang + thoi han
+          title: post.title,
+          description: post.discription,
+          duration: post.duration,
 
-            // thong tin ve co so vat chat
-            bathroom: "",
-            heater: "",
-            kitchen: "",
-            airconditional: "",
-            balcony: "",
-            electric_price: "",
-            water_price: "",
-            other: "",
-            
-            // tieu de va mieu ta bai dang + thoi han
-            title: "",
-            description: "",
-            duration: "",
+          // anh cua tin dang
+          // images: [],
+          file: JSON.parse(post.images),
+      },
+      validationSchema: Yup.object({
+          commune: Yup.string().required(message),
+          district: Yup.string().required(message),
+          province: Yup.string().required(message),
 
-            // anh cua tin dang
-            // images: [],
-            file: [],
-        },
-        validationSchema: Yup.object({
-            commune: Yup.string().required(message),
-            district: Yup.string().required(message),
-            province: Yup.string().required(message),
+          typeroom: Yup.number().required(message),
+          numberOfRoom: Yup.number().required(message),
+          square: Yup.number(require_message).required(message),
+          price: Yup.number(require_message).required(message),
+          with_owner: Yup.number().required(message),
+          pre_money: Yup.number(require_message).required(message),
 
-            typeroom: Yup.number().required(message),
-            numberOfRoom: Yup.number().required(message),
-            square: Yup.number(require_message).required(message),
-            price: Yup.number(require_message).required(message),
-            with_owner: Yup.number().required(message),
-            pre_money: Yup.number(require_message).required(message),
+          bathroom: Yup.number().required(message),
+          heater: Yup.number().required(message),
+          kitchen: Yup.number().required(message),
+          airconditional: Yup.number().required(message),
+          balcony: Yup.number().required(message),
+          electric_price: Yup.number(require_message).required(message),
+          water_price: Yup.number(require_message).required(message),
 
-            bathroom: Yup.number().required(message),
-            heater: Yup.number().required(message),
-            kitchen: Yup.number().required(message),
-            airconditional: Yup.number().required(message),
-            balcony: Yup.number().required(message),
-            electric_price: Yup.number(require_message).required(message),
-            water_price: Yup.number(require_message).required(message),
+          title: Yup.string().required(message),
+          duration: Yup.number(require_message).required(message),
+          description: Yup.string()
+          .required(message)
+          .min(10, 'Độ dài tối thiểu là 10')
+          .max(2000, 'Tối đa 2000 ký tự')
 
-            title: Yup.string().required(message),
-            duration: Yup.number(require_message).required(message),
-            description: Yup.string()
-            .required(message)
-            .min(10, 'Độ dài tối thiểu là 10')
-            .max(2000, 'Tối đa 2000 ký tự')
+          // images: Yup
+          // images: Yup.array().min(1).max(10).required(message),
+      }),
+      onSubmit: (value) => {
+          // console.log(value);
+          let data = {
+              // province: province1[value.province].name ,
+              address:  value.street + ", "+ communeValue1[value.commune].name + ", "+districtValue1[value.district].name + ", "+ province1[value.province].name,
+              // district_code: districtValue1[value.district].name,
+              // commune_code: communeValue1[value.commune].name,
+              nearby: ConvertNearBytoPlace(nearby),
+              // street: value.street,
+              roomType: value.typeroom,
+              quantity: value.numberOfRoom,
+              area: value.square,
+              price: value.price,
+              shared: value.with_owner,
+              tiencoc: value.pre_money,
 
-            // images: Yup
-            // images: Yup.array().min(1).max(10).required(message),
-        }),
-        onSubmit: (value) => {
-            // console.log(value);
-            let data = {
-                // province: province1[value.province].name ,
-                address:  value.street + ", "+ communeValue1[value.commune].name + ", "+districtValue1[value.district].name + ", "+ province1[value.province].name,
-                // district_code: districtValue1[value.district].name,
-                // commune_code: communeValue1[value.commune].name,
-                nearby: ConvertNearBytoPlace(nearby),
-                // street: value.street,
-                roomType: value.typeroom,
-                quantity: value.numberOfRoom,
-                area: value.square,
-                price: value.price,
-                shared: value.with_owner,
-                tiencoc: value.pre_money,
+              // Co so vat chat cua phong
+              bathroom: value.bathroom,
+              nonglanh: value.heater,
+              kitchen: value.kitchen,
+              airConditioner: value.airconditional,
+              balcony: value.balcony,
+              electricity: value.electric_price,
+              water: value.water_price,
+              other: value.other,
 
-                // Co so vat chat cua phong
-                bathroom: value.bathroom,
-                nonglanh: value.heater,
-                kitchen: value.kitchen,
-                airConditioner: value.airconditional,
-                balcony: value.balcony,
-                electricity: value.electric_price,
-                water: value.water_price,
-                other: value.other,
+              // tieu de va noi dung
+              title: value.title,
+              description: value.description,
+              duration: value.duration,
 
-                // tieu de va noi dung
-                title: value.title,
-                description: value.description,
-                duration: value.duration,
+              // anh cua tin dang
+              // images: linkimg,
+              file: objImages,
 
-                // anh cua tin dang
-                // images: linkimg,
-                file: objImages,
-
-                typeCostElectric: 0,
-                // sua khi có đăng nhập
-                id_owner: 1,
-                status: "active"
-            };
-            console.log(data);
-            setNews(data)
-            setShow(true)
-            // handlePostNewsToDB(data)
-        },
-    });
+              typeCostElectric: 0,
+              // sua khi có đăng nhập
+              id_owner: 1,
+          };
+          console.log(data);
+          handlePostNewsToDB(data)
+      },
+  });
     return (
-        <div className="container">
+      <>
+        
             <form action="" onSubmit={handleSubmit}>
-                <h3>Lấy địa chỉ</h3>
+            <h3>Lấy địa chỉ</h3>
+                <Note title="Địa chỉ: ">
+                  <p>{post.address}</p>
+                </Note>
                 <div className="row" style={{margin: 0, justifyContent: "space-between"}}>
                     <FormInput
                         typeInput="select"
@@ -289,6 +279,9 @@ const PostForm = () => {
                     onChange={handleChange}
                     placeholder="Số nhà, đường/thôn"
                 />
+                <Note title="Gần các địa điểm">
+                  <p>{post.near_place}</p>
+                </Note>
                 {renderNearbyForm(nearby)}
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                     <Button onClick={handleAddNearbyForm} type="button">
@@ -297,6 +290,13 @@ const PostForm = () => {
                 </div>
 
                 <h3>Thông tin về phòng trọ</h3>
+                <Note title="Thông tin phòng: ">
+                  <pre>
+                    {"Loại phòng: " + post.roomType}
+                    {post.shared? "Chung chủ": "Riêng"}
+                    {"Số phòng: "+ post.quantity}
+                  </pre>
+                </Note>
                 <div className="row" style={{margin: 0, justifyContent: "space-between"}}>
                     <FormInput
                         name="typeroom"
@@ -308,7 +308,7 @@ const PostForm = () => {
                         touched={touched}
                         onChange={handleChange}
                         typeInput="select"
-                        
+                        value={values.typeroom}
                     />
                     <FormInput
                         name="with_owner"
@@ -320,6 +320,7 @@ const PostForm = () => {
                         touched={touched}
                         required={true}
                         typeInput="select"
+                        value={values.with_owner}
                     />
                     <FormInput
                         name="numberOfRoom"
@@ -330,6 +331,7 @@ const PostForm = () => {
                         touched={touched}
                         placeholder="Số phòng"
                         type="number"
+                        value={values.numberOfRoom}
                     />
                 </div>
                 
@@ -342,6 +344,7 @@ const PostForm = () => {
                         error={errors.square}
                         touched={touched}
                         placeholder="Diện tích"
+                        value={values.area}
                     />
                     <FormInput
                         name="price"
@@ -351,7 +354,7 @@ const PostForm = () => {
                         error={errors.price}
                         touched={touched}
                         placeholder="Giá"
-                        
+                        value={values.price}
                     />
                     <FormInput
                         name="pre_money"
@@ -361,6 +364,7 @@ const PostForm = () => {
                         error={errors.pre_money}
                         touched={touched}
                         required={true}
+                        value={values.pre_money}
                     />
                 </div>
 
@@ -376,7 +380,7 @@ const PostForm = () => {
                         listOption={option}
                         onChange={handleChange}
                         typeInput="select"
-                        
+                        value={values.bathroom}
                     />
                     <FormInput
                         name="heater"
@@ -387,7 +391,7 @@ const PostForm = () => {
                         touched={touched}
                         listOption={option}
                         onChange={handleChange}
-                        
+                        value={values.heater}
                         typeInput="select"
                     />
                     <FormInput
@@ -400,6 +404,7 @@ const PostForm = () => {
                         onChange={handleChange}
                         placeholder="Phòng bếp"
                         typeInput="select"
+                        value={values.kitchen}
                     />
                     <FormInput
                         name="airconditional"
@@ -411,7 +416,7 @@ const PostForm = () => {
                         touched={touched}
                         onChange={handleChange}
                         typeInput="select"
-                        
+                        value={values.airconditional}
                     />
                     <FormInput
                         name="balcony"
@@ -422,7 +427,7 @@ const PostForm = () => {
                         listOption={option}
                         touched={touched}
                         onChange={handleChange}
-                        
+                        value={values.balcony}
                         typeInput="select"
                     />
                 </div>
@@ -435,7 +440,7 @@ const PostForm = () => {
                         touched={touched}
                         onChange={handleChange}
                         placeholder="Điện (đ/kWh)"
-                        
+                        value={values.electric_price}
                     />
                     <FormInput
                         name="water_price"
@@ -445,13 +450,14 @@ const PostForm = () => {
                         onChange={handleChange}
                         required={true}
                         placeholder="Nước (đ/m3)"
-                        
+                        value={values.water_price}
                     />
                     <FormInput
                         name="other"
                         label="Tiện ích khác"
                         placeholder="Tiện ích khác"
                         onChange={handleChange}
+                        value={values.other}
                     />
                 </div>
                 <Note>
@@ -460,7 +466,9 @@ const PostForm = () => {
                 </Note>
 
                 <h3>Chọn tiêu đề và miêu tả bài viết</h3>
-                
+                <Note title="Tiêu đề cũ: ">
+                  <p>{post.title}</p>
+                </Note>
                 <FormInput
                     name="title"
                     label="Tiêu đề"
@@ -469,7 +477,11 @@ const PostForm = () => {
                     error={errors.title}
                     touched={touched}
                     required={true}
+                    value={values.title}
                 />
+                <Note title="Miêu tả cũ: ">
+                  <p>{post.discription}</p>
+                </Note>
                 <FormInput
                     typeInput="textaria"
                     name="description"
@@ -479,7 +491,7 @@ const PostForm = () => {
                     placeholder="Mô tả về phòng để mọi người chú ý ..."
                     error={errors.description}
                     touched={touched}
-                    
+                    value={values.discription}
                 />
                 
                 <FormInput
@@ -490,10 +502,18 @@ const PostForm = () => {
                     onChange={handleChange}
                     type="number"
                     min="7"
+                    value={values.duration}
                 />
 
                 <h3>Tải ảnh lên</h3>
-
+                
+                <Note title="Ảnh sp: ">
+                    {/* {alert(post.images.length)} */}
+                    <div>
+                    {JSON.parse(post.images).map((x, index)=>{
+                        <img src={x} style={{width: 50, height: 50}} key={index}/>
+                    })}</div>
+                </Note>
                 <MultiImageInput
                     images={objImages}
                     setImages={setObjImages}
@@ -510,34 +530,13 @@ const PostForm = () => {
                 </Note>
                 <Padding />
                 <div className="">
-                    {/* <ModalViewPost post={values} /> */}
-                    {/* {console.log(values)} */}
                     <Button
-                        children="Post tin đăng"
+                        children="Cập nhật tin đăng"
                         type="submit"></Button>
                 </div>
             </form>
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Preview</Modal.Title>
-                </Modal.Header>
-                    <Modal.Body>
-                        <PreView news ={news}/>
-                    </Modal.Body>
-                    <Button variant="success" onClick={()=>
-                        handlePostNewsToDB(news)
-                    }>
-                        Đăng tin 
-                    </Button>
-                <Modal.Footer>
-
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                </Modal.Footer>
-            </Modal>
-        </div>
+      </>
     );
-};
+}
 
-export default PostForm
+export default ModalEditPost;

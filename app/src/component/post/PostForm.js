@@ -101,7 +101,8 @@ export const PostForm = () => {
             const result = await axios.post("http://localhost:4000/api/post/create", data )
             const res = result.data
             // console.log(res)
-            alert(res.msg)
+            // alert(res.msg)
+            alert(`Đăng tin ${res.msg} thành công`)
         }
         catch(err) {
             console.log(err)

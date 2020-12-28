@@ -7,7 +7,7 @@ const fake ={
 
 const ItemNotifycation = ({thongbao}) =>{ 
     const data = thongbao ||  fake
-    const img =  data.img
+    const img =  data.img || "bg-warning"
 
     return (
         <div className="dropdown-item d-flex align-items-center">

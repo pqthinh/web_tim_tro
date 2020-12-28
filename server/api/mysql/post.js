@@ -10,7 +10,7 @@ const Post = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_ownner} and post.status = 'active' and post.available = 'not rented' and datediff(CURRENT_DATE, post.updateAt) < post.duration `
+            sql = `SELECT room.*, post.*, owner.name,owner.email, owner.phone, owner.id_owner, owner.avatar, owner.place FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner  where post.id_owner = ${id_ownner} and post.status = 'active' and post.available = 'not rented' and datediff(CURRENT_DATE, post.updateAt) < post.duration `
             console.log(sql)
             let result = await conn.query(sql)
             res.json(result[0])
@@ -31,7 +31,7 @@ const Post = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_ownner} and post.status = 'pending'`
+            sql = `SELECT room.*, post.*, owner.name,owner.email, owner.phone, owner.id_owner, owner.avatar, owner.place FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner  where post.id_owner = ${id_ownner} and post.status = 'pending'`
             console.log(sql)
             let result = await conn.query(sql)
             res.json(result[0])
@@ -52,7 +52,7 @@ const Post = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_ownner} and post.available = 'rented' `
+            sql = `SELECT room.*, post.*, owner.name,owner.email, owner.phone, owner.id_owner, owner.avatar, owner.place FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner  where post.id_owner = ${id_ownner} and post.available = 'rented' `
             console.log(sql)
             let result = await conn.query(sql)
             res.json(result[0])
@@ -73,7 +73,7 @@ const Post = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_ownner} and post.status = 'deactive' `
+            sql = `SELECT room.*, post.*, owner.name,owner.email, owner.phone, owner.id_owner, owner.avatar, owner.place FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner  where post.id_owner = ${id_ownner} and post.status = 'deactive' `
             // console.log(sql)
             let result = await conn.query(sql)
             res.json(result[0])
@@ -94,7 +94,7 @@ const Post = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_ownner} and datediff(CURRENT_DATE, post.updateAt) < post.duration `
+            sql = `SELECT room.*, post.*, owner.name,owner.email, owner.phone, owner.id_owner, owner.avatar, owner.place FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner  where post.id_owner = ${id_ownner} and datediff(CURRENT_DATE, post.updateAt) < post.duration `
             // console.log(sql)
             let result = await conn.query(sql)
             res.json(result[0])
@@ -115,7 +115,7 @@ const Post = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_ownner} `
+            sql = `SELECT room.*, post.*, owner.name,owner.email, owner.phone, owner.id_owner, owner.avatar, owner.place FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner  where post.id_owner = ${id_ownner} `
             // console.log(sql)
             let result = await conn.query(sql)
             res.json(result[0])
@@ -135,7 +135,7 @@ const Post = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql, id_post =req.params.id
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where postId=?`
+            sql = `SELECT room.*, post.*, owner.name,owner.email, owner.phone, owner.id_owner, owner.avatar, owner.place FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner  where postId=?`
             console.log(sql)
             result = await conn.query(sql, [id_post])
             res.json(result[0][0])
@@ -224,7 +224,7 @@ const Post = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql, result
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner `
+            sql = `SELECT room.*, post.*, owner.name,owner.email, owner.phone, owner.id_owner, owner.avatar, owner.place FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner  `
             result = await conn.query(sql)
             await conn.commit()
             res.json(result[0])
@@ -249,7 +249,7 @@ const Post = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql, result
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where post.id_owner = ${id_owner} and post.status = '${status}' and ${consql} `
+            sql = `SELECT room.*, post.*, owner.name,owner.email, owner.phone, owner.id_owner, owner.avatar, owner.place FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner  where post.id_owner = ${id_owner} and post.status = '${status}' and ${consql} `
             console.log(sql)
 
             result = await conn.query(sql)
@@ -274,7 +274,7 @@ const Post = {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
             let sql, result
-            sql = `SELECT * FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner where owner.id_owner = ${id_owner} and datediff(CURRENT_DATE, post.updateAt) > post.duration `
+            sql = `SELECT room.*, post.*, owner.name,owner.email, owner.phone, owner.id_owner, owner.avatar, owner.place FROM post join room on post.roomID = room.id join owner on post.id_owner = owner.id_owner  where owner.id_owner = ${id_owner} and datediff(CURRENT_DATE, post.updateAt) > post.duration `
             console.log(sql)
             result = await conn.query(sql)
             await conn.commit()
@@ -408,7 +408,7 @@ const Post = {
 
             console.log("create post id: "+ id_post)
 
-            res.status(200).json({msg : `Them Post id = ${id_post} thanh cong `})
+            res.status(200).json({msg : id_post})
         }
         catch (err) {
             await conn.rollback()
@@ -434,7 +434,7 @@ const Post = {
             var temp  = await conn.query(check, [postID])
             await conn.commit()
             if(temp[0].length != 1)
-                return res.status(401).json({msg: "Tin nay da duoc duyet hoac da cha thue"})
+                return res.json({msg: "Tin nay da duoc duyet hoac da cha thue"})
             
             // create room   data : ('phòng trọ', '15', '1', 'phòng tắm riêng, vệ sinh khéo kín', 'có bếp riêng', '0', '1', '1', '0', '0', NULL)
             let room = "update `room` set `roomType` = ? , `area` = ? , `shared` = ? , `bathroom` = ? , `kitchen` = ? , `airConditioner` = ?, `balcony` = ?, `typeCostElectric` = ?, `electricity` = ?, `water` = ?, `near_place` = ? , updateAt = CURRENT_DATE() where id = ? "
