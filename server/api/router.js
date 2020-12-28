@@ -28,7 +28,7 @@ router.post('/post/all/search', post.SearchPost)    // ok
 router.post('/post/update', post.update)        // Update thong tin ve post , va room // khong update anh
 router.post('/post/update/anh', post.updateAnh) 
 router.get('/post/owner', post.getPostOwner)    // body: id_owner
-router.post('/post/owner/state', post.updateAvailablePost)   // id of post 
+router.post('/post/owner/state/:postID', post.updateAvailablePost)   // id of post 
 router.post('/post/admin/status', post.updateStatusPost)     // status of post : (active, inactive, expire)
 router.post('/post/admin/duration', post.updateDurationPost)   // status of post : (active, inactive, expire)
 

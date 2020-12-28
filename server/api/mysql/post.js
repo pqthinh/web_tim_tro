@@ -202,9 +202,10 @@ const Post = {
         airConditioner = airConditioner? `r.airConditioner = ${airConditioner}` : " 1 "
         balcony = balcony? `r.balcony = ${balcony}` : " 1 "
         typeCostElectric = typeCostElectric? `r.typeCostElectric = ${typeCostElectric}` : " 1 "
-
-        areacon = area && typeof area === "undefined"? ` r.area between ${area[0]} and ${area[1]} ` : " 1 "
-        priceconn = price && typeof price === "undefined"?  ` p.price between ${price[0]} and ${price[1]} ` : " 1 "
+        // !area && typeof !area === "undefined"?  : " 1 "
+        // !price && !typeof price === "undefined"?  : " 1 "
+        areacon = ` r.area between ${area[0]} and ${area[1]} `
+        priceconn =  ` p.price between ${price[0]} and ${price[1]} `
 
         try {
             conn = await dbs.getConnection()
@@ -374,16 +375,18 @@ const Post = {
     },
     updateAvailablePost :  async (req, res, next) =>{
         let conn 
-        const body = req.query ,id = body.postID
+        const body = req.params ,id = body.postID
+        console.log(body)
         try {
             conn = await dbs.getConnection()
             await conn.beginTransaction()
 
-            let sql  = "update post set availabel = 'rented' where postID = ?"
-            await conn.query(sql, [status, id])
+            let sql  = `update post set available = 'rented' where postID = ${id}`
+            console.log(sql)
+            await conn.query(sql)
             await conn.commit()
             res.status(200).json({
-                msg: `post id ${id} duoc danh dau la da cho thue`
+                msg: `Post id ${id} đã cho thuê`
             })
 
         }

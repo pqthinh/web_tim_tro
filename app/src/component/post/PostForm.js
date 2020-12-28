@@ -100,7 +100,7 @@ export const PostForm = () => {
         try {
             const result = await axios.post("http://localhost:4000/api/post/create", data )
             const res = result.data
-            console.log(res)
+            // console.log(res)
             alert(res.msg)
         }
         catch(err) {
@@ -183,7 +183,7 @@ export const PostForm = () => {
             duration: Yup.number(require_message).required(message),
             description: Yup.string()
             .required(message)
-            .min(10, 'Độ dài tối thiểu là 10')
+            .min(10, 'Độ dài tối thiểu là 20')
             .max(2000, 'Tối đa 2000 ký tự')
 
             // images: Yup
