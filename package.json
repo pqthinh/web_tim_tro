@@ -1,0 +1,28 @@
+{
+  "name": "int3306",
+  "version": "1.0.0",
+  "description": "app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "cd ./server && node index.js",
+    "app": "cd ./app && npm start",
+    "admin": "cd ./admin && npm start",
+    "start" : "cd ./server && node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pqthinh/int3306.git"
+  },
+  "keywords": [
+    "react",
+    "node",
+    "heroku"
+  ],
+  "author": "pqthinh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pqthinh/int3306/issues"
+  },
+  "homepage": "https://github.com/pqthinh/int3306#readme"
+}
