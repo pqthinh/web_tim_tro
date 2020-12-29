@@ -2,13 +2,13 @@
   "name": "int3306",
   "version": "1.0.0",
   "description": "app",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "cd ./server && node index.js",
     "app": "cd ./app && npm start",
     "admin": "cd ./admin && npm start",
-    "start" : "cd ./server && node app.js"
+    "start" : "cd ./server && node index.js"
   },
   "repository": {
     "type": "git",
