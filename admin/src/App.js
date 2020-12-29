@@ -12,6 +12,7 @@ import NotFoundScreen from './screen/notFound';
 import "./css/menu.css"
 import TestTable from './component/table/tableOwner';
 import TableNoti from './component/table/tableNoti';
+import baseUrl from './fetch/baseurl';
 
 function App() {
   const [authLoading, setAuthLoading] = useState(true);
@@ -21,7 +22,7 @@ function App() {
       return;
     }
 
-    axios.get(`http://localhost:4000/api/verifyToken?token=${token}`).then(response => {
+    axios.get(`${baseUrl}/verifyToken?token=${token}`).then(response => {
       console.log(response.data.user)
       setUserSession(response.data.token, response.data.user)
       setAuthLoading(false);

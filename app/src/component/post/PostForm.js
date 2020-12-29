@@ -11,6 +11,7 @@ import Note from "../Note";
 import Padding from "../padding";
 import { getUser } from "../../Utils/Common";
 import PreView from "./PostPreview";
+import baseUrl from '../../fetch/baseurl'
 
 export const PostForm = () => {
     const user = getUser()

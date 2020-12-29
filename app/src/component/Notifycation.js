@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import baseUrl from '../../../admin/src/fetch/baseurl'
+import baseUrl from '../fetch/baseurl'
 import { getUser } from '../Utils/Common'
 import ItemNotifycation from './ItemNotifycation'
 

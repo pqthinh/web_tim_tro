@@ -9,7 +9,7 @@ import { FormInput } from '../FormInput'
 import getData  from '../../Utils/DataAddress'
 import Note from "../Note";
 import Padding from "../padding";
-import baseUrl from '../../../../admin/src/fetch/baseurl';
+import baseUrl from '../../fetch/baseurl';
 
 function ModalEditPost({post}) {
   console.log(post)
