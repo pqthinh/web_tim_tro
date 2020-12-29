@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
+import baseUrl from '../../../admin/src/fetch/baseurl'
 import { getUser } from '../Utils/Common'
 import ItemNotifycation from './ItemNotifycation'
 
@@ -9,7 +10,7 @@ export default function Notifycation({}) {
     const [tb, setTb] = useState([])
     useEffect(() =>{
         const gettb = async () =>{
-            const res = await axios.get("http://localhost:4000/api/notification", {id: currentUser.id})
+            const res = await axios.get(`${baseUrl}/notification`, {id: currentUser.id})
             console.log(res.data)
             setTb(res.data)
         }

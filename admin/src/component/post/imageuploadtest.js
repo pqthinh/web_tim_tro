@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Axios from "axios"
 // import formAxios from '../fetch/axios'
 import MultiImageInput from 'react-multiple-image-input';
+import baseUrl from '../../fetch/baseurl';
 
 export default function ImageUpload() {
     const [files, setFiles] = useState([])
@@ -21,13 +22,13 @@ export default function ImageUpload() {
     const submitForm = (images) =>{
       console.log(images)
       // let headers = { 'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2) };
-      Axios.post("http://localhost:4000/api/images/upload/base64", {file: images} )
+      Axios.post(`${baseUrl}/images/upload/base64`, {file: images} )
       .then(res=> console.log(res))
       .catch(err=> console.log(err))
     }
     useEffect(()=>{
       const fetchimage = async() => {
-        const temp =  await Axios.get('http://localhost:4000/api/images/room')
+        const temp =  await Axios.get(`${baseUrl}/images/room`)
         console.log(temp.data)
         alert(temp.data.length)
         setList(temp.data)

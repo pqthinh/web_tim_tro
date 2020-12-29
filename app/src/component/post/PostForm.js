@@ -98,7 +98,7 @@ export const PostForm = () => {
     const handlePostNewsToDB = async (data) => {
         setShow(false)
         try {
-            const result = await axios.post("http://localhost:4000/api/post/create", data )
+            const result = await axios.post(`${baseUrl}/post/create`, data )
             const res = result.data
             // console.log(res)
             // alert(res.msg)

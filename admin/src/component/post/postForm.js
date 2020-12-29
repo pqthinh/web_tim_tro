@@ -11,6 +11,7 @@ import Note from "../Note";
 import Padding from "../padding";
 import ModalViewPost from "../modal/viewPost";
 import PreView from "./PostPreview"
+import baseUrl from "../../fetch/baseurl";
 
 
 const PostForm = () => {
@@ -104,11 +105,11 @@ const PostForm = () => {
 
     const handlePostNewsToDB = async (data) => {
         try {
-            const result = await axios.post("http://localhost:4000/api/post/create", data )
+            const result = await axios.post(`${baseUrl}/post/create`, data )
             const res = result.data
             console.log(res)
             alert(`Đăng tin ${res.msg} thành công`)
-            await axios.post(`http://localhost:4000/api/post/admin/status`, {postID: res.msg, status: "active"})
+            await axios.post(`${baseUrl}/post/admin/status`, {postID: res.msg, status: "active"})
         }
         catch(err) {
             console.log(err)

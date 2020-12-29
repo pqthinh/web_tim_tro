@@ -1,6 +1,7 @@
 import React, { useState} from 'react'
 import axios from 'axios'
 import {setUserSession} from '../Utils/Common'
+import baseUrl from '../fetch/baseurl'
 // var passwordHash = require('password-hash');
 
 const useFormInput = initialValue => {
@@ -26,7 +27,7 @@ export default function Login(props) {
         setError(null)
         setLoading(true)
         // passwordHash.generate(password.value )
-        axios.post('http://localhost:4000/api/user/admin/login', { username: username.value, password: password.value })
+        axios.post(`${baseUrl}/user/admin/login`, { username: username.value, password: password.value })
         .then(response => {
             setLoading(false)
             setUserSession(response.data.token, response.data.user)

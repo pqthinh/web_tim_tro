@@ -10,6 +10,7 @@ import { FormInput } from '../FormInput'
 import getData  from '../../Utils/DataAddress'
 import Note from "../Note";
 import Padding from "../padding";
+import baseUrl from '../../fetch/baseurl'
 
 function ModalEditPost({post}) {
   // console.log(post)
@@ -95,7 +96,7 @@ function ModalEditPost({post}) {
 
     const handlePostNewsToDB = async (data) => {
         try {
-            const result = await axios.post("http://localhost:4000/api/post/update", data )
+            const result = await axios.post(`${baseUrl}/post/update`, data )
             const res = result.data
             console.log(res)
             alert(res.msg)
