@@ -1,6 +1,7 @@
 const dbs = require("./dbs")
 var fs = require('fs');
-const baseUrl = "http://localhost:4000"
+// const baseUrl = "http://localhost:4000"
+const baseUrl = "https://polar-dusk-67788.herokuapp.com"
 
 const Post = {
     getTindangban: async (req, res, next) => {
