@@ -1,5 +1,5 @@
 const user =  {
-    user: "pqthinh.uet@gmail.com",  
-    pass: "thinh2008@gmail.com" 
+    user: "email of system",  
+    pass: "email of system" 
 }
 module.exports = user
