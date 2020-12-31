@@ -11,6 +11,6 @@ finish web app
 ### link sp: 
 - app: https://stupefied-yalow-dbd057.netlify.app
 - admin: https://awesome-easley-576199.netlify.app
-- server: chay tren localhost cổng 4000
+- server: http://rentalhouse-pqthinh.herokuapp.com/api
 
 ----------------------------28-12----------------------pqthinh
