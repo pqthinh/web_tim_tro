@@ -1,12 +1,11 @@
-var nodemailer = require('nodemailer');
-const user = require('../inforemail')
+var nodemailer = require("nodemailer");
 
 var transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
-    user: user.user,
-    pass: user.pass
-  }
+    user: process.env.email,
+    pass: process.env.pass,
+  },
 });
 
-module.exports = transporter
+module.exports = transporter;
